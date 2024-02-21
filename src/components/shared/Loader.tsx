@@ -1,5 +1,9 @@
-const Loader = () => {
-  return <div>Loader</div>;
-};
+import { AiOutlineLoading } from 'react-icons/ai';
 
-export default Loader;
+export const Loader = () => {
+  return (
+    <div>
+      <AiOutlineLoading className='animate-spin' />
+    </div>
+  );
+};

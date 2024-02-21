@@ -12,10 +12,12 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { SignupValidation } from '@/lib/validation';
+import { Loader } from '@/components/shared/Loader';
+import { Link } from 'react-router-dom';
+import { createUserAccount } from '@/lib/appwrite/api';
 
 const SignupForm = () => {
-  const isLoading = true;
-  // 1. Define your form.
+  const isLoading = false;
   const form = useForm<z.infer<typeof SignupValidation>>({
     resolver: zodResolver(SignupValidation),
     defaultValues: {
@@ -26,19 +28,19 @@ const SignupForm = () => {
     },
   });
 
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof SignupValidation>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof SignupValidation>) {
+    const newUser = await createUserAccount(values);
+    console.log(newUser);
   }
   return (
     <Form {...form}>
       <div className='w-1/2 flex justify-center items-center flex-col'>
-        <span>DisMoment</span>
+        <span className='bg-primary p-2 rounded-lg text-white font-black'>
+          DisMoment
+        </span>
         <h2 className='font-bold pt-3'>Create a new account</h2>
         <p className='font-thin'>
-          Enter your details and start capturing DisMoment
+          Enter your details and start capturing this moment.
         </p>
 
         <form
@@ -97,7 +99,14 @@ const SignupForm = () => {
               </FormItem>
             )}
           />
-          <Button type='submit'>{isLoading ? 'Loading' : 'Submit'}</Button>
+          <Button type='submit'>{isLoading ? <Loader /> : 'Sign Up'}</Button>
+          <p className='text-sm text-center font-thin'>
+            Already registered?
+            <Link to='/sign-in' className='font-bold'>
+              {' '}
+              Sign In
+            </Link>
+          </p>
         </form>
       </div>
     </Form>
