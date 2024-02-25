@@ -3,7 +3,7 @@ import { IContextType, IUser } from '@/types';
 import { createContext, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export const INITIAL_USER = {
+const INITIAL_USER = {
   id: '',
   name: '',
   username: '',
