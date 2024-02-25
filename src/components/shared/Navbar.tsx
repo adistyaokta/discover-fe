@@ -14,16 +14,20 @@ export const Navbar = () => {
   }, [isSuccess]);
 
   return (
-    <section className='topbar'>
-      <div className='flex flex-row justify-between py-4 px-5 bg-red-900'>
+    <section className='topbar flex sm:hidden'>
+      <div className='flex flex-row w-full justify-between py-2 px-3 bg-primary'>
         <Link to='/' className='py-2'>
-          <span className='bg-primary p-2 rounded-lg text-white font-black'>
+          <span className='bg-card p-2 rounded-sm text-card-foreground font-black hover:bg-card-foreground hover:text-card'>
             DisMoment
           </span>
         </Link>
 
         <div className='flex gap-4'>
-          <Button variant='ghost' className='' onClick={() => signOut()}>
+          <Button
+            variant='ghost'
+            className='text-secondary'
+            onClick={() => signOut()}
+          >
             Logout
           </Button>
 

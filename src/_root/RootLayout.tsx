@@ -3,11 +3,11 @@ import { Outlet } from 'react-router-dom';
 
 const RootLayout = () => {
   return (
-    <div className='w-full'>
-      {/* <Navbar /> */}
+    <div className='w-full flex flex-col sm:flex-row min-h-screen'>
+      <Navbar />
       <Sidebar />
 
-      <section className='flex h-full'>
+      <section className='flex-grow flex flex-wrap'>
         <Outlet />
       </section>
 

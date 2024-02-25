@@ -1,5 +1,7 @@
+import { useUserContext } from '@/context/AuthContext';
 import React from 'react';
 
 export const Profile = () => {
-  return <div>Profile</div>;
+  const { user } = useUserContext();
+  return <div>Profile of {user.name}</div>;
 };
