@@ -12,6 +12,7 @@ export const Footer = () => {
           return (
             <Link
               to={link.route}
+              key={link.label}
               className={`h-12 w-full flex justify-center items-center rounded-full hover:bg-card-foreground hover:text-secondary ${
                 isActive && 'bg-secondary text-primary'
               }`}

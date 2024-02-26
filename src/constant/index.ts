@@ -11,4 +11,8 @@ export const sideBarLinks = [
     label: 'Saved',
     route: '/saved',
   },
+  {
+    label: 'Post',
+    route: '/create-post',
+  },
 ];
