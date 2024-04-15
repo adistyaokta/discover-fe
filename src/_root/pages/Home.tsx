@@ -1,5 +1,20 @@
-import React from 'react';
+import { Loader } from "@/components/shared";
+import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
+import React from "react";
 
 export const Home = () => {
-  return <div>Home</div>;
+	const {
+		data: posts,
+		isPending: isLoading,
+		isError: isErrorPosts,
+	} = useGetRecentPosts();
+
+	return (
+		<div>
+			<div>
+				<h2>Home Feed</h2>
+				{isLoading && !posts ? <Loader /> : <p>wuihhh</p>}
+			</div>
+		</div>
+	);
 };
