@@ -184,7 +184,7 @@ export async function getRecentPosts() {
 	const posts = await databases.listDocuments(
 		appWriteConfig.databaseId,
 		appWriteConfig.postCollectionId,
-		[Query.orderDesc("$createdAt}"), Query.limit(20)],
+		[Query.orderDesc("$CreatedAt"), Query.limit(20)],
 	);
 
 	if (!posts) throw Error;

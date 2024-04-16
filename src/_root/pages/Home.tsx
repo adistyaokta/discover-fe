@@ -1,5 +1,6 @@
 import { Loader } from "@/components/shared";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
+import type { Models } from "appwrite";
 import React from "react";
 
 export const Home = () => {
@@ -13,7 +14,15 @@ export const Home = () => {
 		<div>
 			<div>
 				<h2>Home Feed</h2>
-				{isLoading && !posts ? <Loader /> : <p>wuihhh</p>}
+				{isLoading && !posts ? (
+					<Loader />
+				) : (
+					<ul>
+						{posts?.documents.map((post: Models.Document) => (
+							<li>{post.caption}</li>
+						))}
+					</ul>
+				)}
 			</div>
 		</div>
 	);
