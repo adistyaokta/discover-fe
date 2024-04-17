@@ -1,4 +1,5 @@
 import { Loader } from "@/components/shared";
+import { PostCard } from "@/components/shared/PostCard";
 import { useGetRecentPosts } from "@/lib/react-query/queriesAndMutations";
 import type { Models } from "appwrite";
 import React from "react";
@@ -17,11 +18,11 @@ export const Home = () => {
 				{isLoading && !posts ? (
 					<Loader />
 				) : (
-					<ul>
+					<div>
 						{posts?.documents.map((post: Models.Document) => (
-							<li>{post.caption}</li>
+							<PostCard post={post} key={post.$id} />
 						))}
-					</ul>
+					</div>
 				)}
 			</div>
 		</div>
