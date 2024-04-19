@@ -7,7 +7,7 @@ export const CreatePost = () => {
         <div className='max-w-5xl flex justify-start items-start gap-2'>
           add post
         </div>
-        <PostForm />
+        <PostForm action='Create' />
       </div>
     </div>
   );
