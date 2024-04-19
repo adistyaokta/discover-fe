@@ -1,6 +1,3 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -10,20 +7,22 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '../ui/input';
-import { Textarea } from '../ui/textarea';
-import { FileUploader } from '../shared/FileUploader';
-import { PostValidation } from '@/lib/validation';
-import { Models } from 'appwrite';
 import { useUserContext } from '@/context/AuthContext';
-import { useToast } from '../ui/use-toast';
-import { useNavigate } from 'react-router-dom';
 import {
   useCreatePost,
   useUpdatePost,
 } from '@/lib/react-query/queriesAndMutations';
-import { updatePost } from '@/lib/appwrite/api';
+import { PostValidation } from '@/lib/validation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { Models } from 'appwrite';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import * as z from 'zod';
 import { Loader } from '../shared';
+import { FileUploader } from '../shared/FileUploader';
+import { Input } from '../ui/input';
+import { Textarea } from '../ui/textarea';
+import { useToast } from '../ui/use-toast';
 
 type PostFormProps = {
   post?: Models.Document;
@@ -59,7 +58,7 @@ export const PostForm = ({ post, action }: PostFormProps) => {
         imageUrl: post?.imageUrl,
       });
 
-      if (!updatePost) {
+      if (!updatedPost) {
         toast({ title: 'Please try again.' });
       }
 
