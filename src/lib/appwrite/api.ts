@@ -301,18 +301,24 @@ export async function updatePost(post: IUpdatePost) {
   }
 }
 
-export async function deletePost(postId: string, imageId: string) {
-  if (!postId || imageId) throw Error;
+export async function deletePost(postId?: string, imageId?: string) {
+  if (!postId || !imageId) return;
 
   try {
-    await databases.deleteDocument(
+    const statusCode = await databases.deleteDocument(
       appWriteConfig.databaseId,
       appWriteConfig.postCollectionId,
       postId
     );
 
-    return { status: 'OK' };
-  } catch (error) {}
+    if (!statusCode) throw Error;
+
+    await deleteFile(imageId);
+
+    return { status: 'Ok' };
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function getInfinitePosts({ pageParam }: { pageParam: number }) {

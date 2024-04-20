@@ -1,6 +1,5 @@
 import { useUserContext } from '@/context/AuthContext';
 import { Models } from 'appwrite';
-import React from 'react';
 import { PostStats } from './PostStats';
 type GridPostListProps = {
   posts?: Models.Document[];
@@ -32,7 +31,9 @@ export const GridPostList = ({
                   <p>{post.creator.name}</p>
                 </div>
                 <div>
-                  {showStats && <PostStats post={post} userId={user.id} />}
+                  {showStats && (
+                    <PostStats key={post?.id} post={post} userId={user.id} />
+                  )}
                 </div>
               </div>
             )}

@@ -4,12 +4,14 @@ import {
   useSearchPosts,
 } from '@/lib/react-query/queriesAndMutations';
 import { Filter, SearchIcon } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { SearchResults } from '@/components/shared/SearchResult';
 import { GridPostList } from '@/components/shared/GridPostList';
 import { Loader } from '@/components/shared';
+import { useInView } from 'react-intersection-observer';
 
 export const Explore = () => {
+  const { ref, inView } = useInView();
   const { data: posts, fetchNextPage, hasNextPage } = useGetPosts();
 
   const [searchValue, setsearchValue] = useState<string>('');
@@ -17,6 +19,10 @@ export const Explore = () => {
   const debounceValue = useDebounce(searchValue, 500);
   const { data: searchedPosts, isFetching: isSearchFetching } =
     useSearchPosts(debounceValue);
+
+  useEffect(() => {
+    if (inView && !searchValue) fetchNextPage();
+  }, [inView, searchValue]);
 
   if (!posts) {
     return (
@@ -30,7 +36,6 @@ export const Explore = () => {
     !hasSearchResult &&
     posts.pages.every((item) => item?.documents.length === 0);
 
-  console.log(posts);
   return (
     <div>
       <div>
@@ -70,6 +75,11 @@ export const Explore = () => {
           )}
         </div>
       </div>
+      {hasNextPage && !searchValue && (
+        <div ref={ref}>
+          <Loader />
+        </div>
+      )}
     </div>
   );
 };
