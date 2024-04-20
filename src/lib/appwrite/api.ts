@@ -1,7 +1,6 @@
 import { ID, Query } from 'appwrite';
 import type { INewPost, INewUser, IUpdatePost } from '@/types';
 import { account, appWriteConfig, avatars, databases, storage } from './config';
-import { error } from 'console';
 
 export async function createUserAccount(user: INewUser) {
   try {
@@ -314,4 +313,42 @@ export async function deletePost(postId: string, imageId: string) {
 
     return { status: 'OK' };
   } catch (error) {}
+}
+
+export async function getInfinitePosts({ pageParam }: { pageParam: number }) {
+  const queries: any[] = [Query.orderDesc('$updatedAt'), Query.limit(10)];
+
+  if (pageParam) {
+    queries.push(Query.cursorAfter(pageParam.toString()));
+  }
+
+  try {
+    const posts = await databases.listDocuments(
+      appWriteConfig.databaseId,
+      appWriteConfig.postCollectionId,
+      queries
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function searchPosts(searchTerm: string) {
+  try {
+    const posts = await databases.listDocuments(
+      appWriteConfig.databaseId,
+      appWriteConfig.postCollectionId,
+      [Query.search('caption', searchTerm)]
+    );
+
+    if (!posts) throw Error;
+
+    return posts;
+  } catch (error) {
+    console.log(error);
+  }
 }
