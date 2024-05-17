@@ -1,17 +1,13 @@
-import { Navbar, Sidebar, Footer } from '@/components/shared';
-import { Outlet } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
+import { useAuthStore } from '../app/store';
 
 const RootLayout = () => {
+  const { isAuthenticated } = useAuthStore();
   return (
     <div className='w-full flex flex-col sm:flex-row min-h-screen'>
-      <Navbar />
-      <Sidebar />
-
       <section className='flex-grow flex flex-wrap'>
-        <Outlet />
+        {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </section>
-
-      <Footer />
     </div>
   );
 };
