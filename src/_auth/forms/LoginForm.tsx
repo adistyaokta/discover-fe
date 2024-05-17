@@ -1,4 +1,4 @@
-import { SignupValidation } from '@/app/lib/validation';
+import { LoginValidation } from '@/app/lib/validation';
 import { useAuthStore } from '@/app/store/authStore';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -9,45 +9,38 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 
-export const SignupForm = () => {
+export const LoginForm = () => {
   const { toast } = useToast();
-  const { signup, login } = useAuthStore();
-
+  const { isAuthenticated, login } = useAuthStore();
   const navigate = useNavigate();
 
-  const form = useForm<z.infer<typeof SignupValidation>>({
-    resolver: zodResolver(SignupValidation),
+  const form = useForm<z.infer<typeof LoginValidation>>({
+    resolver: zodResolver(LoginValidation),
     defaultValues: {
       username: '',
-      email: '',
       password: ''
     }
   });
 
-  async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    const success = await signup(values.username, values.email, values.password);
-
-    if (!success) {
-      return toast({
-        title: 'Sign up failed. Please try again'
-      });
-    }
-
+  async function onSubmit(values: z.infer<typeof LoginValidation>) {
     const session = await login(values.username, values.password);
 
     if (session) {
+      console.log(isAuthenticated);
       form.reset();
+
       navigate('/');
     } else {
-      toast({ title: 'Sign in failed. Please try again.' });
+      return toast({ title: 'Sign up failed.' });
     }
   }
+
   return (
     <Form {...form}>
       <div className='w-1/2 flex justify-center items-center flex-col'>
         <span className='bg-primary p-2 rounded-lg text-white font-black'>DisMoment</span>
-        <h2 className='font-bold pt-3'>Create a new account</h2>
-        <p className='font-thin'>Enter your details and start capturing this moment.</p>
+        <h2 className='font-bold pt-3'>Log in to your account</h2>
+        <p className='font-thin'>Hey welcome back! Please enter your details to continue.</p>
 
         <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 w-full mt-4'>
           <FormField
@@ -55,22 +48,9 @@ export const SignupForm = () => {
             name='username'
             render={({ field }) => (
               <FormItem>
-                <FormLabel>username</FormLabel>
+                <FormLabel>Username</FormLabel>
                 <FormControl>
                   <Input type='text' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='email'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type='email' {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -89,12 +69,12 @@ export const SignupForm = () => {
               </FormItem>
             )}
           />
-          <Button type='submit'>Signup</Button>
+          <Button type='submit'>Login</Button>
           <p className='text-sm text-center font-thin'>
-            Already registered?
-            <Link to='/sign-in' className='font-bold'>
+            Don't have an account?
+            <Link to='/sign-up' className='font-bold'>
               {' '}
-              Sign In
+              Sign Up
             </Link>
           </p>
         </form>

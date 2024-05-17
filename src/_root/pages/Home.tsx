@@ -1,29 +1,19 @@
-import { Loader } from '@/components/shared';
-import { PostCard } from '@/components/shared/PostCard';
-import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations';
-import type { Models } from 'appwrite';
+import { useAuthStore } from '@/app/store/authStore';
+import { Button } from '@/components/ui/button';
 
 export const Home = () => {
-  const {
-    data: posts,
-    isPending: isLoading,
-    isError: isErrorPosts,
-  } = useGetRecentPosts();
+  const { logout, user } = useAuthStore();
+
+  async function handleLogout() {
+    await logout();
+  }
 
   return (
     <div>
-      <div>
-        <h2>Home Feed</h2>
-        {isLoading && !posts ? (
-          <Loader />
-        ) : (
-          <div>
-            {posts?.documents.map((post: Models.Document) => (
-              <PostCard post={post} key={post.$id} />
-            ))}
-          </div>
-        )}
-      </div>
+      <h1>Welcome {user?.name}</h1>
+      <Button type='button' onClick={handleLogout}>
+        Logout
+      </Button>
     </div>
   );
 };
