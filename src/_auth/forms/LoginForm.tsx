@@ -11,7 +11,7 @@ import type { z } from 'zod';
 
 export const LoginForm = () => {
   const { toast } = useToast();
-  const { isAuthenticated, login } = useAuthStore();
+  const { login } = useAuthStore();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginValidation>>({
@@ -26,7 +26,6 @@ export const LoginForm = () => {
     const session = await login(values.username, values.password);
 
     if (session) {
-      console.log(isAuthenticated);
       form.reset();
 
       navigate('/');
