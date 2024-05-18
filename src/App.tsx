@@ -2,7 +2,10 @@ import { Navigate, Route, Routes } from 'react-router-dom';
 import AuthLayout from './_auth/AuthLayout';
 import { LoginForm, SignupForm } from './_auth/forms';
 import RootLayout from './_root/RootLayout';
-import { Home } from './_root/pages';
+import { HomePage } from './_root/pages';
+import { ExplorePage } from './_root/pages/Explore';
+import { CreatePostPage } from './_root/pages/CreatePostPage';
+import { ProfilePage } from './_root/pages/Profile';
 
 function App() {
   return (
@@ -14,7 +17,10 @@ function App() {
         </Route>
 
         <Route element={<RootLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<HomePage />} />
+          <Route path='/explore' element={<ExplorePage />} />
+          <Route path='/create-post' element={<CreatePostPage />} />
+          <Route path='/profile' element={<ProfilePage />} />
         </Route>
 
         <Route path='*' element={<Navigate to='/' replace />} />
