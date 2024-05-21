@@ -1,9 +1,9 @@
-import { SignupValidation } from '@/app/lib/validation';
-import { useAuthStore } from '@/app/store/authStore';
 import { Button } from '@/components/ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
+import { useCreateAccount, useLoginAccount } from '@/lib/react-query/queriesAndMutation';
+import { SignupValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
@@ -11,7 +11,8 @@ import type { z } from 'zod';
 
 export const SignupForm = () => {
   const { toast } = useToast();
-  const { signup, login } = useAuthStore();
+  const { mutateAsync: loginAccount } = useLoginAccount();
+  const { mutateAsync: createAccount } = useCreateAccount();
 
   const navigate = useNavigate();
 
@@ -25,21 +26,31 @@ export const SignupForm = () => {
   });
 
   async function onSubmit(values: z.infer<typeof SignupValidation>) {
-    const success = await signup(values.username, values.email, values.password);
-
-    if (!success) {
-      return toast({
-        title: 'Sign up failed. Please try again'
+    try {
+      const success = await createAccount({
+        username: values.username,
+        email: values.email,
+        password: values.password
       });
-    }
 
-    const session = await login(values.username, values.password);
+      if (!success) {
+        return toast({
+          title: 'Sign up failed. Please try again'
+        });
+      }
 
-    if (session) {
-      form.reset();
-      navigate('/');
-    } else {
-      toast({ title: 'Sign in failed. Please try again.' });
+      const session = await loginAccount({ username: values.username, password: values.password });
+
+      if (!session) return;
+
+      if (session) {
+        form.reset();
+        navigate('/');
+      } else {
+        toast({ title: 'Sign in failed. Please try again.' });
+      }
+    } catch (error: any) {
+      toast({ title: error });
     }
   }
   return (

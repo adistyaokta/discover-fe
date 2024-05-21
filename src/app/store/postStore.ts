@@ -1,26 +1,18 @@
 import { create } from 'zustand';
 import { http } from '../http';
-
-type PostData = {
-  id: number;
-  caption: string;
-  media: string;
-  createdAt: Date;
-  updatedAt: Date;
-  authorId: number;
-};
+import type { IPostData } from '../type';
 
 type PostStore = {
-  post: PostData | null;
+  posts: IPostData[] | null;
   loading: boolean;
   success: boolean;
   error: boolean;
   errorData: null;
-  getPostData: () => Promise<void>;
+  getPostData: (token: string) => Promise<void>;
 };
 
 const initialState = {
-  post: null,
+  posts: null,
   loading: false,
   success: false,
   error: false,
@@ -31,9 +23,13 @@ export const usePostStore = create<PostStore>((set) => ({
   ...initialState,
   getPostData: async () => {
     set({ ...initialState, loading: true });
+    const token = localStorage.getItem('token');
     try {
-      const response = await http.get('/posts');
-      set({ ...initialState, success: true, post: response.data });
+      console.log(token, 'tkn');
+      const response = await http.get('/posts', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      set({ ...initialState, success: true, posts: response.data });
     } catch (err: any) {
       console.error('Error in data fetch: ', err);
       set({ ...initialState, error: true, errorData: err.message });

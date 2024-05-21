@@ -1,19 +1,19 @@
-import { usePostStore } from '@/app/store';
 import { useAuthStore } from '@/app/store/authStore';
-import { useEffect } from 'react';
+import type { IPostData } from '@/app/type';
+import { useGetRecentPost } from '@/lib/react-query/queriesAndMutation';
 
 export const HomePage = () => {
   const { user } = useAuthStore();
-  const { post, getPostData } = usePostStore();
-
-  useEffect(() => {
-    getPostData();
-    console.log([post]);
-  }, []);
+  const { data: posts } = useGetRecentPost();
 
   return (
     <div>
       <h1>Welcome {user?.name}</h1>
+      <ul>
+        {posts?.map((post: IPostData) => (
+          <li key={post.id}>{post.caption}</li>
+        ))}
+      </ul>
     </div>
   );
 };
