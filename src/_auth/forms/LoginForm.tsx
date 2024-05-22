@@ -12,14 +12,14 @@ import type { z } from 'zod';
 
 export const LoginForm = () => {
   const { toast } = useToast();
-  const { mutateAsync: loginAccount } = useLoginAccount();
+  const { mutateAsync: loginAccount, isPending: loading } = useLoginAccount();
   const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
     defaultValues: {
-      username: '',
-      password: ''
+      username: 'admin2',
+      password: 'admin2'
     }
   });
 
@@ -71,7 +71,7 @@ export const LoginForm = () => {
               </FormItem>
             )}
           />
-          <Button type='submit'>Login</Button>
+          <Button type='submit'>{loading ? 'Loding' : 'Login'}</Button>
           <p className='text-sm text-center font-thin'>
             Don't have an account?
             <Link to='/sign-up' className='font-bold'>

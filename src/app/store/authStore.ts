@@ -42,7 +42,6 @@ export const useAuthStore = create(
             token: null,
             isAuthenticated: false
           });
-          localStorage.clear();
         } catch (error) {
           console.error('Failed to logout', error);
         }

@@ -1,5 +1,9 @@
-import React from 'react';
+import { PostForm } from '@/components/forms/PostForm';
 
 export const CreatePostPage = () => {
-  return <div>CreatePostPage</div>;
+  return (
+    <div>
+      <PostForm />
+    </div>
+  );
 };

@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/app/store/authStore';
-import type { ICreateUserParam, ILoginParam } from '@/app/type';
-import { useMutation, useQuery } from '@tanstack/react-query';
-import { createAccount, getRecentPosts, signInAccount } from '../api';
+import type { ICreateUserParam, ILoginParam, INewPost } from '@/app/type';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { createAccount, createPost, getRecentPosts, signInAccount } from '../api';
 import { QUERY_KEYS } from './queryKeys';
 
 export const useLoginAccount = () => {
@@ -30,9 +30,21 @@ export const useCreateAccount = () => {
 };
 
 export const useGetRecentPost = () => {
-  const { token } = useAuthStore();
   return useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
-    queryFn: () => getRecentPosts(token!)
+    queryFn: getRecentPosts
+  });
+};
+
+export const useCreatePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (post: INewPost) => createPost(post),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+    }
   });
 };
