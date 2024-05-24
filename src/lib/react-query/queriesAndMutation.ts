@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/app/store/authStore';
 import type { ICreateUserParam, ILoginParam, INewPost } from '@/app/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { createAccount, createPost, getRecentPosts, signInAccount } from '../api';
+import { createAccount, createPost, getPostByAuthor, getRecentPosts, getUserDetail, signInAccount } from '../api';
 import { QUERY_KEYS } from './queryKeys';
 
 export const useLoginAccount = () => {
@@ -46,5 +46,19 @@ export const useCreatePost = () => {
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
       });
     }
+  });
+};
+
+export const useGetUserDetail = (id: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_CURRENT_USER],
+    queryFn: () => getUserDetail(id)
+  });
+};
+
+export const useGetPostByAuthor = (authorId: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR],
+    queryFn: () => getPostByAuthor(authorId)
   });
 };

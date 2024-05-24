@@ -4,8 +4,8 @@ import { useCreatePost } from '@/lib/react-query/queriesAndMutation';
 import { CreatePostValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { RiLoader5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
-import { BsSend } from 'react-icons/bs';
 import type { z } from 'zod';
 import { Button } from '../ui/button';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../ui/form';
@@ -29,6 +29,8 @@ export const PostForm = ({ post, label }: PostFormProps) => {
     }
   });
 
+  const { reset } = form;
+
   const onSubmit = async (values: z.infer<typeof CreatePostValidation>) => {
     try {
       const newPost = await createPost({
@@ -41,6 +43,7 @@ export const PostForm = ({ post, label }: PostFormProps) => {
           title: 'Unable to create post, please try again.'
         });
       } else {
+        reset();
         navigate('/');
       }
     } catch (error: any) {
@@ -50,22 +53,27 @@ export const PostForm = ({ post, label }: PostFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full flex flex-row gap-2 items-center justify-between'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full flex items-center gap-2 pr-5'>
         <FormField
           control={form.control}
           name='caption'
           render={({ field }) => (
-            <FormItem className='w-11/12'>
+            <FormItem className='flex-1'>
               {label && <FormLabel>Caption</FormLabel>}
               <FormControl>
-                <Textarea placeholder='Add post' className='bg-primary max-h-40' {...field} />
+                <Textarea className='w-full max-h-32 h-32' placeholder='Share your moment...' {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type='submit' className='w-14 h-full' variant={'circle'}>
-          <BsSend size={20} />
+        <Button
+          type='submit'
+          variant={'default'}
+          className='flex w-20 justify-center items-center'
+          disabled={isLoadingCreate}
+        >
+          {isLoadingCreate ? <RiLoader5Fill className='animate-spin' /> : 'Send'}
         </Button>
       </form>
     </Form>

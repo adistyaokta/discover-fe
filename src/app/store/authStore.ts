@@ -1,21 +1,14 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-
-export type User = {
-  id: number;
-  username: string;
-  email: string;
-  password: string;
-  name: string;
-};
+import type { IUser } from '../type';
 
 type AuthStore = {
-  user: User | null;
+  user: IUser | null;
   token: string | null;
   isAuthenticated: boolean;
-  login: (user: User, token: string) => Promise<void>;
+  login: (user: IUser, token: string) => Promise<void>;
   logout: () => Promise<void>;
-  signup: (user: User, token: string) => Promise<void>;
+  signup: (user: IUser, token: string) => Promise<void>;
 };
 
 export const useAuthStore = create(

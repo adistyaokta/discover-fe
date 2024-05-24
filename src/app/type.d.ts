@@ -33,6 +33,15 @@ export type ICreateUserParam = {
   password: string;
 };
 
+export type IUser = {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  name: string;
+  bio?: string;
+};
+
 export type INewPost = {
   authorId: number | undefined;
   caption: string;
@@ -40,6 +49,7 @@ export type INewPost = {
 };
 
 export type IPostData = {
+  author: IUser;
   id: number;
   caption: string;
   media: string;

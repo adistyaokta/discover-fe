@@ -19,8 +19,8 @@ const RootLayout = () => {
   }
 
   return (
-    <div className='w-full py-5 flex flex-row min-h-screen'>
-      <div className='w-16 py-3 px-1 flex flex-col items-center justify-between '>
+    <div className='w-full py-5 flex flex-row min-h-screen max-h-dvh'>
+      <div className='w-16 min-w-16 py-3 px-1 flex flex-col items-center justify-between'>
         <ThemeSwitcher />
         <div className='bg-background w-10 h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
           <ul className='w-full h-full flex flex-col justify-between gap-1 items-center '>
