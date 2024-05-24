@@ -1,11 +1,64 @@
-import { Navigate, Outlet } from 'react-router-dom';
+import { ThemeSwitcher } from '@/components/shared/ThemeSwitcher';
+import { NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../app/store';
+import { Button } from '@/components/ui/button';
+import { RiLogoutCircleRFill, RiLogoutCircleRLine } from 'react-icons/ri';
+import { useTheme } from '@/components/shared/ThemeProvider';
+
+import { sideBarLinks } from '@/constant';
+import type { INavLink } from '@/app/type';
+import { RenderIcon } from '@/components/shared/RenderIcon';
 
 const RootLayout = () => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
+  const { theme } = useTheme();
+  const { pathname } = useLocation();
+
+  async function handleLogout() {
+    await logout();
+  }
+
   return (
-    <div className='w-full flex flex-col sm:flex-row min-h-screen'>
-      <section className='flex-grow flex flex-wrap'>
+    <div className='w-full py-5 flex flex-row min-h-screen max-h-dvh'>
+      <div className='w-16 min-w-16 py-3 px-1 flex flex-col items-center justify-between'>
+        <ThemeSwitcher />
+        <div className='bg-background w-10 h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
+          <ul className='w-full h-full flex flex-col justify-between gap-1 items-center '>
+            {sideBarLinks.map((link: INavLink) => {
+              const isActive = pathname === link.route;
+              return (
+                <li
+                  className={`w-full h-full group first:rounded-t-md last:rounded-b-md ${
+                    isActive
+                      ? 'bg-secondary-foreground text-primary-foreground dark:text-primary dark:bg-primary-foreground'
+                      : ''
+                  }`}
+                  key={link.label}
+                >
+                  <NavLink
+                    to={link.route}
+                    className='w-full h-full flex items-center justify-center  
+                    '
+                  >
+                    <RenderIcon
+                      IconComponent={link.icon}
+                      className='w-5 h-5 group-hover:scale-110 transition-all duration-300'
+                    />
+                  </NavLink>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <Button variant='outline' size='icon' onClick={handleLogout}>
+          {theme === 'light' ? (
+            <RiLogoutCircleRFill className='h-7 w-7 rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0' />
+          ) : (
+            <RiLogoutCircleRLine className='h-5 w-5 rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100' />
+          )}
+        </Button>
+      </div>
+      <section className='flex-grow flex flex-wrap border border-input bg-background rounded-md rounded-r-none border-r-0'>
         {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </section>
     </div>

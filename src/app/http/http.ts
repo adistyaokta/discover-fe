@@ -8,11 +8,34 @@ export const sleeper = (s: number) => {
   });
 };
 
+const getToken = () => {
+  const local = localStorage.getItem('auth-store');
+  const data = JSON.parse(local!);
+
+  const token = data.state.token;
+  return token;
+};
+
 export const http = axios.create({
   baseURL: `${import.meta.env.VITE_BE_SERVER}`,
   // timeout: 10000,
   headers: { 'Content-Type': 'application/json' }
 });
+
+http.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
 
 export const httpFile = axios.create({
   baseURL: `${import.meta.env.VITE_BE_SERVER}`,

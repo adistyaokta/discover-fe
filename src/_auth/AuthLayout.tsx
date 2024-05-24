@@ -1,10 +1,11 @@
 import { Outlet, Navigate } from 'react-router-dom';
+import { useAuthStore } from '../app/store';
 
 const AuthLayout = () => {
-  const isLogin = false;
+  const { isAuthenticated } = useAuthStore();
   return (
     <>
-      {isLogin ? (
+      {isAuthenticated ? (
         <Navigate to={'/'} />
       ) : (
         <>

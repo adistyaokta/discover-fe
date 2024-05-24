@@ -1,3 +1,6 @@
+import type { ReactElement } from 'react';
+import type { User } from './store';
+
 export type GetParam = {
   filters?: string;
   page?: number;
@@ -5,4 +8,52 @@ export type GetParam = {
   search?: string;
   orderBy?: string;
   order?: 'asc' | 'desc';
+};
+
+export type AuthResponse = {
+  user: User;
+  accessToken: string;
+};
+
+export type INavLink = {
+  imgURL?: string;
+  route: string;
+  label: string;
+  icon: ReactElements;
+};
+
+export type ILoginParam = {
+  username: string;
+  password: string;
+};
+
+export type ICreateUserParam = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export type IUser = {
+  id: number;
+  username: string;
+  email: string;
+  password: string;
+  name: string;
+  bio?: string;
+};
+
+export type INewPost = {
+  authorId: number | undefined;
+  caption: string;
+  media?: string;
+};
+
+export type IPostData = {
+  author: IUser;
+  id: number;
+  caption: string;
+  media: string;
+  createdAt: Date;
+  updatedAt: Date;
+  authorId: number;
 };
