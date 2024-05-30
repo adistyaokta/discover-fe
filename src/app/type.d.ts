@@ -34,7 +34,7 @@ export type ICreateUserParam = {
 };
 
 export type IUser = {
-  id: number;
+  id: number | string;
   username: string;
   email: string;
   password: string;

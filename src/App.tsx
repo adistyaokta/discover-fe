@@ -3,14 +3,12 @@ import AuthLayout from './_auth/AuthLayout';
 import { LoginForm, SignupForm } from './_auth/forms';
 import RootLayout from './_root/RootLayout';
 import { HomePage } from './_root/pages';
+import { PostDetailPage } from './_root/pages/CreatePostPage';
 import { ExplorePage } from './_root/pages/Explore';
-import { CreatePostPage } from './_root/pages/CreatePostPage';
 import { ProfilePage } from './_root/pages/Profile';
 import { Toaster } from './components/ui/toaster';
-import { useAuthStore } from './app/store';
 
 function App() {
-  const { user } = useAuthStore();
   return (
     <main>
       <Routes>
@@ -22,8 +20,8 @@ function App() {
         <Route element={<RootLayout />}>
           <Route index element={<HomePage />} />
           <Route path='/explore' element={<ExplorePage />} />
-          <Route path='/create-post' element={<CreatePostPage />} />
-          <Route path='/profile' element={<ProfilePage id={user?.id!} />} />
+          <Route path='/post/:id' element={<PostDetailPage />} />
+          <Route path='/profile/:userId' element={<ProfilePage />} />
         </Route>
 
         <Route path='*' element={<Navigate to='/' replace />} />

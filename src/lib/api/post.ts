@@ -27,3 +27,21 @@ export async function getPostByAuthor(authorId: number) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
   }
 }
+
+export async function getRandomPosts(count: number) {
+  try {
+    const response = await useHttpGet<IPostData[]>(`/posts/random/${count}`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
+  }
+}
+
+export async function getPostDetail(id: number) {
+  try {
+    const response = await useHttpGet<IPostData>(`/posts/${id}`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Unable to get post detail');
+  }
+}

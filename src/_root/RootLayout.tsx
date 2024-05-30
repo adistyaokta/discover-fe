@@ -1,16 +1,16 @@
+import { useTheme } from '@/components/shared/ThemeProvider';
 import { ThemeSwitcher } from '@/components/shared/ThemeSwitcher';
-import { NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuthStore } from '../app/store';
 import { Button } from '@/components/ui/button';
 import { RiLogoutCircleRFill, RiLogoutCircleRLine } from 'react-icons/ri';
-import { useTheme } from '@/components/shared/ThemeProvider';
+import { NavLink, Navigate, Outlet, useLocation } from 'react-router-dom';
+import { useAuthStore } from '../app/store';
 
-import { sideBarLinks } from '@/constant';
 import type { INavLink } from '@/app/type';
 import { RenderIcon } from '@/components/shared/RenderIcon';
+import { sideBarLinks } from '@/constant';
 
 const RootLayout = () => {
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, logout, user } = useAuthStore();
   const { theme } = useTheme();
   const { pathname } = useLocation();
 
@@ -25,7 +25,8 @@ const RootLayout = () => {
         <div className='bg-background w-10 h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
           <ul className='w-full h-full flex flex-col justify-between gap-1 items-center '>
             {sideBarLinks.map((link: INavLink) => {
-              const isActive = pathname === link.route;
+              const route = link.route.replace(':userId', user?.id.toString() || '');
+              const isActive = pathname === route;
               return (
                 <li
                   className={`w-full h-full group first:rounded-t-md last:rounded-b-md ${
@@ -36,7 +37,7 @@ const RootLayout = () => {
                   key={link.label}
                 >
                   <NavLink
-                    to={link.route}
+                    to={route}
                     className='w-full h-full flex items-center justify-center  
                     '
                   >

@@ -1,7 +1,8 @@
 import type { INavLink } from '@/app/type';
-import { GoHome, GoSearch } from 'react-icons/go';
-import { IoMdAddCircleOutline } from 'react-icons/io';
 import { CgProfile } from 'react-icons/cg';
+import { GoHome } from 'react-icons/go';
+import { IoMdAddCircleOutline } from 'react-icons/io';
+import { MdOutlineExplore } from 'react-icons/md';
 
 export const sideBarLinks: INavLink[] = [
   {
@@ -12,16 +13,16 @@ export const sideBarLinks: INavLink[] = [
   {
     label: 'Explore',
     route: '/explore',
-    icon: GoSearch
+    icon: MdOutlineExplore
   },
-  {
-    label: 'Post',
-    route: '/create-post',
-    icon: IoMdAddCircleOutline
-  },
+  // {
+  //   label: 'Post',
+  //   route: '/post/:id',
+  //   icon: IoMdAddCircleOutline
+  // },
   {
     label: 'Profile',
-    route: '/profile',
+    route: '/profile/:userId',
     icon: CgProfile
   }
 ];

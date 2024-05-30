@@ -1,7 +1,7 @@
 type ProfileSectionProps = {
   likes?: string;
   bio: string;
-  id: number;
+  id: number | string;
   stat: number;
 };
 

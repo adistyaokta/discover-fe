@@ -11,6 +11,7 @@ export enum QUERY_KEYS {
 
   //Post Keys
   GET_POST = 'getPost',
+  GET_POST_DETAIL = 'getPostDetail',
   GET_INFINITE_POSTS = 'getInfinitePosts',
   GET_RECENT_POSTS = 'getRecentPosts',
   GET_POST_BY_ID = 'getPostById',
@@ -21,6 +22,7 @@ export enum QUERY_KEYS {
   GET_POSTS_BY_CREATOR = 'getPostsByCreator',
   GET_POSTS_BY_CREATOR_NAME = 'getPostsByCreatorName',
   GET_FILE_PREVIEW = 'getFilePreview',
+  GET_RANDOM_POSTS = 'getRandomPosts',
 
   //Search Keys
   SEARCH_POSTS = 'getSearchPosts'
