@@ -12,7 +12,7 @@ export const HomePage = () => {
     <div className='w-full h-full px-4 py-2 flex flex-row gap-1'>
       {/* <SearchComponent /> */}
       <div className='w-2/3 h-full flex flex-col gap-5'>
-        <div className='h-1/6'>
+        <div className='h-1/6 pr-5'>
           <PostForm />
         </div>
         <ScrollArea className='w-full h-full pr-5 scroll-smooth'>

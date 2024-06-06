@@ -53,7 +53,7 @@ export const PostForm = ({ post, label }: PostFormProps) => {
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full flex items-center gap-2 pr-5'>
+      <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full flex flex-row gap-2 items-center'>
         <FormField
           control={form.control}
           name='caption'
@@ -61,20 +61,23 @@ export const PostForm = ({ post, label }: PostFormProps) => {
             <FormItem className='flex-1'>
               {label && <FormLabel>Caption</FormLabel>}
               <FormControl>
-                <Textarea className='w-full max-h-32 h-32' placeholder='Share your moment...' {...field} />
+                <Textarea className='w-full max-h-32 h-20' placeholder='Share your moment...' {...field} />
               </FormControl>
+              <Button>aaa</Button>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button
-          type='submit'
-          variant={'default'}
-          className='flex w-20 justify-center items-center'
-          disabled={isLoadingCreate}
-        >
-          {isLoadingCreate ? <RiLoader5Fill className='animate-spin' /> : 'Send'}
-        </Button>
+        <div className='h-full '>
+          <Button
+            type='submit'
+            variant={'default'}
+            className='flex w-20 h-full max-h-full justify-center items-center'
+            disabled={isLoadingCreate}
+          >
+            {isLoadingCreate ? <RiLoader5Fill className='animate-spin' /> : 'Send'}
+          </Button>
+        </div>
       </form>
     </Form>
   );

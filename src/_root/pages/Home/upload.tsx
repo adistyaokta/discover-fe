@@ -30,7 +30,7 @@ const UploadImage = () => {
       console.log('Image uploaded successfully:', response.data);
       // Set the image URL in state to display it
       setImageUrl(response.data.filePath);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error uploading image:', error.response.data);
       // Handle error and display message to user
     }

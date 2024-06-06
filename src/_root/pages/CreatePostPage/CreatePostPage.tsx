@@ -1,4 +1,3 @@
-import { PostForm } from '@/components/forms/PostForm';
 import { PostDetail } from '@/components/shared/PostDetail';
 
 export const PostDetailPage = () => {

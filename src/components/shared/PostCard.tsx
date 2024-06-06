@@ -16,7 +16,7 @@ export const PostCard = ({ post }: PostCardProps) => {
   return (
     <Card className='w-full h-40 overflow-hidden flex flex-col gap-1'>
       <CardContent className='flex w-full min-h-12 items-center truncate py-3 flex-row gap-2 bg-secondary rounded-t-md '>
-        <Link to={`/profile/${author?.id}`} className='w-fit flex items-center gap-2 group'>
+        <Link to={`/profile/${post.authorId}`} className='w-fit flex items-center gap-2 group'>
           <Avatar>
             <AvatarImage />
             <AvatarFallback>{getInitials(author?.name || '')}</AvatarFallback>

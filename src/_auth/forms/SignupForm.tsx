@@ -6,12 +6,13 @@ import { useCreateAccount, useLoginAccount } from '@/lib/react-query/queriesAndM
 import { SignupValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
+import { motion } from 'framer-motion';
 
 export const SignupForm = () => {
   const { toast } = useToast();
-  const { mutateAsync: loginAccount } = useLoginAccount();
+  const { mutateAsync: loginAccount, isPending: loading } = useLoginAccount();
   const { mutateAsync: createAccount } = useCreateAccount();
 
   const navigate = useNavigate();
@@ -53,63 +54,83 @@ export const SignupForm = () => {
       toast({ title: error });
     }
   }
-  return (
-    <Form {...form}>
-      <div className='w-1/2 flex justify-center items-center flex-col'>
-        <span className='bg-primary p-2 rounded-lg text-white font-black'>DisMoment</span>
-        <h2 className='font-bold pt-3'>Create a new account</h2>
-        <p className='font-thin'>Enter your details and start capturing this moment.</p>
+  const { pathname } = useLocation();
 
-        <form onSubmit={form.handleSubmit(onSubmit)} className='flex flex-col gap-5 w-full mt-4'>
-          <FormField
-            control={form.control}
-            name='username'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>username</FormLabel>
-                <FormControl>
-                  <Input type='text' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='email'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Email</FormLabel>
-                <FormControl>
-                  <Input type='email' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name='password'
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type='password' {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <Button type='submit'>Signup</Button>
-          <p className='text-sm text-center font-thin'>
-            Already registered?
-            <Link to='/sign-in' className='font-bold'>
-              {' '}
-              Sign In
-            </Link>
-          </p>
-        </form>
-      </div>
-    </Form>
+  return (
+    <motion.div
+      key={pathname}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 1 }}
+      className='h-full'
+    >
+      <Form {...form}>
+        <div className='flex flex-row w-full h-full px-4 py-2'>
+          <motion.div
+            initial={{ opacity: 0, x: 10 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1, ease: 'easeOut' }}
+            key={pathname}
+            className='w-1/2 h-full flex flex-col items-center'
+          >
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full flex flex-col gap-5 px-2 py-3'>
+              <FormField
+                control={form.control}
+                name='username'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Username</FormLabel>
+                    <FormControl>
+                      <Input type='text' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='email'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Email</FormLabel>
+                    <FormControl>
+                      <Input type='email' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name='password'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Password</FormLabel>
+                    <FormControl>
+                      <Input type='password' {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className='flex-grow' />
+              <Button type='submit'>{loading ? 'Loading' : 'Sign Up'}</Button>
+            </form>
+          </motion.div>
+          <div className='w-1/2 flex items-center justify-center'>
+            <motion.p
+              className='font-bigshoulder w-full text-center text-9xl font-bold uppercase'
+              initial={{ opacity: 0, x: -100 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 1, ease: 'easeOut' }}
+              key={pathname}
+            >
+              Register
+            </motion.p>
+          </div>
+        </div>
+      </Form>
+    </motion.div>
   );
 };

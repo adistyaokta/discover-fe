@@ -43,7 +43,7 @@ export type IUser = {
 };
 
 export type INewPost = {
-  authorId: number | undefined;
+  authorId: string | number | undefined;
   caption: string;
   media?: string;
 };
