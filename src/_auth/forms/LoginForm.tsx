@@ -19,8 +19,8 @@ export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
     defaultValues: {
-      username: 'admin2',
-      password: 'admin2'
+      username: 'admin',
+      password: 'admin1'
     }
   });
 

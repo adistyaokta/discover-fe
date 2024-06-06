@@ -15,6 +15,14 @@ export type AuthResponse = {
   accessToken: string;
 };
 
+export type FileResponse = {
+  data: {
+    message: string;
+    filePath: string;
+    data: IFileImage;
+  };
+};
+
 export type INavLink = {
   imgURL?: string;
   route: string;
@@ -45,15 +53,23 @@ export type IUser = {
 export type INewPost = {
   authorId: string | number | undefined;
   caption: string;
-  media?: string;
+  media: string | null;
 };
 
 export type IPostData = {
   author: IUser;
   id: number;
   caption: string;
-  media: string;
+  media: string | null;
   createdAt: Date;
   updatedAt: Date;
   authorId: number;
+};
+
+export type IFileImage = {
+  createdAt: string;
+  filename: string;
+  id: number;
+  path: string;
+  updatedAt: string;
 };

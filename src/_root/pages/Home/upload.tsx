@@ -22,11 +22,14 @@ const UploadImage = () => {
     formData.append('image', file);
 
     try {
+      console.log(typeof formData);
+
       const response = await http.post('/images/upload', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+      console.log(response);
       console.log('Image uploaded successfully:', response.data);
       // Set the image URL in state to display it
       setImageUrl(response.data.filePath);

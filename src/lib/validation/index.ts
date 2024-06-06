@@ -12,5 +12,6 @@ export const LoginValidation = z.object({
 });
 
 export const CreatePostValidation = z.object({
-  caption: z.string().max(255)
+  caption: z.string().max(255),
+  media: z.string().optional()
 });

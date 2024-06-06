@@ -9,7 +9,8 @@ import {
   getRandomPosts,
   getRecentPosts,
   getUserDetail,
-  signInAccount
+  signInAccount,
+  uploadImage
 } from '../api';
 import { QUERY_KEYS } from './queryKeys';
 
@@ -84,5 +85,17 @@ export const useGetPostDetail = (id: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_POST_DETAIL],
     queryFn: () => getPostDetail(id)
+  });
+};
+
+export const useUploadImage = () => {
+  return useMutation({
+    mutationFn: (image: File) => uploadImage(image),
+    onError: (error: Error) => {
+      return error;
+    },
+    onSuccess: (data) => {
+      return data;
+    }
   });
 };
