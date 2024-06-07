@@ -14,7 +14,7 @@ export const PostCard = ({ post }: PostCardProps) => {
   const { author } = post;
 
   return (
-    <Card className='w-full h-40 overflow-hidden flex flex-col gap-1'>
+    <Card className={`w-full overflow-hidden flex flex-col gap-1 ${post.media ? 'h-fit' : 'h-40'}`}>
       <CardContent className='flex w-full min-h-12 items-center truncate py-3 flex-row gap-2 bg-secondary rounded-t-md '>
         <Link to={`/profile/${post.authorId}`} className='w-fit flex items-center gap-2 group'>
           <Avatar>
@@ -26,12 +26,18 @@ export const PostCard = ({ post }: PostCardProps) => {
         </Link>
         <p>• {multiFormatDateString(post.createdAt.toString())}</p>
       </CardContent>
-      <Link to={`/post/${post.id}`} className='h-full'>
-        <CardFooter className='flex-1 py-2 h-full text-pretty items-start overflow-hidden'>
+
+      <Link to={`/post/${post.id}`} className='h-full w-full flex'>
+        <CardFooter className='flex-1 w-3/4 h-full text-pretty items-start overflow-hidden'>
           <div className='h-full overflow-hidden'>
             <ScrollArea className='h-full overflow-y-auto'>{post.caption}</ScrollArea>
           </div>
         </CardFooter>
+        {post.media && (
+          <div className='w-1/4 h-full flex justify-center bg-secondary'>
+            <img alt='image-prev' className='w-60 aspect-square justify-end' src={post.media} />
+          </div>
+        )}
       </Link>
     </Card>
   );

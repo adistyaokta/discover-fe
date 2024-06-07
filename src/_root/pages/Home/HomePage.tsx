@@ -22,9 +22,7 @@ export const HomePage = () => {
           </div>
         </ScrollArea>
       </div>
-      <div className='w-1/3 border border-input border-y-0 border-r-0'>
-        <UploadImage />
-      </div>
+      <div className='w-1/3 border border-input border-y-0 border-r-0'>{/* <UploadImage /> */}</div>
     </div>
   );
 };

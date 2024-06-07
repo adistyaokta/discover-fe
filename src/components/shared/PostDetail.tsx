@@ -9,7 +9,7 @@ export const PostDetail = () => {
   const { data: post } = useGetPostDetail(parseInt(id!));
 
   return (
-    <div className='w-full h-full flex flex-col'>
+    <div className='w-full h-full overflow-hidden flex flex-col'>
       <div className='w-full min-h-14 flex flex-row gap-2 items-center px-3'>
         <Link to={-1 as unknown as string}>
           <FaArrowLeft
@@ -29,8 +29,8 @@ export const PostDetail = () => {
         <p>• {multiFormatDateString(post?.createdAt.toString() || '')}</p>
       </Link>
       {post?.media && (
-        <div className='py-4  flex items-center justify-center'>
-          <img src='https://placehold.co/500x500' alt='placeholder-image' className='rounded-sm' />
+        <div className='w-full h-full flex justify-center py-2'>
+          <img alt='image-prev' className='w-1/2 object-cover' src={post.media} />
         </div>
       )}
       <div className='px-2 py-3 w-full min-h-44 flex flex-col justify-between'>
