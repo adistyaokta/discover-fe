@@ -71,6 +71,10 @@ export const useHttpPut = async <T>(endpoint: string, body?: any) => {
   return http.put<any, BaseResponse<T>>(endpoint, body);
 };
 
+export const useHttpPatch = async <T>(endpoint: string, body?: any) => {
+  return http.patch<any, BaseResponse<T>>(endpoint, body);
+};
+
 export const useHttpDelete = async <T>(endpoint: string) => {
   return http.delete<any, BaseResponse<T>>(endpoint);
 };

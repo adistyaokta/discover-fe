@@ -42,7 +42,7 @@ export const PostForm = ({ post, label }: PostFormProps) => {
     try {
       let mediaFilePath = null;
       if (imagePreview) {
-        const uploadedMedia = await uploadImage(imagePreview);
+        const uploadedMedia = await uploadImage({ image: imagePreview, folder: 'posts' });
         mediaFilePath = uploadedMedia.filePath;
       }
 

@@ -41,6 +41,11 @@ export type ICreateUserParam = {
   password: string;
 };
 
+export type IUpdateProfileParam = {
+  id: string | number;
+  user: IUser;
+};
+
 export type IUser = {
   id: number | string;
   username: string;
@@ -48,12 +53,18 @@ export type IUser = {
   password: string;
   name: string;
   bio?: string;
+  avaUrl?: string;
 };
 
 export type INewPost = {
   authorId: string | number | undefined;
   caption: string;
   media: string | null;
+};
+
+export type IPostImage = {
+  image: File;
+  folder: string;
 };
 
 export type IPostData = {

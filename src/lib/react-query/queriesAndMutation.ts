@@ -1,9 +1,10 @@
 import { useAuthStore } from '@/app/store/authStore';
-import type { ICreateUserParam, ILoginParam, INewPost } from '@/app/type';
+import type { ICreateUserParam, ILoginParam, INewPost, IPostImage, IUpdateProfileParam, IUser } from '@/app/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createAccount,
   createPost,
+  editUser,
   getPostByAuthor,
   getPostDetail,
   getRandomPosts,
@@ -90,12 +91,28 @@ export const useGetPostDetail = (id: number) => {
 
 export const useUploadImage = () => {
   return useMutation({
-    mutationFn: (image: File) => uploadImage(image),
+    mutationFn: ({ image, folder }: IPostImage) => uploadImage(image, folder),
     onError: (error: Error) => {
       return error;
     },
     onSuccess: (data) => {
       return data;
+    }
+  });
+};
+
+export const useEditUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: editUser,
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER]
+      });
+    },
+    onError: (error: Error) => {
+      console.error('Error editing user:', error);
     }
   });
 };

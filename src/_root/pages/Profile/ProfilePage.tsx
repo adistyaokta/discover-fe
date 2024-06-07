@@ -14,7 +14,7 @@ export const ProfilePage = () => {
   return (
     <div className='w-full h-full overflow-hidden flex flex-col px-4 py-2'>
       <div className='h-1/3'>
-        <HeroProfile name={user?.name || ''} username={user?.username || ''} />
+        <HeroProfile user={user!} />
       </div>
       <div className='h-1/12'>
         <ProfileSection bio={user?.bio || ''} id={userId!} stat={posts?.length!} />

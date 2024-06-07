@@ -1,5 +1,5 @@
-import { useHttpGet } from '@/app/http';
-import type { IUser } from '@/app/type';
+import { useHttpGet, useHttpPatch, useHttpPost, useHttpPut } from '@/app/http';
+import type { IUpdateProfileParam, IUser } from '@/app/type';
 
 export async function getUserDetail(id: number) {
   try {
@@ -7,5 +7,14 @@ export async function getUserDetail(id: number) {
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get post by author');
+  }
+}
+
+export async function editUser({ id, user: updatedUser }: IUpdateProfileParam) {
+  try {
+    const response = await useHttpPatch(`/users/${id}`, updatedUser);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Unable to edit user');
   }
 }
