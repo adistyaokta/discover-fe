@@ -19,8 +19,8 @@ export const LoginForm = () => {
   const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
     defaultValues: {
-      username: 'admin',
-      password: 'admin1'
+      username: 'admin2',
+      password: 'admin2'
     }
   });
 
@@ -28,6 +28,7 @@ export const LoginForm = () => {
     try {
       const session = await loginAccount({ username: values.username, password: values.password });
 
+      console.log(session);
       if (!session) return;
 
       if (session) {

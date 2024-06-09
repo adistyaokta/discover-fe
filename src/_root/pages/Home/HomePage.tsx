@@ -3,7 +3,6 @@ import { PostForm } from '@/components/forms/PostForm';
 import { PostCard } from '@/components/shared/PostCard';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGetRecentPost } from '@/lib/react-query/queriesAndMutation';
-import UploadImage from './upload';
 
 export const HomePage = () => {
   const { data: posts } = useGetRecentPost();

@@ -19,12 +19,15 @@ export const ProfilePage = () => {
       <div className='h-1/12'>
         <ProfileSection bio={user?.bio || ''} id={userId!} stat={posts?.length!} />
       </div>
-      <ScrollArea scrollHideDelay={300} className='w-full h-full scroll-smooth py-2 '>
-        <div className='grid grid-cols-2 gap-2 '>
-          {posts?.map((post: IPostData) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+      <ScrollArea
+        scrollHideDelay={300}
+        className='w-1/2 mx-auto h-full flex flex-col justify-center scroll-smooth py-1 px-5 '
+      >
+        {posts?.map((post: IPostData, index: number) => (
+          <div key={post.id} className={index !== 0 ? 'mt-2' : ''}>
+            <PostCard post={post} />
+          </div>
+        ))}
       </ScrollArea>
     </div>
   );

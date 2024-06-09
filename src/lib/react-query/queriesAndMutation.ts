@@ -14,6 +14,7 @@ import {
   uploadImage
 } from '../api';
 import { QUERY_KEYS } from './queryKeys';
+import { toast } from '@/components/ui/use-toast';
 
 export const useLoginAccount = () => {
   const { login } = useAuthStore();
@@ -105,14 +106,20 @@ export const useEditUser = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: editUser,
-    onSuccess: () => {
+    mutationFn: (param: IUpdateProfileParam) => editUser(param),
+    onSuccess: (data) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER]
       });
+
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
+      });
+
+      return data;
     },
-    onError: (error: Error) => {
-      console.error('Error editing user:', error);
+    onError: (error: any) => {
+      return error;
     }
   });
 };

@@ -1,5 +1,5 @@
-import { useHttpPost, useHttpPostFile } from '@/app/http';
-import type { AuthResponse, FileResponse } from '@/app/type';
+import { useHttpPost } from '@/app/http';
+import type { AuthResponse } from '@/app/type';
 
 export async function signInAccount(username: string, password: string) {
   try {

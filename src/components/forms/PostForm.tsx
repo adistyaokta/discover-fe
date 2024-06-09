@@ -80,7 +80,11 @@ export const PostForm = ({ post, label }: PostFormProps) => {
             <FormItem className='relative w-full'>
               {label && <FormLabel>Caption</FormLabel>}
               <FormControl>
-                <Textarea className='w-full h-28 max-h-28' placeholder='Share your moment...' {...field} />
+                <Textarea
+                  className={`w-full h-28 max-h-28  ${imagePreview ? 'w-5/6' : ''}`}
+                  placeholder='Share your moment...'
+                  {...field}
+                />
               </FormControl>
               {imagePreview && (
                 <div className='absolute -top-2 right-0 max-w-40 w-full h-full group'>

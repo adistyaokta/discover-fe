@@ -28,7 +28,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const { mutateAsync: uploadAva } = useUploadImage();
-  const { mutate: updateProfile } = useEditUser();
+  const { mutate: updateProfile, error: updateError } = useEditUser();
   const form = useForm<z.infer<typeof UpdateProfileValidation>>({
     resolver: zodResolver(UpdateProfileValidation),
     defaultValues: {
@@ -39,6 +39,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       name: user?.name || ''
     }
   });
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     form.reset({
@@ -51,28 +52,37 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   }, [user]);
 
   async function onSubmit(values: z.infer<typeof UpdateProfileValidation>) {
-    try {
-      let mediaFilePath = null;
-      if (imagePreview) {
-        const uploadedAva = await uploadAva({ image: imagePreview, folder: 'ava' });
-        mediaFilePath = uploadedAva.filePath;
-      }
-
-      const updatedUserData = {
-        id: user?.id,
-        user: {
-          username: values.username,
-          email: values.email,
-          bio: values.bio,
-          avaUrl: mediaFilePath || ''
-        }
-      };
-
-      console.log(updatedUserData);
-      const update = await updateProfile(updatedUserData);
-    } catch (error) {
-      console.error('Error updating user profile:', error);
+    let mediaFilePath = null;
+    if (imagePreview) {
+      const uploadedAva = await uploadAva({ image: imagePreview, folder: 'ava' });
+      mediaFilePath = uploadedAva.filePath;
     }
+
+    const updatedUserData = {
+      id: user?.id,
+      user: {
+        username: values.username,
+        email: values.email,
+        bio: values.bio,
+        avaUrl: mediaFilePath || '',
+        name: values.name
+      }
+    };
+
+    try {
+      await updateProfile(updatedUserData);
+    } catch (error) {
+      toast({ title: updateError });
+    }
+
+    // if (updateError) {
+
+    //   return;
+    // }
+
+    setDialogOpen(false);
+
+    return;
   }
 
   return (
@@ -89,7 +99,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       </div>
       {validUser && (
         <div className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center group'>
-          <Dialog>
+          <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger>
               <IoSettingsOutline size={20} />
             </DialogTrigger>
