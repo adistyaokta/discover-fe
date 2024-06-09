@@ -43,7 +43,7 @@ export type ICreateUserParam = {
 
 export type IUpdateProfileParam = {
   id: string | number;
-  user: IUser;
+  user: Partial<IUser>;
 };
 
 export type IUser = {

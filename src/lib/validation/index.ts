@@ -15,7 +15,8 @@ export const UpdateProfileValidation = z.object({
   username: z.string().min(5, { message: 'Username cannot be less than 5 characters' }),
   email: z.string().email(),
   bio: z.string(),
-  avaUrl: z.string()
+  avaUrl: z.string(),
+  name: z.string()
 });
 
 export const CreatePostValidation = z.object({

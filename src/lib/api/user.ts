@@ -1,4 +1,4 @@
-import { useHttpGet, useHttpPatch, useHttpPost, useHttpPut } from '@/app/http';
+import { useHttpGet, useHttpPatch } from '@/app/http';
 import type { IUpdateProfileParam, IUser } from '@/app/type';
 
 export async function getUserDetail(id: number) {

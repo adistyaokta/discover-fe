@@ -35,7 +35,7 @@ export const PostCard = ({ post }: PostCardProps) => {
         </CardFooter>
         {post.media && (
           <div className='w-1/4 h-full flex justify-center bg-secondary'>
-            <img alt='image-prev' className='w-60 aspect-square justify-end' src={post.media} />
+            <img alt='image-prev' className='w-60' src={post.media} />
           </div>
         )}
       </Link>

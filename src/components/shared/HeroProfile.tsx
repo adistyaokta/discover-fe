@@ -12,7 +12,7 @@ import { useToast } from '../ui/use-toast';
 import { useEditUser, useUploadImage } from '@/lib/react-query/queriesAndMutation';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import type { z } from 'zod';
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
@@ -29,16 +29,26 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const { mutateAsync: uploadAva } = useUploadImage();
   const { mutate: updateProfile } = useEditUser();
-
   const form = useForm<z.infer<typeof UpdateProfileValidation>>({
     resolver: zodResolver(UpdateProfileValidation),
     defaultValues: {
       username: user?.username || '',
       email: user?.email || '',
       bio: user?.bio || '',
-      avaUrl: user?.avaUrl || ''
+      avaUrl: user?.avaUrl || '',
+      name: user?.name || ''
     }
   });
+
+  useEffect(() => {
+    form.reset({
+      username: user?.username || '',
+      email: user?.email || '',
+      bio: user?.bio || '',
+      avaUrl: user?.avaUrl || '',
+      name: user?.name || ''
+    });
+  }, [user]);
 
   async function onSubmit(values: z.infer<typeof UpdateProfileValidation>) {
     try {
@@ -51,13 +61,15 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       const updatedUserData = {
         id: user?.id,
         user: {
-          ...user
+          username: values.username,
+          email: values.email,
+          bio: values.bio,
+          avaUrl: mediaFilePath || ''
         }
       };
 
-      const up = await updateProfile(updatedUserData);
-
-      console.log('User profile updated successfully:', up);
+      console.log(updatedUserData);
+      const update = await updateProfile(updatedUserData);
     } catch (error) {
       console.error('Error updating user profile:', error);
     }
@@ -74,7 +86,6 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
           </Avatar>
           <p className='text-lg'>@{user?.username || ''}</p>
         </div>
-        {/* <Button variant={'outline'}>Edit Profile</Button> */}
       </div>
       {validUser && (
         <div className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center group'>
@@ -109,6 +120,19 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
                         <FormLabel>Email</FormLabel>
                         <FormControl>
                           <Input type='email' {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name='name'
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Name</FormLabel>
+                        <FormControl>
+                          <Input type='text' {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
