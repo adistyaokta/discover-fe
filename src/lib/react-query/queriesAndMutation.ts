@@ -1,20 +1,28 @@
 import { useAuthStore } from '@/app/store/authStore';
-import type { ICreateUserParam, ILoginParam, INewPost, IPostImage, IUpdateProfileParam, IUser } from '@/app/type';
+import type {
+  ICreateUserParam,
+  ILoginParam,
+  INewPost,
+  IPostImage,
+  IUpdatePostParam,
+  IUpdateProfileParam
+} from '@/app/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createAccount,
   createPost,
+  deletePost,
+  // editPost,
   editUser,
   getPostByAuthor,
   getPostDetail,
-  getRandomPosts,
+  // getRandomPosts,
   getRecentPosts,
   getUserDetail,
   signInAccount,
   uploadImage
 } from '../api';
 import { QUERY_KEYS } from './queryKeys';
-import { toast } from '@/components/ui/use-toast';
 
 export const useLoginAccount = () => {
   const { login } = useAuthStore();
@@ -75,18 +83,48 @@ export const useGetPostByAuthor = (authorId: number) => {
   });
 };
 
-export const useGetRandomPosts = (count: number) => {
-  return useQuery({
-    refetchInterval: 30000,
-    queryKey: [QUERY_KEYS.GET_RANDOM_POSTS],
-    queryFn: () => getRandomPosts(count)
-  });
-};
+// export const useGetRandomPosts = (count: number) => {
+//   return useQuery({
+//     refetchInterval: 30000,
+//     queryKey: [QUERY_KEYS.GET_RANDOM_POSTS],
+//     queryFn: () => getRandomPosts(count)
+//   });
+// };
 
 export const useGetPostDetail = (id: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_POST_DETAIL],
     queryFn: () => getPostDetail(id)
+  });
+};
+
+// export const useEditPost = () => {
+//   const queryClient = useQueryClient();
+
+//   return useMutation({
+//     mutationFn: (param: IUpdatePostParam) => editPost(param),
+//     onSuccess: (data) => {
+//       return data;
+//     },
+//     onError: (data) => {
+//       return data;
+//     }
+//   });
+// };
+
+export const useDeletePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (id: number | string) => deletePost(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+    },
+    onError: (data) => {
+      return data;
+    }
   });
 };
 

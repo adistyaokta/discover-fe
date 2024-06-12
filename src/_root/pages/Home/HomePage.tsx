@@ -1,6 +1,6 @@
 import type { IPostData } from '@/app/type';
 import { PostForm } from '@/components/forms/PostForm';
-import { PostCard } from '@/components/shared/PostCard';
+import { PostCard, SearchComponent } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGetRecentPost } from '@/lib/react-query/queriesAndMutation';
 
@@ -21,7 +21,9 @@ export const HomePage = () => {
           </div>
         </ScrollArea>
       </div>
-      <div className='w-1/3 border border-input border-y-0 border-r-0'>{/* <UploadImage /> */}</div>
+      <div className='w-1/3 py-2 border border-input border-y-0 border-r-0'>
+        <SearchComponent />
+      </div>
     </div>
   );
 };

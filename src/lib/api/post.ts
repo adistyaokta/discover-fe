@@ -1,5 +1,5 @@
-import { useHttpGet, useHttpPost, useHttpPostFile } from '@/app/http';
-import type { IPostData, INewPost } from '@/app/type';
+import { useHttpDelete, useHttpGet, useHttpPatch, useHttpPost, useHttpPostFile } from '@/app/http';
+import type { IPostData, INewPost, IUpdatePostParam } from '@/app/type';
 
 export async function getRecentPosts() {
   try {
@@ -29,14 +29,14 @@ export async function getPostByAuthor(authorId: number) {
   }
 }
 
-export async function getRandomPosts(count: number) {
-  try {
-    const response = await useHttpGet<IPostData[]>(`/posts/random/${count}`);
-    return response.data;
-  } catch (error: any) {
-    return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
-  }
-}
+// export async function getRandomPosts(count: number) {
+//   try {
+//     const response = await useHttpGet<IPostData[]>(`/posts/random/${count}`);
+//     return response.data;
+//   } catch (error: any) {
+//     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
+//   }
+// }
 
 export async function getPostDetail(id: number) {
   try {
@@ -44,5 +44,14 @@ export async function getPostDetail(id: number) {
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get post detail');
+  }
+}
+
+export async function deletePost(id: string | number) {
+  try {
+    const response = await useHttpDelete<IPostData>(`/posts/${id}`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response.data.message);
   }
 }

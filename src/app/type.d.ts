@@ -46,6 +46,11 @@ export type IUpdateProfileParam = {
   user: Partial<IUser>;
 };
 
+export type IUpdatePostParam = {
+  id: string | number;
+  post: Partial<IPostData>;
+};
+
 export type IUser = {
   id: number | string;
   username: string;

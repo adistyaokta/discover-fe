@@ -28,7 +28,8 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const { mutateAsync: uploadAva } = useUploadImage();
-  const { mutate: updateProfile, error: updateError } = useEditUser();
+  const { mutateAsync: updateProfile } = useEditUser();
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof UpdateProfileValidation>>({
     resolver: zodResolver(UpdateProfileValidation),
     defaultValues: {
@@ -39,7 +40,6 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       name: user?.name || ''
     }
   });
-  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   useEffect(() => {
     form.reset({
@@ -71,16 +71,12 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
 
     try {
       await updateProfile(updatedUserData);
-    } catch (error) {
-      toast({ title: updateError });
+      toast({ title: 'User updated successfully' });
+      setDialogOpen(false);
+    } catch (error: any) {
+      setDialogOpen(true);
+      toast({ title: error });
     }
-
-    // if (updateError) {
-
-    //   return;
-    // }
-
-    setDialogOpen(false);
 
     return;
   }
@@ -91,7 +87,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       <div className='w-full  flex flex-row justify-between items-center p-2'>
         <div className='flex items-center gap-2'>
           <Avatar>
-            <AvatarImage />
+            <AvatarImage src={user?.avaUrl || ''} />
             <AvatarFallback>{getInitials(user?.name || '')}</AvatarFallback>
           </Avatar>
           <p className='text-lg'>@{user?.username || ''}</p>

@@ -28,7 +28,6 @@ export const LoginForm = () => {
     try {
       const session = await loginAccount({ username: values.username, password: values.password });
 
-      console.log(session);
       if (!session) return;
 
       if (session) {
