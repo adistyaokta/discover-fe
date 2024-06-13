@@ -1,12 +1,5 @@
 import { useAuthStore } from '@/app/store/authStore';
-import type {
-  ICreateUserParam,
-  ILoginParam,
-  INewPost,
-  IPostImage,
-  IUpdatePostParam,
-  IUpdateProfileParam
-} from '@/app/type';
+import type { ICreateUserParam, ILoginParam, INewPost, IPostImage, IUpdateProfileParam } from '@/app/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   createAccount,
@@ -19,6 +12,8 @@ import {
   // getRandomPosts,
   getRecentPosts,
   getUserDetail,
+  likeUnlikePost,
+  searchPosts,
   signInAccount,
   uploadImage
 } from '../api';
@@ -98,6 +93,14 @@ export const useGetPostDetail = (id: number) => {
   });
 };
 
+export const useSearchPosts = (searchTerm: string) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.SEARCH_POSTS, searchTerm],
+    queryFn: () => searchPosts(searchTerm),
+    enabled: !!searchTerm
+  });
+};
+
 // export const useEditPost = () => {
 //   const queryClient = useQueryClient();
 
@@ -117,6 +120,22 @@ export const useDeletePost = () => {
 
   return useMutation({
     mutationFn: (id: number | string) => deletePost(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+    },
+    onError: (data) => {
+      return data;
+    }
+  });
+};
+
+export const useLikeUnlikePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (postId: number) => likeUnlikePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]

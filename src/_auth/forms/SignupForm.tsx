@@ -115,7 +115,9 @@ export const SignupForm = () => {
                 )}
               />
               <div className='flex-grow' />
-              <Button type='submit'>{loading ? 'Loading' : 'Sign Up'}</Button>
+              <Button type='submit' className='w-1/2 mx-auto'>
+                {loading ? 'Loading' : 'Sign Up'}
+              </Button>
             </form>
           </motion.div>
           <div className='w-1/2 flex items-center justify-center'>

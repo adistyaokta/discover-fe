@@ -14,6 +14,7 @@ export enum QUERY_KEYS {
   GET_POST_DETAIL = 'getPostDetail',
   GET_INFINITE_POSTS = 'getInfinitePosts',
   GET_RECENT_POSTS = 'getRecentPosts',
+  GET_SEARCH_RESULT_POSTS = 'getSearchPosts',
   GET_POST_BY_ID = 'getPostById',
   GET_POSTS_BY_USER = 'getPostsByUser',
   GET_POSTS_BY_TAG = 'getPostsByTag',

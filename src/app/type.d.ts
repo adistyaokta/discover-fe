@@ -80,6 +80,12 @@ export type IPostData = {
   createdAt: Date;
   updatedAt: Date;
   authorId: number;
+  likedBy: number[];
+};
+
+export type ILikePost = {
+  statusCode: string;
+  message: string;
 };
 
 export type IFileImage = {

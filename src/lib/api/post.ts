@@ -1,5 +1,5 @@
-import { useHttpDelete, useHttpGet, useHttpPatch, useHttpPost, useHttpPostFile } from '@/app/http';
-import type { IPostData, INewPost, IUpdatePostParam } from '@/app/type';
+import { useHttpDelete, useHttpGet, useHttpPost } from '@/app/http';
+import type { ILikePost, INewPost, IPostData } from '@/app/type';
 
 export async function getRecentPosts() {
   try {
@@ -38,6 +38,17 @@ export async function getPostByAuthor(authorId: number) {
 //   }
 // }
 
+export async function searchPosts(s: string) {
+  try {
+    const response = await useHttpGet<IPostData[]>('/posts/trending', {
+      s
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getPostDetail(id: number) {
   try {
     const response = await useHttpGet<IPostData>(`/posts/${id}`);
@@ -50,6 +61,15 @@ export async function getPostDetail(id: number) {
 export async function deletePost(id: string | number) {
   try {
     const response = await useHttpDelete<IPostData>(`/posts/${id}`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response.data.message);
+  }
+}
+
+export async function likeUnlikePost(postId: number) {
+  try {
+    const response = await useHttpPost<ILikePost>(`/posts/${postId}/like`);
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response.data.message);
