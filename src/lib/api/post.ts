@@ -67,11 +67,20 @@ export async function deletePost(id: string | number) {
   }
 }
 
-export async function likeUnlikePost(postId: number) {
+export async function likePost(postId: number) {
   try {
     const response = await useHttpPost<ILikePost>(`/posts/${postId}/like`);
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response.data.message);
+  }
+}
+
+export async function unlikePost(postId: number) {
+  try {
+    const response = await useHttpDelete<ILikePost>(`/posts/${postId}/like`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response.data.massage);
   }
 }

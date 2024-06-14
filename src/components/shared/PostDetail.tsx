@@ -1,28 +1,30 @@
+import { useAuthStore } from '@/app/store';
 import { formatDateString, getInitials, multiFormatDateString } from '@/app/utils/utils';
-import { useDeletePost, useGetPostDetail } from '@/lib/react-query/queriesAndMutation';
-import { FaArrowLeft } from 'react-icons/fa6';
+import { useDeletePost, useGetPostDetail, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
+import { FaArrowLeft, FaHeart, FaRegComment, FaRetweet } from 'react-icons/fa6';
+import { LuMenuSquare } from 'react-icons/lu';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger
-} from '../ui/dropdown-menu';
-import { LuMenuSquare } from 'react-icons/lu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useToast } from '../ui/use-toast';
-import { useAuthStore } from '@/app/store';
+import { Button } from '../ui/button';
+import { FaRegHeart } from 'react-icons/fa';
 
 export const PostDetail = () => {
   const { id } = useParams();
   const { data: post } = useGetPostDetail(parseInt(id!));
+  const { user } = useAuthStore();
   const { mutateAsync: deletePost } = useDeletePost();
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user: isUser } = useAuthStore();
   const validUser = isUser?.id === post?.author.id;
+  const { mutateAsync: updateLike } = useLikePost();
+  const { mutateAsync: deleteLike } = useUnlikePost();
+
+  console.log(post);
+
+  const userHasLiked = post?.likedBy.some((likedUser: any) => likedUser.id === user?.id);
 
   const handleDeletePost = async (id: string) => {
     try {
@@ -38,6 +40,20 @@ export const PostDetail = () => {
       toast({ title: error });
     }
   };
+
+  async function handleLikePost(postId: number) {
+    try {
+      if (userHasLiked) {
+        const unlikeResponse = await deleteLike(postId);
+        return unlikeResponse;
+      }
+      const likeResponse = await updateLike(postId);
+
+      return likeResponse;
+    } catch (error: any) {
+      toast({ title: error });
+    }
+  }
 
   return (
     <div className='w-full h-full overflow-hidden flex flex-col'>
@@ -60,6 +76,7 @@ export const PostDetail = () => {
           <p className='text-secondary-foreground'>@{post?.author?.username}</p>
           <p>• {multiFormatDateString(post?.createdAt.toString() || '')}</p>
         </Link>
+
         {validUser && (
           <div className='pr-3'>
             <DropdownMenu>
@@ -73,16 +90,28 @@ export const PostDetail = () => {
           </div>
         )}
       </div>
+      <div className='px-2 py-3 w-full flex flex-col justify-between'>
+        <p>{post?.caption}</p>
+      </div>
       {post?.media && (
-        <div className='w-full h-full flex justify-center py-2'>
-          <img alt='image-prev' className='w-1/2 object-cover' src={post.media} />
+        <div className='w-full h-1/2 flex justify-center py-2'>
+          <img alt='image-prev' className='w-1/2 object-cover rounded-3xl' src={post.media} />
         </div>
       )}
-      <div className='px-2 py-3 w-full min-h-44 flex flex-col justify-between'>
-        <p>{post?.caption}</p>
-        <p className='self-end'>{formatDateString(post?.createdAt.toString()!)}</p>
+      <p className='self-end px-2'>{formatDateString(post?.createdAt.toString()!)}</p>
+
+      <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
+        <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id!)}>
+          {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+          {post?.likedBy.length}
+        </Button>
+        <Button className='px-2' variant={'ghost'}>
+          <FaRetweet size={23} />
+        </Button>
+        <Button className='px-2' variant={'ghost'}>
+          <FaRegComment size={20} />
+        </Button>
       </div>
-      <div className='w-full min-h-20 border border-input px-3 border-x-0' />
     </div>
   );
 };

@@ -12,9 +12,10 @@ import {
   // getRandomPosts,
   getRecentPosts,
   getUserDetail,
-  likeUnlikePost,
+  likePost,
   searchPosts,
   signInAccount,
+  unlikePost,
   uploadImage
 } from '../api';
 import { QUERY_KEYS } from './queryKeys';
@@ -131,14 +132,48 @@ export const useDeletePost = () => {
   });
 };
 
-export const useLikeUnlikePost = () => {
+export const useLikePost = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (postId: number) => likeUnlikePost(postId),
+    mutationFn: (postId: number) => likePost(postId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DETAIL]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
+      });
+    },
+    onError: (data) => {
+      return data;
+    }
+  });
+};
+
+export const useUnlikePost = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (postId: number) => unlikePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DETAIL]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
       });
     },
     onError: (data) => {

@@ -11,6 +11,8 @@ export const ProfilePage = () => {
   const { data: user } = useGetUserDetail(parseInt(userId!));
   const { data: posts } = useGetPostByAuthor(parseInt(userId!));
 
+  console.log(posts);
+
   return (
     <div className='w-full h-full overflow-hidden flex flex-col px-4 py-2'>
       <div className='h-1/3'>
