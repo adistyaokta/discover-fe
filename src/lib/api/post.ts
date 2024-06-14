@@ -85,6 +85,16 @@ export async function unlikePost(postId: number) {
   }
 }
 
+export async function getComment(postId: number) {
+  try {
+    const response = await useHttpGet(`/posts/${postId}/comments`);
+    console.log(response);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
+  }
+}
+
 export async function commentPost(postId: number, content: string) {
   try {
     const response = await useHttpPost(`/posts/${postId}/comments`, { content });

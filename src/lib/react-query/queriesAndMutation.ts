@@ -8,6 +8,7 @@ import {
   deletePost,
   // editPost,
   editUser,
+  getComment,
   getPostByAuthor,
   getPostDetail,
   // getRandomPosts,
@@ -205,6 +206,13 @@ export const useAddComment = () => {
     onError: (data) => {
       return data;
     }
+  });
+};
+
+export const useGetComment = (id: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_DETAIL],
+    queryFn: () => getComment(id)
   });
 };
 

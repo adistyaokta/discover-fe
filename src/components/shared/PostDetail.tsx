@@ -33,8 +33,8 @@ export const PostDetail = () => {
 
   const [comment, setComment] = useState<string>('');
 
-  const userHasLiked = post?.likedBy.some((likedUser: any) => likedUser.id === user?.id);
-  const userHasCommented = post?.comments.some((comment: any) => comment.author.id === user?.id);
+  const userHasLiked = post?.likedBy?.some((likedUser: any) => likedUser.id === user?.id);
+  const userHasCommented = post?.comments?.some((comment: any) => comment.author.id === user?.id);
 
   const handleDeletePost = async (id: string) => {
     try {
