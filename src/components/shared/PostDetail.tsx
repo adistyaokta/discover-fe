@@ -1,6 +1,12 @@
 import { useAuthStore } from '@/app/store';
 import { formatDateString, getInitials, multiFormatDateString } from '@/app/utils/utils';
-import { useDeletePost, useGetPostDetail, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
+import {
+  useAddComment,
+  useDeletePost,
+  useGetPostDetail,
+  useLikePost,
+  useUnlikePost
+} from '@/lib/react-query/queriesAndMutation';
 import { FaArrowLeft, FaHeart, FaRegComment, FaRetweet } from 'react-icons/fa6';
 import { LuMenuSquare } from 'react-icons/lu';
 import { Link, useNavigate, useParams } from 'react-router-dom';
@@ -8,7 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { useToast } from '../ui/use-toast';
 import { Button } from '../ui/button';
-import { FaRegHeart } from 'react-icons/fa';
+import { FaComment, FaRegHeart } from 'react-icons/fa';
+import { Textarea } from '../ui/textarea';
+import { useState } from 'react';
 
 export const PostDetail = () => {
   const { id } = useParams();
@@ -18,13 +26,15 @@ export const PostDetail = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const { user: isUser } = useAuthStore();
-  const validUser = isUser?.id === post?.author.id;
+  const validUser = isUser?.id === user?.id;
   const { mutateAsync: updateLike } = useLikePost();
   const { mutateAsync: deleteLike } = useUnlikePost();
+  const { mutateAsync: addComment } = useAddComment();
 
-  console.log(post);
+  const [comment, setComment] = useState<string>('');
 
   const userHasLiked = post?.likedBy.some((likedUser: any) => likedUser.id === user?.id);
+  const userHasCommented = post?.comments.some((comment: any) => comment.author.id === user?.id);
 
   const handleDeletePost = async (id: string) => {
     try {
@@ -51,6 +61,18 @@ export const PostDetail = () => {
 
       return likeResponse;
     } catch (error: any) {
+      toast({ title: error });
+    }
+  }
+
+  async function handleAddComment(postId: number) {
+    try {
+      if (!comment) return;
+      const sendComment = await addComment({ postId, content: comment });
+      console.log(sendComment);
+      return sendComment;
+    } catch (error: any) {
+      console.log(error);
       toast({ title: error });
     }
   }
@@ -108,8 +130,32 @@ export const PostDetail = () => {
         <Button className='px-2' variant={'ghost'}>
           <FaRetweet size={23} />
         </Button>
-        <Button className='px-2' variant={'ghost'}>
-          <FaRegComment size={20} />
+        <Button className='px-2 flex gap-2' variant={'ghost'}>
+          {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
+          {post?.comments.length}
+        </Button>
+      </div>
+
+      <div className='w-full min-h-52 h-32 flex flex-col items-center justify-center px-2 py-1 gap-2'>
+        <div className='self-start w-full'>
+          <Link to={`/profile/${user?.id}`} className='w-5/6 py-2 px-1  flex items-center gap-2 group'>
+            <Avatar>
+              <AvatarImage src={user?.avaUrl} />
+              <AvatarFallback>{getInitials(user?.name || '')}</AvatarFallback>
+            </Avatar>
+            <p className='font-bold group-hover:underline'>{user?.name}</p>
+            <p className='text-secondary-foreground'>@{user?.username}</p>
+          </Link>
+        </div>
+        <Textarea
+          className='h-full'
+          onBlur={(e) => {
+            const { value } = e.target;
+            setComment(value);
+          }}
+        />
+        <Button className='w-full' onClick={() => handleAddComment(post?.id!)}>
+          COMMENT
         </Button>
       </div>
     </div>

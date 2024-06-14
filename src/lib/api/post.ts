@@ -1,5 +1,5 @@
 import { useHttpDelete, useHttpGet, useHttpPost } from '@/app/http';
-import type { ILikePost, INewPost, IPostData } from '@/app/type';
+import type { IComment, ILikePost, INewComment, INewPost, IPostData } from '@/app/type';
 
 export async function getRecentPosts() {
   try {
@@ -63,7 +63,7 @@ export async function deletePost(id: string | number) {
     const response = await useHttpDelete<IPostData>(`/posts/${id}`);
     return response.data;
   } catch (error: any) {
-    return Promise.reject(error.response.data.message);
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
   }
 }
 
@@ -72,7 +72,7 @@ export async function likePost(postId: number) {
     const response = await useHttpPost<ILikePost>(`/posts/${postId}/like`);
     return response.data;
   } catch (error: any) {
-    return Promise.reject(error.response.data.message);
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
   }
 }
 
@@ -81,6 +81,15 @@ export async function unlikePost(postId: number) {
     const response = await useHttpDelete<ILikePost>(`/posts/${postId}/like`);
     return response.data;
   } catch (error: any) {
-    return Promise.reject(error.response.data.massage);
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
+  }
+}
+
+export async function commentPost(postId: number, content: string) {
+  try {
+    const response = await useHttpPost(`/posts/${postId}/comments`, { content });
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
   }
 }

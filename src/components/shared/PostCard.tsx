@@ -1,10 +1,10 @@
 import type { IPostData } from '@/app/type';
 import { getInitials } from '@/app/utils/utils';
 import { useToast } from '@/components/ui/use-toast';
-import { useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
-import { FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
+import { useAddComment, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
+import { FaComment, FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { FaRetweet } from 'react-icons/fa6';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter } from '../ui/card';
@@ -17,12 +17,14 @@ type PostCardProps = {
 
 export const PostCard = ({ post }: PostCardProps) => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const { author } = post;
   const { user } = useAuthStore();
   const { mutateAsync: updateLike } = useLikePost();
   const { mutateAsync: deleteLike } = useUnlikePost();
 
   const userHasLiked = post.likedBy.some((likedUser: any) => likedUser.id === user?.id);
+  const userHasCommented = post.comments.some((comment: any) => comment.author.id === user?.id);
 
   async function handleLikePost(postId: number) {
     try {
@@ -36,6 +38,10 @@ export const PostCard = ({ post }: PostCardProps) => {
     } catch (error: any) {
       toast({ title: error });
     }
+  }
+
+  async function handleAddComment(postId: number) {
+    navigate(`/post/${postId}`);
   }
 
   return (
@@ -72,8 +78,9 @@ export const PostCard = ({ post }: PostCardProps) => {
         <Button className='px-2' variant={'ghost'}>
           <FaRetweet size={23} />
         </Button>
-        <Button className='px-2' variant={'ghost'}>
-          <FaRegComment size={20} />
+        <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleAddComment(post.id)}>
+          {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
+          {post?.comments.length}
         </Button>
       </CardFooter>
     </Card>

@@ -67,6 +67,10 @@ export type INewPost = {
   media: string | null;
 };
 
+export type INewComment = {
+  content: string;
+};
+
 export type IPostImage = {
   image: File;
   folder: string;
@@ -81,6 +85,13 @@ export type IPostData = {
   updatedAt: Date;
   authorId: number;
   likedBy: number[];
+  comments: IComment[];
+};
+
+export type IComment = {
+  id: number;
+  content: string;
+  author: Partial<IUser>;
 };
 
 export type ILikePost = {

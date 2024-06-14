@@ -2,6 +2,7 @@ import { useAuthStore } from '@/app/store/authStore';
 import type { ICreateUserParam, ILoginParam, INewPost, IPostImage, IUpdateProfileParam } from '@/app/type';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
+  commentPost,
   createAccount,
   createPost,
   deletePost,
@@ -162,6 +163,31 @@ export const useUnlikePost = () => {
 
   return useMutation({
     mutationFn: (postId: number) => unlikePost(postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DETAIL]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
+      });
+    },
+    onError: (data) => {
+      return data;
+    }
+  });
+};
+
+export const useAddComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { postId: number; content: string }) => commentPost(data.postId, data.content),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
