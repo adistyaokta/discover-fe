@@ -52,13 +52,15 @@ export type IUpdatePostParam = {
 };
 
 export type IUser = {
-  id: number | string;
+  id: number;
   username: string;
   email: string;
   password: string;
   name: string;
   bio?: string;
   avaUrl?: string;
+  followers?: Partial<IUser[]>;
+  following?: Partial<IUser[]>;
 };
 
 export type INewPost = {

@@ -53,7 +53,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
         }
       }}
     >
-      <div className='w-full p-1 bg-black bg-opacity-35 flex flex-col group-hover/card:opacity-0 transition-all duration-300 backdrop-blur-md'>
+      <div className='w-full p-1 bg-black bg-opacity-20 flex flex-col group-hover/card:bg-opacity-50 transition-all duration-300 backdrop-blur-md'>
         <Link to={`/profile/${post.author.id}`} className='w-full flex items-center gap-2 group py-1 '>
           <Avatar>
             <AvatarImage src={post.author?.avaUrl} />

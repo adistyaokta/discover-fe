@@ -17,7 +17,13 @@ export const ProfilePage = () => {
         <HeroProfile user={user!} />
       </div>
       <div className='h-1/12'>
-        <ProfileSection bio={user?.bio || ''} id={userId!} stat={posts?.length!} />
+        <ProfileSection
+          bio={user?.bio || ''}
+          id={userId!}
+          stat={posts?.length!}
+          followers={user?.followers}
+          following={user?.following}
+        />
       </div>
       <ScrollArea
         scrollHideDelay={300}

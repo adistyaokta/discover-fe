@@ -9,6 +9,7 @@ import {
   deletePost,
   // editPost,
   editUser,
+  followUser,
   getComment,
   getMostLikedPosts,
   getPostByAuthor,
@@ -20,6 +21,7 @@ import {
   likePost,
   searchPosts,
   signInAccount,
+  unfollowUser,
   unlikePost,
   uploadImage
 } from '../api';
@@ -45,6 +47,40 @@ export const useCreateAccount = () => {
       return error;
     },
     onSuccess: (data) => {
+      return data;
+    }
+  });
+};
+
+export const useFollowUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (followedUserId: number) => followUser(followedUserId),
+    onError: (error: Error) => {
+      return error;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER]
+      });
+      return data;
+    }
+  });
+};
+
+export const useUnfollowUser = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (followedUserId: number) => unfollowUser(followedUserId),
+    onError: (error: Error) => {
+      return error;
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_CURRENT_USER]
+      });
       return data;
     }
   });
@@ -172,6 +208,9 @@ export const useLikePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
+      });
     },
     onError: (data) => {
       return data;
@@ -199,6 +238,9 @@ export const useUnlikePost = () => {
       });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
       });
     },
     onError: (data) => {
@@ -235,6 +277,9 @@ export const useAddComment = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
+      });
     },
     onError: (data) => {
       return data;
@@ -262,6 +307,9 @@ export const useDeleteComment = () => {
       });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
       });
     },
     onError: (data) => {

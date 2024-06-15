@@ -9,7 +9,7 @@ import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
 
-import { useEditUser, useUploadImage } from '@/lib/react-query/queriesAndMutation';
+import { useEditUser, useFollowUser, useUnfollowUser, useUploadImage } from '@/lib/react-query/queriesAndMutation';
 import { UpdateProfileValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef, useState, useEffect } from 'react';
@@ -29,6 +29,8 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const { mutateAsync: uploadAva } = useUploadImage();
   const { mutateAsync: updateProfile } = useEditUser();
+  const { mutateAsync: followUser } = useFollowUser();
+  const { mutateAsync: unfollowUser } = useUnfollowUser();
   const [dialogOpen, setDialogOpen] = useState<boolean>(false);
   const form = useForm<z.infer<typeof UpdateProfileValidation>>({
     resolver: zodResolver(UpdateProfileValidation),
@@ -40,6 +42,12 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
       name: user?.name || ''
     }
   });
+
+  const followers = user?.followers || [];
+  const following = user?.following || [];
+
+  const userHasFollowed = followers.some((follower) => follower?.id === isUser?.id);
+  const userIsFollowing = following.some((follower) => follower?.id === isUser?.id);
 
   useEffect(() => {
     form.reset({
@@ -81,16 +89,40 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
     return;
   }
 
+  async function handleFollowUnfollowUser(postId: number) {
+    try {
+      if (userHasFollowed) {
+        const unfollResponse = await unfollowUser(postId);
+        return unfollResponse;
+      }
+      const follResponse = await followUser(postId);
+
+      return follResponse;
+    } catch (error: any) {
+      toast({ title: error });
+    }
+  }
+
   return (
     <div className='w-full h-full relative border-b flex flex-col justify-around '>
       <div className='text-9xl h-full tracking-normal flex items-center'>{user?.name || ''}</div>
-      <div className='w-full  flex flex-row justify-between items-center p-2'>
+      <div className='w-full flex flex-row justify-between items-center p-2'>
         <div className='flex items-center gap-2'>
           <Avatar>
             <AvatarImage src={user?.avaUrl || ''} />
             <AvatarFallback>{getInitials(user?.name || '')}</AvatarFallback>
           </Avatar>
           <p className='text-lg'>@{user?.username || ''}</p>
+        </div>
+        <div>
+          {!validUser && (
+            <Button
+              className='capitalize font-outfit text-md font-semibold'
+              onClick={() => handleFollowUnfollowUser(user.id)}
+            >
+              {userHasFollowed ? 'unfollow' : 'follow'}
+            </Button>
+          )}
         </div>
       </div>
       {validUser && (
