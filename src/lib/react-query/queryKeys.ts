@@ -22,6 +22,8 @@ export enum QUERY_KEYS {
   GET_POSTS_BY_IMAGE = 'getPostsByImage',
   GET_POSTS_BY_CREATOR = 'getPostsByCreator',
   GET_POSTS_BY_CREATOR_NAME = 'getPostsByCreatorName',
+  GET_POSTS_WITH_MEDIA = 'getPostWithMedia',
+  GET_MOST_LIKED_POSTS = 'getMostLikedPosts',
   GET_FILE_PREVIEW = 'getFilePreview',
   GET_RANDOM_POSTS = 'getRandomPosts',
   GET_COMMENT_POST = 'getComment',

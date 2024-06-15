@@ -3,7 +3,7 @@ import AuthLayout from './_auth/AuthLayout';
 import { LoginForm, SignupForm } from './_auth/forms';
 import RootLayout from './_root/RootLayout';
 import { HomePage } from './_root/pages';
-import { PostDetailPage } from './_root/pages/CreatePostPage';
+import { PostDetailPage } from './_root/pages/PostDetailPage';
 import { ExplorePage } from './_root/pages/Explore';
 import { ProfilePage } from './_root/pages/Profile';
 import { Toaster } from './components/ui/toaster';

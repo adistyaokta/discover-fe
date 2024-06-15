@@ -1,7 +1,8 @@
+import { useAuthStore } from '@/app/store';
 import type { IPostData } from '@/app/type';
 import { getInitials } from '@/app/utils/utils';
 import { useToast } from '@/components/ui/use-toast';
-import { useAddComment, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
+import { useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
 import { FaComment, FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
 import { FaRetweet } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
@@ -9,13 +10,13 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
 import { Card, CardContent, CardFooter } from '../ui/card';
 import { ScrollArea } from '../ui/scroll-area';
-import { useAuthStore } from '@/app/store';
 
 type PostCardProps = {
   post: IPostData;
+  className?: string;
 };
 
-export const PostCard = ({ post }: PostCardProps) => {
+export const PostCard = ({ post, className }: PostCardProps) => {
   const { toast } = useToast();
   const navigate = useNavigate();
   const { author } = post;
@@ -45,9 +46,9 @@ export const PostCard = ({ post }: PostCardProps) => {
   }
 
   return (
-    <Card className={'w-full overflow-hidden flex flex-col gap-1 h-fit '}>
+    <Card className={`w-full overflow-hidden flex flex-col gap-1 h-fit ${className}`}>
       <CardContent className='flex w-full min-h-12 items-center truncate py-3 flex-row gap-2 bg-secondary rounded-t-md '>
-        <Link to={`/profile/${post.authorId}`} className='w-fit flex items-center gap-2 group'>
+        <Link to={`/profile/${post.author.id}`} className='w-fit flex items-center gap-2 group'>
           <Avatar>
             <AvatarImage src={author?.avaUrl} />
             <AvatarFallback>{getInitials(author?.name || '')}</AvatarFallback>
@@ -75,9 +76,9 @@ export const PostCard = ({ post }: PostCardProps) => {
           {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
           {post?.likedBy.length}
         </Button>
-        <Button className='px-2' variant={'ghost'}>
+        {/* <Button className='px-2' variant={'ghost'}>
           <FaRetweet size={23} />
-        </Button>
+        </Button> */}
         <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleAddComment(post.id)}>
           {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
           {post?.comments.length}

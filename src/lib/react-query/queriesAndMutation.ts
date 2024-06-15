@@ -5,12 +5,15 @@ import {
   commentPost,
   createAccount,
   createPost,
+  deleteComment,
   deletePost,
   // editPost,
   editUser,
   getComment,
+  getMostLikedPosts,
   getPostByAuthor,
   getPostDetail,
+  getPostWithMedia,
   // getRandomPosts,
   getRecentPosts,
   getUserDetail,
@@ -54,6 +57,13 @@ export const useGetRecentPost = () => {
   });
 };
 
+export const useGetMostLikedPost = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS],
+    queryFn: getMostLikedPosts
+  });
+};
+
 export const useCreatePost = () => {
   const queryClient = useQueryClient();
 
@@ -78,6 +88,13 @@ export const useGetPostByAuthor = (authorId: number) => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR],
     queryFn: () => getPostByAuthor(authorId)
+  });
+};
+
+export const useGetPostWithMedia = () => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA],
+    queryFn: () => getPostWithMedia()
   });
 };
 
@@ -152,6 +169,9 @@ export const useLikePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
     },
     onError: (data) => {
       return data;
@@ -177,10 +197,20 @@ export const useUnlikePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
     },
     onError: (data) => {
       return data;
     }
+  });
+};
+
+export const useGetComment = (id: number) => {
+  return useQuery({
+    queryKey: [QUERY_KEYS.GET_POST_DETAIL],
+    queryFn: () => getComment(id)
   });
 };
 
@@ -202,6 +232,9 @@ export const useAddComment = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
     },
     onError: (data) => {
       return data;
@@ -209,10 +242,31 @@ export const useAddComment = () => {
   });
 };
 
-export const useGetComment = (id: number) => {
-  return useQuery({
-    queryKey: [QUERY_KEYS.GET_POST_DETAIL],
-    queryFn: () => getComment(id)
+export const useDeleteComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: { postId: number; commentId: number }) => deleteComment(data.commentId, data.postId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POST_DETAIL]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_SEARCH_RESULT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_POSTS_WITH_MEDIA]
+      });
+    },
+    onError: (data) => {
+      return data;
+    }
   });
 };
 

@@ -25,13 +25,11 @@ export const usePostStore = create<PostStore>((set) => ({
     set({ ...initialState, loading: true });
     const token = localStorage.getItem('token');
     try {
-      console.log(token, 'tkn');
       const response = await http.get('/posts', {
         headers: { Authorization: `Bearer ${token}` }
       });
       set({ ...initialState, success: true, posts: response.data });
     } catch (err: any) {
-      console.error('Error in data fetch: ', err);
       set({ ...initialState, error: true, errorData: err.message });
     }
   }

@@ -92,6 +92,7 @@ export type IComment = {
   id: number;
   content: string;
   author: Partial<IUser>;
+  createdAt: Date;
 };
 
 export type ILikePost = {

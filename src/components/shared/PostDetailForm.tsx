@@ -1,26 +1,24 @@
 import { useAuthStore } from '@/app/store';
+import type { IPostData } from '@/app/type';
 import { formatDateString, getInitials, multiFormatDateString } from '@/app/utils/utils';
-import {
-  useAddComment,
-  useDeletePost,
-  useGetPostDetail,
-  useLikePost,
-  useUnlikePost
-} from '@/lib/react-query/queriesAndMutation';
+import { useAddComment, useDeletePost, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
+import { useRef, useState } from 'react';
+import { FaComment, FaRegHeart } from 'react-icons/fa';
 import { FaArrowLeft, FaHeart, FaRegComment, FaRetweet } from 'react-icons/fa6';
 import { LuMenuSquare } from 'react-icons/lu';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
-import { useToast } from '../ui/use-toast';
 import { Button } from '../ui/button';
-import { FaComment, FaRegHeart } from 'react-icons/fa';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Textarea } from '../ui/textarea';
-import { useState } from 'react';
+import { useToast } from '../ui/use-toast';
 
-export const PostDetail = () => {
+type PostDetailProps = {
+  post: IPostData;
+};
+
+export const PostDetailForm = ({ post }: PostDetailProps) => {
   const { id } = useParams();
-  const { data: post } = useGetPostDetail(parseInt(id!));
   const { user } = useAuthStore();
   const { mutateAsync: deletePost } = useDeletePost();
   const navigate = useNavigate();
@@ -30,6 +28,7 @@ export const PostDetail = () => {
   const { mutateAsync: updateLike } = useLikePost();
   const { mutateAsync: deleteLike } = useUnlikePost();
   const { mutateAsync: addComment } = useAddComment();
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   const [comment, setComment] = useState<string>('');
 
@@ -69,10 +68,11 @@ export const PostDetail = () => {
     try {
       if (!comment) return;
       const sendComment = await addComment({ postId, content: comment });
-      console.log(sendComment);
+      if (inputRef.current) {
+        inputRef.current.value = '';
+      }
       return sendComment;
     } catch (error: any) {
-      console.log(error);
       toast({ title: error });
     }
   }
@@ -127,9 +127,9 @@ export const PostDetail = () => {
           {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
           {post?.likedBy.length}
         </Button>
-        <Button className='px-2' variant={'ghost'}>
+        {/* <Button className='px-2' variant={'ghost'}>
           <FaRetweet size={23} />
-        </Button>
+        </Button> */}
         <Button className='px-2 flex gap-2' variant={'ghost'}>
           {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
           {post?.comments.length}
@@ -153,6 +153,7 @@ export const PostDetail = () => {
             const { value } = e.target;
             setComment(value);
           }}
+          ref={inputRef}
         />
         <Button className='w-full' onClick={() => handleAddComment(post?.id!)}>
           COMMENT

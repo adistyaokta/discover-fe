@@ -1,5 +1,5 @@
 import { useHttpDelete, useHttpGet, useHttpPost } from '@/app/http';
-import type { IComment, ILikePost, INewComment, INewPost, IPostData } from '@/app/type';
+import type { ILikePost, INewPost, IPostData } from '@/app/type';
 
 export async function getRecentPosts() {
   try {
@@ -7,6 +7,15 @@ export async function getRecentPosts() {
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
+  }
+}
+
+export async function getMostLikedPosts() {
+  try {
+    const response = await useHttpGet<IPostData[]>('/posts/trending');
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
   }
 }
 
@@ -40,18 +49,27 @@ export async function getPostByAuthor(authorId: number) {
 
 export async function searchPosts(s: string) {
   try {
-    const response = await useHttpGet<IPostData[]>('/posts/trending', {
+    const response = await useHttpGet<IPostData[]>('/posts/search', {
       s
     });
     return response.data;
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
   }
 }
 
 export async function getPostDetail(id: number) {
   try {
     const response = await useHttpGet<IPostData>(`/posts/${id}`);
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Unable to get post detail');
+  }
+}
+
+export async function getPostWithMedia() {
+  try {
+    const response = await useHttpGet<IPostData[]>('/posts/media');
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get post detail');
@@ -88,7 +106,6 @@ export async function unlikePost(postId: number) {
 export async function getComment(postId: number) {
   try {
     const response = await useHttpGet(`/posts/${postId}/comments`);
-    console.log(response);
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
@@ -98,6 +115,15 @@ export async function getComment(postId: number) {
 export async function commentPost(postId: number, content: string) {
   try {
     const response = await useHttpPost(`/posts/${postId}/comments`, { content });
+    return response.data;
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
+  }
+}
+
+export async function deleteComment(commentId: number, postId: number) {
+  try {
+    const response = await useHttpDelete(`/posts/${postId}/comments/${commentId}`);
     return response.data;
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Something went wrong');
