@@ -36,15 +36,15 @@ export const SearchComponent = () => {
                     inputRef.current.value = '';
                   }
                 }}
-                className='cursor-pointer'
+                className='cursor-pointer hover:scale-110 transition-all duration-300'
               />
             ) : (
-              <FaSearch size={20} className='cursor-pointer' />
+              <FaSearch size={20} className='cursor-pointer hover:scale-110 transition-all duration-300' />
             )}
           </div>
         </label>
       </div>
-      <div className='max-h-dvh px-2 py-3 flex flex-col gap-4 absolute'>
+      <div className='max-h-dvh px-2 py-3 flex flex-col gap-4 absolute z-50'>
         {searchedPosts?.length === 0 && <p className='text-muted-foreground italic text-center'>No result found</p>}
         {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
       </div>
