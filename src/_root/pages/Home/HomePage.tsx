@@ -2,11 +2,30 @@ import type { IPostData } from '@/app/type';
 import { PostForm } from '@/components/forms/PostForm';
 import { PostCard, SearchComponent } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useGetMostLikedPost, useGetRecentPost } from '@/lib/react-query/queriesAndMutation';
+import { useGetMostLikedPost, useGetRecentPost, useInfinitePosts } from '@/lib/react-query/queriesAndMutation';
+import { useEffect } from 'react';
+import { useInView } from 'react-intersection-observer';
 
 export const HomePage = () => {
   const { data: posts } = useGetRecentPost();
   const { data: mostLikedPosts } = useGetMostLikedPost();
+  const { data: pages, isPending, hasNextPage, fetchNextPage } = useInfinitePosts();
+  const { ref, inView } = useInView();
+
+  useEffect(() => {
+    if (inView) {
+      // console.log(hasNextPage);
+      console.log(pages);
+
+      fetchNextPage();
+    }
+  }, [fetchNextPage, inView]);
+
+  const array = pages?.pages.flatMap((page) => page.data);
+
+  if (isPending) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <div className='w-full h-full px-4 py-2 flex flex-row justify-center gap-1'>
@@ -16,15 +35,16 @@ export const HomePage = () => {
         </div>
         <ScrollArea className='w-full h-full pr-5 scroll-smooth'>
           <div className='grid grid-cols-1 gap-2'>
-            {posts?.map((post: IPostData) => (
-              <PostCard key={post.id} post={post} />
+            {array?.map((post: IPostData, index: number) => (
+              <PostCard key={`${post.id}-${index}`} post={post} />
             ))}
           </div>
+          <div ref={ref} className='bg-red-800 w-full h-10' />
         </ScrollArea>
       </div>
       <div className='w-1/3 h-full border border-input border-y-0 border-r-0 flex flex-col justify-between gap-2'>
         <SearchComponent />
-        <p className='px-2 text-center font-outfit font-bold tracking-wider'> • Trending Moment • </p>
+        <p className='px-2 text-center font-outfit font-bold tracking-wider'>Trending Moment</p>
         <ScrollArea className='h-full flex px-2'>
           {mostLikedPosts?.map((post) => (
             <PostCard key={post.id} post={post} className='my-1' />

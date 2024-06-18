@@ -1,7 +1,6 @@
-import { Outlet, Navigate, useLocation, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { Link, Navigate, Outlet, useLocation } from 'react-router-dom';
 import { useAuthStore } from '../app/store';
-import { AnimatePresence, motion } from 'framer-motion';
-import { LoginForm, SignupForm } from './forms';
 
 const AuthLayout = () => {
   const { isAuthenticated } = useAuthStore();
@@ -16,7 +15,7 @@ const AuthLayout = () => {
           <section className='flex h-dvh max-h-dvh w-full flex-1 justify-evenly items-center flex-col py-10'>
             <div className='h-1/4 w-full flex flex-col justify-center items-center'>
               <span className='p-2 font-bigshoulder font-black text-8xl tracking-widest border-y-2 border-secondary-foreground'>
-                disMoment
+                disCover
               </span>
 
               <motion.div

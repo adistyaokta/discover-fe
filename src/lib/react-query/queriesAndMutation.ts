@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/app/store/authStore';
 import type { ICreateUserParam, ILoginParam, INewPost, IPostImage, IUpdateProfileParam } from '@/app/type';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   commentPost,
   createAccount,
@@ -9,6 +9,7 @@ import {
   deletePost,
   // editPost,
   editUser,
+  fetchInfinitePosts,
   followUser,
   getComment,
   getMostLikedPosts,
@@ -90,6 +91,16 @@ export const useGetRecentPost = () => {
   return useQuery({
     queryKey: [QUERY_KEYS.GET_RECENT_POSTS],
     queryFn: getRecentPosts
+  });
+};
+
+export const useInfinitePosts = () => {
+  return useInfiniteQuery({
+    queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
+    queryFn: fetchInfinitePosts,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage) => lastPage.nextCursor,
+    getPreviousPageParam: (firstPage) => firstPage.prevCursor
   });
 };
 
