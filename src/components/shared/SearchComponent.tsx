@@ -2,10 +2,9 @@ import useDebounce from '@/app/utils/utils';
 import { useGetMostLikedPost, useSearchPosts } from '@/lib/react-query/queriesAndMutation';
 import { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
-import { PostCard } from './PostCard';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { ScrollArea } from '../ui/scroll-area';
-import { searchPosts } from '@/lib/api';
+import { PostCard } from './PostCard';
 
 export const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -48,7 +47,7 @@ export const SearchComponent = () => {
         </label>
       </div>
       <div className={'h-full w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
-        {searchedPosts?.length === 0 && <p className='text-muted-foreground italic text-center'>No result found</p>}
+        {searchedPosts?.length === 0 && <div className='text-muted-foreground italic text-center'>No result found</div>}
         {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
         {!searchValue && !searchedPosts && (
           <>

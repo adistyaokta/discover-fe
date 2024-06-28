@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { getInitials } from '@/app/utils/utils';
 import { DialogDescription } from '@radix-ui/react-dialog';
+import { Button } from '../ui/button';
 
 type FollowerModalProps = {
   follow: Partial<IUser[]>;
@@ -54,12 +55,12 @@ export const ProfileSection = ({ bio, stat, followers, following }: ProfileSecti
       </div>
       <div className='w-1/2 px-2 py-1 items-center flex flex-row justify-end text-left gap-2'>
         <div className='w-32 text-center'>{stat} Moments</div>
-        <div className='w-32 text-center'>
+        <Button variant={'ghost'} className='w-32 text-center'>
           <FollowerModal follow={followers!} label='follower' />
-        </div>
-        <div className='w-32 text-center'>
+        </Button>
+        <Button variant={'ghost'} className='w-32 text-center'>
           <FollowerModal follow={following!} label='following' />
-        </div>
+        </Button>
       </div>
     </div>
   );

@@ -44,7 +44,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
 
   return (
     <div
-      className='w-1/6 h-full rounded-lg border border-input bg-cover bg-center flex flex-col justify-end relative cursor-pointer group/card'
+      className='w-1/6 h-full rounded-lg border border-input bg-cover bg-center flex flex-col justify-end relative cursor-pointer group/card overflow-hidden'
       style={{ backgroundImage: `url(${post.media})` }}
       onClick={(e) => {
         const target = e.target as HTMLElement;
@@ -53,8 +53,8 @@ export const PostMedia = ({ post }: PostMediaProps) => {
         }
       }}
     >
-      <div className='w-full p-1 bg-black bg-opacity-20 flex flex-col group-hover/card:bg-opacity-50 transition-all duration-300 backdrop-blur-md'>
-        <Link to={`/profile/${post.author.id}`} className='w-full flex items-center gap-2 group py-1 '>
+      <div className='w-full h-1/6 p-1 bg-black rounded-2xl rounded-b-none bg-opacity-20 flex flex-col group-hover/card:bg-opacity-50 group-hover/card:h-1/5 transition-all duration-300 backdrop-blur-md'>
+        <Link to={`/profile/${post.author.id}`} className='w-full flex items-center gap-2 group py-1'>
           <Avatar>
             <AvatarImage src={post.author?.avaUrl} />
             <AvatarFallback>{getInitials(post.author?.name || '')}</AvatarFallback>
@@ -64,7 +64,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
             <p className='text-secondary-foreground text-xs'>@{post.author?.username}</p>
           </div>
         </Link>
-        <p>{post.caption}</p>
+        <p className='hidden group-hover/card:block transition-all duration-100 '>{post.caption}</p>
       </div>
       <div className='absolute top-1/2 transform -translate-y-1/2 right-0 flex flex-col items-center justify-center h-full w-12'>
         <Button
