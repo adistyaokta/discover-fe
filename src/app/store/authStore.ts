@@ -9,6 +9,7 @@ type AuthStore = {
   login: (user: IUser, token: string) => Promise<void>;
   logout: () => Promise<void>;
   signup: (user: IUser, token: string) => Promise<void>;
+  updateUser: (user: IUser) => Promise<void>;
 };
 
 export const useAuthStore = create(
@@ -48,6 +49,15 @@ export const useAuthStore = create(
           });
         } catch (error) {
           console.error('Failed to register', error);
+        }
+      },
+      updateUser: async (updatedUserData) => {
+        try {
+          set({
+            user: updatedUserData
+          });
+        } catch (error) {
+          console.error('Failed to update profile', error);
         }
       }
     }),

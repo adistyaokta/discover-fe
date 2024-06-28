@@ -1,18 +1,21 @@
 import useDebounce from '@/app/utils/utils';
-import { useSearchPosts } from '@/lib/react-query/queriesAndMutation';
+import { useGetMostLikedPost, useSearchPosts } from '@/lib/react-query/queriesAndMutation';
 import { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { PostCard } from './PostCard';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
+import { ScrollArea } from '../ui/scroll-area';
+import { searchPosts } from '@/lib/api';
 
 export const SearchComponent = () => {
   const [searchValue, setSearchValue] = useState<string>('');
   const debouncedSearch = useDebounce(searchValue, 1000);
   const { data: searchedPosts } = useSearchPosts(debouncedSearch);
+  const { data: mostLikedPosts } = useGetMostLikedPost();
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className='h-fit relative'>
+    <div className='h-full relative'>
       <div className='w-full h-14 px-2'>
         <label htmlFor='search-box' className='flex flex-row h-full w-full'>
           <input
@@ -44,9 +47,21 @@ export const SearchComponent = () => {
           </div>
         </label>
       </div>
-      <div className='max-h-dvh px-2 py-3 flex flex-col gap-4 absolute z-50'>
+      <div className={'h-full w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
         {searchedPosts?.length === 0 && <p className='text-muted-foreground italic text-center'>No result found</p>}
         {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
+        {!searchValue && !searchedPosts && (
+          <>
+            <p className='w-full font-outfit font-bold text-center'>Trending Moment</p>
+            <ScrollArea className='w-full px-1 h-full scroll-smooth'>
+              <div className='grid grid-cols-1 gap-2 px-2'>
+                {mostLikedPosts?.map((post) => (
+                  <PostCard key={post.id} post={post} className='last:mb-20' />
+                ))}
+              </div>
+            </ScrollArea>
+          </>
+        )}
       </div>
     </div>
   );

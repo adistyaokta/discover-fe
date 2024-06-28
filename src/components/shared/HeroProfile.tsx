@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { useToast } from '../ui/use-toast';
 
 import { useEditUser, useFollowUser, useUnfollowUser, useUploadImage } from '@/lib/react-query/queriesAndMutation';
@@ -44,10 +44,8 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   });
 
   const followers = user?.followers || [];
-  const following = user?.following || [];
 
   const userHasFollowed = followers.some((follower) => follower?.id === isUser?.id);
-  const userIsFollowing = following.some((follower) => follower?.id === isUser?.id);
 
   useEffect(() => {
     form.reset({
@@ -216,6 +214,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
                   <Button type='submit'>Update</Button>
                 </form>
               </Form>
+              <DialogDescription />
             </DialogContent>
           </Dialog>
         </div>

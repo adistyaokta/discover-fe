@@ -51,10 +51,10 @@ export const ProfilePage = () => {
       </div>
       <ScrollArea
         scrollHideDelay={300}
-        className='w-1/2 mx-auto h-full flex flex-col justify-center scroll-smooth py-1 px-5 '
+        className='w-full h-full flex flex-col items-center justify-center scroll-smooth py-1'
       >
-        {posts?.map((post: IPostData, index: number) => (
-          <div key={post.id} className={index !== 0 ? 'mt-2' : ''}>
+        {posts?.map((post: IPostData) => (
+          <div key={post.id} className='first:mt-2 last:mt-2 my-2 w-1/2 mx-auto flex gap-10'>
             <PostCard post={post} />
           </div>
         ))}

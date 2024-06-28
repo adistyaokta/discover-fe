@@ -9,9 +9,9 @@ import {
   deletePost,
   // editPost,
   editUser,
-  fetchInfinitePosts,
   followUser,
   getComment,
+  getInfinitePosts,
   getMostLikedPosts,
   getPostByAuthor,
   getPostDetail,
@@ -97,10 +97,10 @@ export const useGetRecentPost = () => {
 export const useInfinitePosts = () => {
   return useInfiniteQuery({
     queryKey: [QUERY_KEYS.GET_INFINITE_POSTS],
-    queryFn: fetchInfinitePosts,
+    queryFn: getInfinitePosts,
     initialPageParam: 0,
-    getNextPageParam: (lastPage) => lastPage.nextCursor,
-    getPreviousPageParam: (firstPage) => firstPage.prevCursor
+    getNextPageParam: (lastPage: any) => lastPage?.nextCursor,
+    getPreviousPageParam: (firstPage: any) => firstPage?.prevCursor
   });
 };
 
@@ -119,6 +119,9 @@ export const useCreatePost = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
       });
     }
   });
@@ -343,10 +346,11 @@ export const useUploadImage = () => {
 
 export const useEditUser = () => {
   const queryClient = useQueryClient();
+  const { updateUser } = useAuthStore();
 
   return useMutation({
     mutationFn: (param: IUpdateProfileParam) => editUser(param),
-    onSuccess: (data) => {
+    onSuccess: (data: any) => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_CURRENT_USER]
       });
@@ -355,6 +359,7 @@ export const useEditUser = () => {
         queryKey: [QUERY_KEYS.GET_POSTS_BY_CREATOR]
       });
 
+      updateUser(data);
       return data;
     },
     onError: (error: any) => {

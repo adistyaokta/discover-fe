@@ -2,21 +2,16 @@ import type { IPostData } from '@/app/type';
 import { PostForm } from '@/components/forms/PostForm';
 import { PostCard, SearchComponent } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { useGetMostLikedPost, useGetRecentPost, useInfinitePosts } from '@/lib/react-query/queriesAndMutation';
+import { useInfinitePosts } from '@/lib/react-query/queriesAndMutation';
 import { useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 export const HomePage = () => {
-  const { data: posts } = useGetRecentPost();
-  const { data: mostLikedPosts } = useGetMostLikedPost();
-  const { data: pages, isPending, hasNextPage, fetchNextPage } = useInfinitePosts();
+  const { data: pages, isPending, fetchNextPage, hasNextPage } = useInfinitePosts();
   const { ref, inView } = useInView();
 
   useEffect(() => {
     if (inView) {
-      // console.log(hasNextPage);
-      console.log(pages);
-
       fetchNextPage();
     }
   }, [fetchNextPage, inView]);
@@ -39,17 +34,11 @@ export const HomePage = () => {
               <PostCard key={`${post.id}-${index}`} post={post} />
             ))}
           </div>
-          <div ref={ref} className='bg-red-800 w-full h-10' />
+          {hasNextPage && <div ref={ref} className='w-full h-10' />}
         </ScrollArea>
       </div>
-      <div className='w-1/3 h-full border border-input border-y-0 border-r-0 flex flex-col justify-between gap-2'>
+      <div className='w-1/3 h-full overflow-hidden border border-input border-y-0 border-r-0 flex flex-col justify-between gap-2'>
         <SearchComponent />
-        <p className='px-2 text-center font-outfit font-bold tracking-wider'>Trending Moment</p>
-        <ScrollArea className='h-full flex px-2'>
-          {mostLikedPosts?.map((post) => (
-            <PostCard key={post.id} post={post} className='my-1' />
-          ))}
-        </ScrollArea>
       </div>
     </div>
   );

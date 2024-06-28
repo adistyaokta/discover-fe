@@ -5,7 +5,7 @@ import { getInitials } from '@/app/utils/utils';
 import { Button } from '../ui/button';
 import { useAuthStore } from '@/app/store/authStore';
 import { useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
-import { FaHeart, FaRegHeart, FaRetweet, FaComment, FaRegComment } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaComment, FaRegComment } from 'react-icons/fa';
 import { useToast } from '../ui/use-toast';
 
 type PostMediaProps = {
@@ -70,15 +70,14 @@ export const PostMedia = ({ post }: PostMediaProps) => {
         <Button
           className='px-2 flex items-center justify-center gap-2'
           variant={'plain'}
-          onClick={() => handleLikePost(post.id)}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleLikePost(post.id);
+          }}
         >
           {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
           {post?.likedBy.length}
         </Button>
-        {/* Uncomment this section if you want a retweet button */}
-        {/* <Button className='px-2 flex items-center justify-center' variant={'plain'}>
-      <FaRetweet size={23} />
-    </Button> */}
         <Button
           className='px-2 flex items-center justify-center gap-2'
           variant={'plain'}

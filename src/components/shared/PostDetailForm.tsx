@@ -4,7 +4,7 @@ import { formatDateString, getInitials, multiFormatDateString } from '@/app/util
 import { useAddComment, useDeletePost, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
 import { useRef, useState } from 'react';
 import { FaComment, FaRegHeart } from 'react-icons/fa';
-import { FaArrowLeft, FaHeart, FaRegComment, FaRetweet } from 'react-icons/fa6';
+import { FaArrowLeft, FaHeart, FaRegComment } from 'react-icons/fa6';
 import { LuMenuSquare } from 'react-icons/lu';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
@@ -127,9 +127,6 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
           {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
           {post?.likedBy.length}
         </Button>
-        {/* <Button className='px-2' variant={'ghost'}>
-          <FaRetweet size={23} />
-        </Button> */}
         <Button className='px-2 flex gap-2' variant={'ghost'}>
           {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
           {post?.comments.length}

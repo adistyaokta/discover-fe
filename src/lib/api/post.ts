@@ -1,6 +1,5 @@
 import { useHttpDelete, useHttpGet, useHttpPost } from '@/app/http';
 import type { ILikePost, INewPost, IPostData } from '@/app/type';
-import axios from 'axios';
 
 export async function getRecentPosts() {
   try {
@@ -11,9 +10,13 @@ export async function getRecentPosts() {
   }
 }
 
-export async function fetchInfinitePosts({ pageParam = 1 }) {
-  const { data } = await axios.get(`http://localhost:3000/posts/wedhus?cursor=${pageParam}`);
-  return data;
+export async function getInfinitePosts({ pageParam = 1 }) {
+  try {
+    const response = await useHttpGet<any>(`/posts/infinite?cursor=${pageParam}`);
+    return { data: response.data.data, nextCursor: response.data.nextCursor };
+  } catch (error: any) {
+    return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
+  }
 }
 
 export async function getMostLikedPosts() {
