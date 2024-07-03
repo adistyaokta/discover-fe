@@ -5,7 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useLoginAccount } from '@/lib/react-query/queriesAndMutation';
 import { LoginValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AnimatePresence } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
@@ -40,16 +40,14 @@ export const LoginForm = () => {
   }
 
   return (
-    <div className='h-full'>
+    <div className='h-full w-full flex justify-center items-center'>
       <Form {...form}>
-        <div className='flex flex-row w-full h-full px-4 py-2 items-center'>
-          <div className='w-1/2 h-1/2 flex items-center justify-center'>
-            <p key={pathname} className='font-playwrite w-full text-center text-9xl font-bold'>
-              Login
-            </p>
-          </div>
-          <div className='w-1/2 py-16 h-full flex flex-col items-center text-center'>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-1/2 flex flex-col gap-5 px-2 py-3'>
+        <motion.div className='w-1/2 h-full flex flex-col items-center justify-center border hover:bg-red-900  rounded-lg transition-all duration-500 '>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='w-full h-fit flex flex-col items-center justify-center gap-5 px-2 py-3'
+          >
+            <div className='w-1/2 flex flex-col justify-start gap-5 text-center '>
               <FormField
                 control={form.control}
                 name='username'
@@ -76,13 +74,13 @@ export const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              <div className='flex-grow' />
-              <Button type='submit' className='w-1/2 h-1/2 mx-auto'>
-                {loading ? 'Loading' : 'Login'}
-              </Button>
-            </form>
-          </div>
-        </div>
+              {/* <div className='flex-grow' /> */}
+            </div>
+            <Button type='submit' className='w-1/2 h-10 mx-auto'>
+              {loading ? 'Loading' : 'Login'}
+            </Button>
+          </form>
+        </motion.div>
       </Form>
     </div>
   );
