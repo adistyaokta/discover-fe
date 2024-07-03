@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { getInitials } from '@/app/utils/utils';
 import { DialogDescription } from '@radix-ui/react-dialog';
 import { Button } from '../ui/button';
+import { Link } from 'react-router-dom';
 
 type FollowerModalProps = {
   follow: Partial<IUser[]>;
@@ -20,7 +21,11 @@ const FollowerModal = ({ follow, label }: FollowerModalProps) => {
         <DialogHeader>
           <DialogTitle className='capitalize flex flex-col gap-3 py-2 text-center'>{label}</DialogTitle>
           {follow?.map((foll) => (
-            <div key={foll?.id} className='flex items-center justify-start gap-4 px-1'>
+            <Link
+              key={foll?.id}
+              to={`/profile/${foll?.id}`}
+              className='flex items-center justify-start gap-4 px-1 rounded-md hover:bg-secondary'
+            >
               <Avatar>
                 <AvatarImage src={foll?.avaUrl} className='aspect-square' />
                 <AvatarFallback>{getInitials(foll?.name!)}</AvatarFallback>
@@ -29,7 +34,7 @@ const FollowerModal = ({ follow, label }: FollowerModalProps) => {
                 <p className='text-lg font-bold font-outfit w-full'>@{foll?.username!}</p>
                 <p className='text-lg font-outfit w-full'>{foll?.name!}</p>
               </div>
-            </div>
+            </Link>
           ))}
           <DialogDescription />
         </DialogHeader>

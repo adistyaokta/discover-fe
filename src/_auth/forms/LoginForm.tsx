@@ -42,16 +42,14 @@ export const LoginForm = () => {
   return (
     <div className='h-full'>
       <Form {...form}>
-        <div className='flex flex-row w-full h-full px-4 py-2'>
-          <div className='w-1/2 flex items-center justify-center'>
-            <AnimatePresence mode='wait'>
-              <p key={pathname} className='font-bigshoulder w-full text-center text-9xl font-bold uppercase'>
-                Login
-              </p>
-            </AnimatePresence>
+        <div className='flex flex-row w-full h-full px-4 py-2 items-center'>
+          <div className='w-1/2 h-1/2 flex items-center justify-center'>
+            <p key={pathname} className='font-playwrite w-full text-center text-9xl font-bold'>
+              Login
+            </p>
           </div>
-          <div className='w-1/2 h-full flex flex-col items-center'>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full flex flex-col gap-5 px-2 py-3'>
+          <div className='w-1/2 py-16 h-full flex flex-col items-center text-center'>
+            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-1/2 flex flex-col gap-5 px-2 py-3'>
               <FormField
                 control={form.control}
                 name='username'
@@ -79,7 +77,7 @@ export const LoginForm = () => {
                 )}
               />
               <div className='flex-grow' />
-              <Button type='submit' className='w-1/2 mx-auto'>
+              <Button type='submit' className='w-1/2 h-1/2 mx-auto'>
                 {loading ? 'Loading' : 'Login'}
               </Button>
             </form>

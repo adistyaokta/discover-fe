@@ -14,8 +14,8 @@ export const SearchComponent = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className='h-full relative'>
-      <div className='w-full h-14 px-2'>
+    <div className='h-full relative py-2'>
+      <div className='w-full h-12 px-2'>
         <label htmlFor='search-box' className='flex flex-row h-full w-full'>
           <input
             ref={inputRef}

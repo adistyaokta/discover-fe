@@ -78,7 +78,7 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
   }
 
   return (
-    <div className='w-full h-full overflow-hidden flex flex-col'>
+    <div className='w-full max-h-full overflow-hidden h-full flex flex-col'>
       <div className='w-full min-h-14 flex flex-row gap-2 items-center px-3'>
         <Link to={-1 as unknown as string}>
           <FaArrowLeft

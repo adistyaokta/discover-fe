@@ -14,9 +14,7 @@ const AuthLayout = () => {
         <>
           <section className='flex h-dvh max-h-dvh w-full flex-1 justify-evenly items-center flex-col py-10'>
             <div className='h-1/4 w-full flex flex-col justify-center items-center'>
-              <span className='p-2 font-bigshoulder font-black text-8xl tracking-widest border-y-2 border-secondary-foreground'>
-                disCover
-              </span>
+              <span className='p-2 font-playwrite font-black text-8xl tracking-widest'>discover!</span>
 
               <motion.div
                 initial={{ opacity: 0 }}
@@ -25,13 +23,11 @@ const AuthLayout = () => {
                 key={pathname}
                 className='text-center'
               >
-                <p className='font-bold pt-3'>
-                  {pathname === '/sign-in' ? 'Log in to your account' : 'Create a new account'}
-                </p>
+                <p className='font-bold pt-3'>{pathname === '/sign-in' ? 'Welcome back' : 'Ready to discover more?'}</p>
                 <p className='font-thin'>
                   {pathname === '/sign-in'
-                    ? 'Hey welcome back! Please enter your details to continue.'
-                    : 'Enter your details and start capturing this moment.'}
+                    ? 'Come inside and discover what awaits you.'
+                    : 'Join us and start exploring!'}
                 </p>
               </motion.div>
             </div>
@@ -42,8 +38,10 @@ const AuthLayout = () => {
 
             <div className='h-1/6 w-full flex flex-col justify-center items-center'>
               <p className='text-sm text-center font-thin '>
-                {pathname === '/sign-in' ? "Don't have an account?" : 'Already registered?'}
-                <Link to={pathname === '/sign-in' ? '/sign-up' : '/sign-in'} className='font-bold'>
+                {pathname === '/sign-in'
+                  ? "First time? Let's start discovering together!"
+                  : 'Already part of the discovery crew?'}
+                <Link to={pathname === '/sign-in' ? '/sign-up' : '/sign-in'} className='font-playwrite font-bold'>
                   {pathname === '/sign-in' ? ' Register' : ' Login'}
                 </Link>
               </p>

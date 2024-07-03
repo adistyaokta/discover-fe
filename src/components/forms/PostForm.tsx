@@ -82,7 +82,7 @@ export const PostForm = ({ post, label }: PostFormProps) => {
               <FormControl>
                 <Textarea
                   className={`w-full h-28 max-h-28  ${imagePreview ? 'w-5/6' : ''}`}
-                  placeholder='Share your moment...'
+                  placeholder='Share your discovery!'
                   {...field}
                 />
               </FormControl>

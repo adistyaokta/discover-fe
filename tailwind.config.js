@@ -14,7 +14,8 @@ module.exports = {
     extend: {
       fontFamily: {
         bigshoulder: 'Big Shoulders Inline Text',
-        outfit: 'Outfit'
+        outfit: 'Outfit',
+        playwrite: 'Playwrite AU SA'
       },
       colors: {
         border: 'hsl(var(--border))',

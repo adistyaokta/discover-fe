@@ -54,13 +54,12 @@ export const SignupForm = () => {
       toast({ title: error });
     }
   }
-  const { pathname } = useLocation();
 
   return (
     <div className='h-full'>
       <Form {...form}>
         <div className='flex flex-row w-full h-full px-4 py-2'>
-          <div className='w-1/2 h-full flex flex-col items-center'>
+          <div className='w-1/2 h-full flex flex-col items-center text-center'>
             <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full flex flex-col gap-5 px-2 py-3'>
               <FormField
                 control={form.control}
@@ -108,7 +107,7 @@ export const SignupForm = () => {
             </form>
           </div>
           <div className='w-1/2 flex items-center justify-center'>
-            <p className='font-bigshoulder w-full text-center text-9xl font-bold uppercase'>Register</p>
+            <p className='font-playwrite w-full text-center text-9xl font-bold'>Register</p>
           </div>
         </div>
       </Form>
