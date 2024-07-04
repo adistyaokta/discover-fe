@@ -56,11 +56,19 @@ export const SignupForm = () => {
   }
 
   return (
-    <div className='h-full'>
+    <div className='h-full w-full flex justify-center items-center'>
       <Form {...form}>
-        <div className='flex flex-row w-full h-full px-4 py-2'>
-          <div className='w-1/2 h-full flex flex-col items-center text-center'>
-            <form onSubmit={form.handleSubmit(onSubmit)} className='w-full h-full flex flex-col gap-5 px-2 py-3'>
+        <div className='w-1/2 h-full flex flex-col items-center justify-center border-x-0 border hover:border-x-2 hover:rounded-lg transition-all duration-300'>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className='w-full h-fit flex flex-col items-center justify-center gap-5 px-2 py-3'
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -500 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 2 }}
+              className='w-1/2 flex flex-col justify-start gap-5 text-center'
+            >
               <FormField
                 control={form.control}
                 name='username'
@@ -104,11 +112,8 @@ export const SignupForm = () => {
               <Button type='submit' className='w-1/2 mx-auto'>
                 {loading ? 'Loading' : 'Sign Up'}
               </Button>
-            </form>
-          </div>
-          <div className='w-1/2 flex items-center justify-center'>
-            <p className='font-playwrite w-full text-center text-9xl font-bold'>Register</p>
-          </div>
+            </motion.div>
+          </form>
         </div>
       </Form>
     </div>

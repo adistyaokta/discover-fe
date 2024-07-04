@@ -42,12 +42,17 @@ export const LoginForm = () => {
   return (
     <div className='h-full w-full flex justify-center items-center'>
       <Form {...form}>
-        <motion.div className='w-1/2 h-full flex flex-col items-center justify-center border hover:bg-red-900  rounded-lg transition-all duration-500 '>
+        <div className='w-1/2 h-full flex flex-col items-center justify-center border-x-0 border hover:border-x-2 hover:rounded-lg transition-all duration-300'>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full h-fit flex flex-col items-center justify-center gap-5 px-2 py-3'
           >
-            <div className='w-1/2 flex flex-col justify-start gap-5 text-center '>
+            <motion.div
+              initial={{ opacity: 0, x: -500 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className='w-1/2 flex flex-col justify-start gap-5 text-center'
+            >
               <FormField
                 control={form.control}
                 name='username'
@@ -75,12 +80,12 @@ export const LoginForm = () => {
                 )}
               />
               {/* <div className='flex-grow' /> */}
-            </div>
-            <Button type='submit' className='w-1/2 h-10 mx-auto'>
-              {loading ? 'Loading' : 'Login'}
-            </Button>
+              <Button type='submit' className='w-1/2 h-10 mx-auto'>
+                {loading ? 'Loading' : 'Login'}
+              </Button>
+            </motion.div>
           </form>
-        </motion.div>
+        </div>
       </Form>
     </div>
   );
