@@ -58,15 +58,15 @@ export const SignupForm = () => {
   return (
     <div className='h-full w-full flex justify-center items-center'>
       <Form {...form}>
-        <div className='w-1/2 h-full flex flex-col items-center justify-center border-x-0 border hover:border-x-2 hover:rounded-lg transition-all duration-300'>
+        <div className='w-full lg:w-1/2 h-full flex flex-col items-center justify-center border border-x-0 transition-all duration-300'>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full h-fit flex flex-col items-center justify-center gap-5 px-2 py-3'
           >
             <motion.div
-              initial={{ opacity: 0, y: -500 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 2 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
               className='w-1/2 flex flex-col justify-start gap-5 text-center'
             >
               <FormField
@@ -108,7 +108,6 @@ export const SignupForm = () => {
                   </FormItem>
                 )}
               />
-              <div className='flex-grow' />
               <Button type='submit' className='w-1/2 mx-auto'>
                 {loading ? 'Loading' : 'Sign Up'}
               </Button>

@@ -5,7 +5,7 @@ import { useToast } from '@/components/ui/use-toast';
 import { useLoginAccount } from '@/lib/react-query/queriesAndMutation';
 import { LoginValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AnimatePresence, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { useLocation, useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
@@ -42,14 +42,14 @@ export const LoginForm = () => {
   return (
     <div className='h-full w-full flex justify-center items-center'>
       <Form {...form}>
-        <div className='w-1/2 h-full flex flex-col items-center justify-center border-x-0 border hover:border-x-2 hover:rounded-lg transition-all duration-300'>
+        <div className='w-full lg:w-1/2 h-full flex flex-col items-center justify-center border border-x-0 transition-all duration-300'>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
             className='w-full h-fit flex flex-col items-center justify-center gap-5 px-2 py-3'
           >
             <motion.div
-              initial={{ opacity: 0, x: -500 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
               className='w-1/2 flex flex-col justify-start gap-5 text-center'
             >
@@ -79,7 +79,6 @@ export const LoginForm = () => {
                   </FormItem>
                 )}
               />
-              {/* <div className='flex-grow' /> */}
               <Button type='submit' className='w-1/2 h-10 mx-auto'>
                 {loading ? 'Loading' : 'Login'}
               </Button>

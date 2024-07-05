@@ -14,16 +14,18 @@ const AuthLayout = () => {
         <>
           <section className='flex h-dvh max-h-dvh w-full flex-1 justify-evenly items-center flex-col py-10'>
             <div className='h-1/4 w-full flex flex-col justify-center items-center'>
-              <span className='p-2 font-playwrite font-black text-8xl tracking-widest'>discover!</span>
+              <span className='p-2 font-playwrite font-black text-6xl lg:text-8xl tracking-widest'>discover!</span>
 
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 1, ease: 'easeOut' }}
                 key={pathname}
-                className='text-center'
+                className='text-center flex flex-col gap-2'
               >
-                <p className='font-bold pt-3'>{pathname === '/sign-in' ? 'Welcome back' : 'Ready to discover more?'}</p>
+                <p className='font-bold pt-5 lg:pt-3'>
+                  {pathname === '/sign-in' ? 'Welcome back' : 'Ready to discover more?'}
+                </p>
                 <p className='font-thin'>
                   {pathname === '/sign-in'
                     ? 'Come inside and discover what awaits you.'

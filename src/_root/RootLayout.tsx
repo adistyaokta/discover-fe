@@ -19,17 +19,17 @@ const RootLayout = () => {
   }
 
   return (
-    <div className='w-full py-5 flex flex-row min-h-screen max-h-dvh'>
-      <div className='w-16 min-w-16 py-3 px-1 flex flex-col items-center justify-between'>
+    <div className='w-full py-5 flex flex-col-reverse lg:flex-row min-h-dvh max-h-dvh'>
+      <div className='w-full lg:w-16 lg:min-w-16 py-3 px-1 flex flex-row lg:flex-col items-center justify-between'>
         <ThemeSwitcher />
-        <div className='bg-background w-10 h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
-          <ul className='w-full h-full flex flex-col justify-between gap-1 items-center '>
+        <div className='bg-background w-1/2 lg:w-10 h-10 lg:h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
+          <ul className='w-full h-full flex flex-row lg:flex-col justify-between gap-1 items-center '>
             {sideBarLinks.map((link: INavLink) => {
               const route = link.route.replace(':userId', user?.id.toString() || '');
               const isActive = pathname === route;
               return (
                 <li
-                  className={`w-full h-full group first:rounded-t-md last:rounded-b-md ${
+                  className={`w-full h-full group first:rounded-l-md last:rounded-r-md lg:first:rounded-b-none lg:first:rounded-t-md lg:last:rounded-t-none lg:last:rounded-b-md ${
                     isActive
                       ? 'bg-secondary-foreground text-primary-foreground dark:text-primary dark:bg-primary-foreground'
                       : ''
@@ -59,7 +59,7 @@ const RootLayout = () => {
           )}
         </Button>
       </div>
-      <section className='flex-grow flex flex-wrap border border-input bg-background rounded-md rounded-r-none border-r-0'>
+      <section className='lg:flex-grow flex flex-wrap border border-input bg-background rounded-md rounded-r-none border-r-0'>
         {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </section>
     </div>
