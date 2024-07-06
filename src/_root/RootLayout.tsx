@@ -19,7 +19,7 @@ const RootLayout = () => {
   }
 
   return (
-    <div className='w-full py-5 flex flex-col-reverse lg:flex-row min-h-dvh max-h-dvh'>
+    <div className='w-full py-5 px-2 lg:px-0 flex flex-col-reverse lg:flex-row min-h-dvh max-h-dvh'>
       <div className='w-full lg:w-16 lg:min-w-16 py-3 px-1 flex flex-row lg:flex-col items-center justify-between'>
         <ThemeSwitcher />
         <div className='bg-background w-1/2 lg:w-10 h-10 lg:h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
@@ -59,7 +59,7 @@ const RootLayout = () => {
           )}
         </Button>
       </div>
-      <section className='lg:flex-grow flex flex-wrap border border-input bg-background rounded-md rounded-r-none border-r-0'>
+      <section className='max-md:h-full lg:flex-grow flex flex-wrap border border-input bg-background rounded-md lg:rounded-r-none lg:border-r-0'>
         {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </section>
     </div>
