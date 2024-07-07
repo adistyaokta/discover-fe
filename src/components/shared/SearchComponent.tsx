@@ -6,7 +6,11 @@ import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { ScrollArea } from '../ui/scroll-area';
 import { PostCard } from './PostCard';
 
-export const SearchComponent = () => {
+type SearchComponentProps = {
+  showTrending?: boolean;
+};
+
+export const SearchComponent = ({ showTrending = false }: SearchComponentProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
   const debouncedSearch = useDebounce(searchValue, 1000);
   const { data: searchedPosts } = useSearchPosts(debouncedSearch);
@@ -51,14 +55,18 @@ export const SearchComponent = () => {
         {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
         {!searchValue && !searchedPosts && (
           <>
-            <p className='w-full font-outfit font-bold text-center'>Trending Moment</p>
-            <ScrollArea className='w-full px-1 h-full scroll-smooth'>
-              <div className='grid grid-cols-1 gap-2 px-2'>
-                {mostLikedPosts?.map((post) => (
-                  <PostCard key={post.id} post={post} className='last:mb-20' />
-                ))}
-              </div>
-            </ScrollArea>
+            {showTrending && (
+              <>
+                <p className='w-full font-outfit font-bold text-center'>Trending Moment</p>
+                <ScrollArea className='w-full px-1 h-full scroll-smooth'>
+                  <div className='grid grid-cols-1 gap-2 px-2'>
+                    {mostLikedPosts?.map((post) => (
+                      <PostCard key={post.id} post={post} className='last:mb-20' />
+                    ))}
+                  </div>
+                </ScrollArea>
+              </>
+            )}
           </>
         )}
       </div>

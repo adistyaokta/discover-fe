@@ -44,7 +44,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
 
   return (
     <div
-      className='w-1/6 h-full rounded-lg border border-input bg-cover bg-center flex flex-col justify-end relative cursor-pointer group/card overflow-hidden'
+      className='w-full h-full rounded-lg border border-input bg-cover bg-center flex flex-col flex-grow justify-end cursor-pointer relative group/card overflow-hidden'
       style={{ backgroundImage: `url(${post.media})` }}
       onClick={(e) => {
         const target = e.target as HTMLElement;
@@ -53,7 +53,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
         }
       }}
     >
-      <div className='w-full h-1/4 p-1 bg-black rounded-2xl rounded-b-none bg-opacity-20 flex flex-col group-hover/card:bg-opacity-50 group-hover/card:h-1/6 transition-all duration-300 backdrop-blur-md'>
+      <div className='w-full h-1/6 p-1 bg-black rounded-2xl rounded-b-none bg-opacity-10 flex flex-col group-hover/card:bg-opacity-50 group-hover/card:h-1 lg:group-hover/card:h-1/4 transition-all duration-300 backdrop-blur-md'>
         <Link to={`/profile/${post.author.id}`} className='w-full flex items-center gap-2 group py-1'>
           <Avatar>
             <AvatarImage src={post.author?.avaUrl} />
@@ -64,7 +64,9 @@ export const PostMedia = ({ post }: PostMediaProps) => {
             <p className='text-secondary-foreground text-xs'>@{post.author?.username}</p>
           </div>
         </Link>
-        <p className=' group-hover/card:hidden h-full transition-all duration-100 '>{post.caption}</p>
+        <p className='opacity-100 lg:opacity-0 lg:group-hover/card:opacity-100 group-hover/card:opacity-0 h-full transition-all duration-75 '>
+          {post.caption}
+        </p>
       </div>
       <div className='absolute top-1/2 transform -translate-y-1/2 right-0 flex flex-col items-center justify-center h-full w-12'>
         <Button

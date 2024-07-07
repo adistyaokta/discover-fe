@@ -8,3 +8,4 @@ export * from './SearchComponent';
 export * from './ThemeProvider';
 export * from './ThemeSwitcher';
 export * from './CommentCard';
+export * from './SideBar';

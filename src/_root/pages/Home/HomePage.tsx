@@ -32,7 +32,7 @@ export const HomePage = () => {
           <ScrollArea className='w-full min-h-[90%] h-screen lg:h-full lg:pr-5 overflow-y-auto'>
             <div className='grid grid-cols-1 gap-2'>
               {array?.map((post: IPostData, index: number) => (
-                <div key={`${post.id}-${index}`} className='first:mt-24 lg:first:mt-0 lg:last:mb-24'>
+                <div key={`${post.id}-${index}`} className='first:mt-20 lg:first:mt-0 lg:last:mb-24'>
                   <PostCard post={post} />
                 </div>
               ))}
@@ -42,7 +42,7 @@ export const HomePage = () => {
         </div>
       </div>
       <div className='w-1/3 h-full overflow-hidden border border-input border-y-0 border-r-0 hidden lg:flex flex-col justify-between gap-2'>
-        <SearchComponent />
+        <SearchComponent showTrending />
       </div>
     </div>
   );
