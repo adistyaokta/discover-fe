@@ -7,20 +7,19 @@ import { LoginValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 
 export const LoginForm = () => {
   const { toast } = useToast();
   const { mutateAsync: loginAccount, isPending: loading } = useLoginAccount();
   const navigate = useNavigate();
-  const { pathname } = useLocation();
 
   const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
     defaultValues: {
-      username: 'admin2',
-      password: 'admin2'
+      username: '',
+      password: ''
     }
   });
 

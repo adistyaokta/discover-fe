@@ -5,10 +5,10 @@ import { useToast } from '@/components/ui/use-toast';
 import { useCreateAccount, useLoginAccount } from '@/lib/react-query/queriesAndMutation';
 import { SignupValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import type { z } from 'zod';
 import { motion } from 'framer-motion';
+import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import type { z } from 'zod';
 
 export const SignupForm = () => {
   const { toast } = useToast();
