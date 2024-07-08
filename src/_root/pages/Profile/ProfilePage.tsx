@@ -36,11 +36,11 @@ export const ProfilePage = () => {
   }
 
   return (
-    <div className='w-full h-full overflow-hidden flex flex-col px-4 py-2'>
-      <div className='h-1/3'>
+    <div className='w-full h-full overflow-hidden'>
+      <div className='lg:h-1/3'>
         <HeroProfile user={user!} />
       </div>
-      <div className='h-1/12'>
+      <div className='h-36 lg:h-20'>
         <ProfileSection
           bio={user?.bio || ''}
           id={userId!}
@@ -49,16 +49,18 @@ export const ProfilePage = () => {
           following={user?.following}
         />
       </div>
-      <ScrollArea
-        scrollHideDelay={300}
-        className='w-full h-full flex flex-col items-center justify-center scroll-smooth py-1'
-      >
-        {posts?.map((post: IPostData) => (
-          <div key={post.id} className='first:mt-2 last:mt-2 my-2 w-1/2 mx-auto flex gap-10'>
-            <PostCard post={post} />
-          </div>
-        ))}
-      </ScrollArea>
+      <div className='min-h-1 lg:min-h-[90%] '>
+        <ScrollArea
+          scrollHideDelay={300}
+          className='w-full h-full lg:min-h-full flex flex-col items-center justify-center scroll-smooth py-1'
+        >
+          {posts?.map((post: IPostData) => (
+            <div key={post.id} className='first:mt-2 last:mt-2 my-2 w-full lg:w-1/2 mx-auto flex gap-10'>
+              <PostCard post={post} />
+            </div>
+          ))}
+        </ScrollArea>
+      </div>
     </div>
   );
 };

@@ -54,16 +54,18 @@ type ProfileSectionProps = {
 
 export const ProfileSection = ({ bio, stat, followers, following }: ProfileSectionProps) => {
   return (
-    <div className='w-full h-full border-b flex flex-row justify-start px-2 py-3'>
-      <div className='w-1/2 max-h-20 overflow-hidden p-2 flex items-start'>
+    <div className='w-full h-full border-b flex flex-col lg:flex-row justify-start px-2 py-3'>
+      <div className='w-full h-full lg:w-1/2 max-h-20 overflow-hidden justify-center lg:justify-start p-2 flex items-center'>
         <p className='text-pretty'>{bio}</p>
       </div>
-      <div className='w-1/2 px-2 py-1 items-center flex flex-row justify-end text-left gap-2'>
-        <div className='w-32 text-center'>{stat} Moments</div>
-        <Button variant={'ghost'} className='w-32 text-center'>
+      <div className='w-full max-h-20 lg:w-1/2 px-2 py-1 items-center flex flex-row justify-center lg:justify-end text-left gap-2'>
+        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
+          {stat} Moments
+        </Button>
+        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
           <FollowerModal follow={followers!} label='follower' />
         </Button>
-        <Button variant={'ghost'} className='w-32 text-center'>
+        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
           <FollowerModal follow={following!} label='following' />
         </Button>
       </div>

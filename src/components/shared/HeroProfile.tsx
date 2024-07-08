@@ -102,8 +102,8 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
   }
 
   return (
-    <div className='w-full h-full relative border-b flex flex-col justify-around '>
-      <div className='text-9xl h-full tracking-normal flex items-center'>{user?.name || ''}</div>
+    <div className='w-full h-full relative border-b flex flex-col justify-around'>
+      <div className='text-4xl lg:text-9xl h-full tracking-normal flex items-center'>{user?.name || ''}</div>
       <div className='w-full flex flex-row justify-between items-center p-2'>
         <div className='flex items-center gap-2'>
           <Avatar>
@@ -124,7 +124,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
         </div>
       </div>
       {validUser && (
-        <div className='absolute top-2 right-2 w-8 h-8 flex items-center justify-center group'>
+        <div className='absolute top-2 right-2 w-8 h-8 max-h-10 flex items-center justify-center group'>
           <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
             <DialogTrigger>
               <IoSettingsOutline size={20} />

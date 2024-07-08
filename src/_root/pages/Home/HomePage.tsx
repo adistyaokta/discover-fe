@@ -33,9 +33,7 @@ export const HomePage = () => {
             <ScrollArea className='h-full'>
               <div className='grid grid-cols-1 gap-2'>
                 {array?.map((post: IPostData, index: number) => (
-                  <div key={`${post.id}-${index}`} className=''>
-                    <PostCard post={post} />
-                  </div>
+                  <PostCard key={`${post.id}-${index}`} post={post} />
                 ))}
               </div>
               {hasNextPage && <div ref={ref} className='w-full h-10' />}
