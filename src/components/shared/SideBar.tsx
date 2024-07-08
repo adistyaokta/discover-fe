@@ -18,8 +18,7 @@ export const SideBar = () => {
   }
 
   return (
-    // <div className='w-full lg:w-16 lg:min-w-16 py-3 px-1 flex flex-row lg:flex-col items-center justify-between'>
-    <div className='absolute bottom-0 lg:left-0 lg:bottom-top-0 lg:h-full w-full lg:w-16 py-3 px-3 flex flex-row lg:flex-col justify-between items-end'>
+    <div className='h-full lg:h-full w-full lg:w-16 py-3 px-3 flex flex-row lg:flex-col justify-between items-end'>
       <ThemeSwitcher />
       <div className='bg-background w-1/2 lg:w-10 h-10 lg:h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
         <ul className='w-full h-full flex flex-row lg:flex-col justify-between gap-1 items-center '>
