@@ -20,14 +20,16 @@ export const PostDetailPage = () => {
   }
 
   return (
-    <div className='w-full h-full px-4 py-2 flex flex-row gap-1'>
-      <div className='w-2/3 border border-input rounded-md'>
+    <div className='w-full h-full lg:px-4 py-2 flex flex-col lg:flex-row gap-2'>
+      <div className='w-full lg:w-2/3 border border-input rounded-md'>
         <PostDetailForm post={post} />
       </div>
-      <ScrollArea className='w-1/3 border border-input border-y-0 border-r-0 px-4'>
-        <div className='flex flex-col gap-1'>
+      <ScrollArea className='w-full lg:w-1/3 lg:border lg:border-input lg:border-y-0 lg:border-r-0 px-2 lg:px-4'>
+        <div className='w-full max-w-full flex flex-col gap-1'>
           {comments.map((comment) => (
-            <CommentCard key={comment.id} comment={comment} postId={post.id} />
+            <div key={comment.id}>
+              <CommentCard comment={comment} postId={post.id} />
+            </div>
           ))}
         </div>
       </ScrollArea>
