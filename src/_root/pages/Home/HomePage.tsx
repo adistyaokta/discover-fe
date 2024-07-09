@@ -25,13 +25,13 @@ export const HomePage = () => {
   return (
     <div className='w-full h-full overflow-hidden'>
       <div className='w-full h-full flex flex-col lg:flex-row'>
-        <div className=' w-full lg:w-2/3 lg:flex flex-col'>
+        <div className='max-h-full w-full lg:w-2/3 lg:flex flex-col'>
           <div className='hidden lg:flex'>
             <PostForm />
           </div>
-          <div className='min-h-[90%]'>
-            <ScrollArea className='h-full'>
-              <div className='grid grid-cols-1 gap-2'>
+          <div className='h-full'>
+            <ScrollArea className='h-full overflow-hidden'>
+              <div className='grid grid-cols-1 gap-2 lg:pb-32'>
                 {array?.map((post: IPostData, index: number) => (
                   <PostCard key={`${post.id}-${index}`} post={post} />
                 ))}

@@ -103,7 +103,7 @@ export const HeroProfile = ({ user }: HeroProfileProps) => {
 
   return (
     <div className='w-full h-full relative border-b flex flex-col justify-around'>
-      <div className='text-4xl lg:text-9xl h-full tracking-normal flex items-center'>{user?.name || ''}</div>
+      <div className=' hidden text-4xl lg:text-9xl h-full tracking-normal lg:flex items-center'>{user?.name || ''}</div>
       <div className='w-full flex flex-row justify-between items-center p-2'>
         <div className='flex items-center gap-2'>
           <Avatar>

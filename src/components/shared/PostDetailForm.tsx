@@ -89,14 +89,15 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
         <div>Post Detail</div>
       </div>
       <div className='w-full bg-secondary flex justify-between items-center gap-2'>
-        <Link to={`/profile/${post?.author?.id}`} className='w-5/6 py-2 px-1  flex items-center gap-2 group'>
+        <Link to={`/profile/${post?.author?.id}`} className='w-5/6 py-2 px-1 flex items-center gap-2 group'>
           <Avatar>
             <AvatarImage src={post?.author.avaUrl} />
             <AvatarFallback>{getInitials(post?.author?.name || '')}</AvatarFallback>
           </Avatar>
-          <p className='font-bold group-hover:underline'>{post?.author?.name}</p>
-          <p className='text-secondary-foreground'>@{post?.author?.username}</p>
-          <p>• {multiFormatDateString(post?.createdAt.toString() || '')}</p>
+          <div className='w-fit px-2 flex flex-col justify-center'>
+            <p className='font-bold group-hover:underline'>{post?.author?.name}</p>
+            <p className='text-secondary-foreground'>@{post?.author?.username}</p>
+          </div>
         </Link>
 
         {validUser && (
@@ -112,7 +113,7 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
           </div>
         )}
       </div>
-      <div className='px-2 py-3 w-full flex flex-col justify-between'>
+      <div className='px-2 py-3 min-h-40 w-full flex flex-col justify-between'>
         <p>{post?.caption}</p>
       </div>
       {post?.media && (
@@ -120,7 +121,10 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
           <img alt='image-prev' className='w-1/2 object-cover rounded-3xl' src={post.media} />
         </div>
       )}
-      <p className='self-end px-2'>{formatDateString(post?.createdAt.toString()!)}</p>
+      <div className='px-2 py-1 flex justify-between text-xs lg:text-base'>
+        <p className=''>{multiFormatDateString(post?.createdAt.toString() || '')}</p>
+        <p className=''>{formatDateString(post?.createdAt.toString()!)}</p>
+      </div>
 
       <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
         <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id!)}>

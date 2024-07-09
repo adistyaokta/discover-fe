@@ -10,7 +10,7 @@ export const ExplorePage = () => {
   return (
     <div className='w-full h-full overflow-hidden relative'>
       <div className='w-full absolute top-0 z-10 opacity-25 lg:hidden'>
-        <SearchComponent showTrending={false} />
+        <SearchComponent showTrending={false} modal={true} />
       </div>
       <div className='w-full h-full flex flex-col '>
         <ScrollArea className='w-full min-h-full h-[calc(100dvh)] max-h-full overflow-hidden absolute inset-0 scroll-smooth'>
