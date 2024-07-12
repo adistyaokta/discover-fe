@@ -4,7 +4,6 @@ import { getInitials } from '@/app/utils/utils';
 import { useToast } from '@/components/ui/use-toast';
 import { useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
 import { FaComment, FaHeart, FaRegComment, FaRegHeart } from 'react-icons/fa';
-import { FaRetweet } from 'react-icons/fa6';
 import { Link, useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 import { Button } from '../ui/button';
