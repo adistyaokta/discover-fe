@@ -57,7 +57,7 @@ export const LoginForm = () => {
                 name='username'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel className='text-base font-outfit'>Username</FormLabel>
                     <FormControl>
                       <Input type='text' {...field} />
                     </FormControl>
@@ -70,7 +70,7 @@ export const LoginForm = () => {
                 name='password'
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel className='text-base font-outfit'>Password</FormLabel>
                     <FormControl>
                       <Input type='password' {...field} />
                     </FormControl>
