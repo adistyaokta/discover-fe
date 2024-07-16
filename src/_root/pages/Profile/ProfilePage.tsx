@@ -49,15 +49,10 @@ export const ProfilePage = () => {
           following={user?.following}
         />
       </div>
-      <div className='min-h-1 lg:max-h-full lg:min-h-[90%] lg:h-full'>
-        <ScrollArea
-          scrollHideDelay={300}
-          className='w-full h-full lg:min-h-full flex flex-col items-center justify-center scroll-smooth py-1 snap-y'
-        >
+      <div className=' overflow-hidden h-full flex-1'>
+        <ScrollArea scrollHideDelay={300} className='flex flex-col justify-center items-center gap-2 min-h-full h-full'>
           {posts?.map((post: IPostData) => (
-            <div key={post.id} className='snap-center first:mt-2 last:mt-2 my-2 w-full lg:w-1/2 mx-auto flex gap-10'>
-              <PostCard post={post} />
-            </div>
+            <PostCard post={post} key={post.id} className='my-1 last:mb-52' />
           ))}
         </ScrollArea>
       </div>

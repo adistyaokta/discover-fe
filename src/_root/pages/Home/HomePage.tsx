@@ -30,14 +30,14 @@ export const HomePage = () => {
           <div className='hidden lg:flex'>
             <PostForm />
           </div>
-          <div className='flex lg:hidden bg-red-900 mb-2 '>
+          <div className='flex lg:hidden mb-2 '>
             <PostDialog />
           </div>
           <div className='h-full'>
             <ScrollArea className='h-full overflow-hidden'>
-              <div className='grid grid-cols-1 gap-2 lg:pb-32'>
+              <div className='grid grid-cols-1 gap-2 lg:pb-[8rem]'>
                 {array?.map((post: IPostData, index: number) => (
-                  <PostCard key={`${post.id}-${index}`} post={post} className='last:mb-16' />
+                  <PostCard key={`${post.id}-${index}`} post={post} className='last:mb-16 lg:last:mb-0' />
                 ))}
               </div>
               {hasNextPage && <div ref={ref} className='w-full h-10' />}

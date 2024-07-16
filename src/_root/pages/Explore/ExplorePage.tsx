@@ -12,11 +12,11 @@ export const ExplorePage = () => {
       <div className='w-full absolute top-0 z-10 opacity-25 lg:hidden'>
         <SearchComponent showTrending={false} modal={true} />
       </div>
-      <div className='w-full h-full flex flex-col '>
-        <ScrollArea className='w-full min-h-full h-[calc(100dvh)] max-h-full overflow-hidden absolute inset-0 scroll-smooth'>
-          <div className='w-full flex flex-wrap'>
+      <div className='w-full h-full flex flex-col'>
+        <ScrollArea className='w-full min-h-full h-[calc(100dvh)] max-h-full overflow-y-scroll snap-y snap-mandatory scroll-smooth'>
+          <div className='w-full flex flex-col'>
             {posts?.map((post: IPostData) => (
-              <div key={post.id} className='w-full lg:w-1/6 h-[calc(100dvh)] lg:h-96 p-2'>
+              <div key={post.id} className='w-full h-[calc(100dvh)] lg:h-96 p-2 snap-start'>
                 <PostMedia post={post} />
               </div>
             ))}

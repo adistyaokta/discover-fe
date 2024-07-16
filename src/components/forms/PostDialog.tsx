@@ -27,7 +27,7 @@ export const PostDialog = ({ post, label }: PostFormProps) => {
   const { mutateAsync: uploadImage } = useUploadImage();
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const [dialogOpen, setDialogOpen] = useState<boolean>(true);
+  const [dialogOpen, setDialogOpen] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof CreatePostValidation>>({
     resolver: zodResolver(CreatePostValidation),
