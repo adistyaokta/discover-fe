@@ -5,8 +5,8 @@ import { CreatePostValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { MdDeleteOutline } from 'react-icons/md';
 import { RiLoader5Fill } from 'react-icons/ri';
-import { useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 import { Button } from '../ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
@@ -14,7 +14,6 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { useToast } from '../ui/use-toast';
-import { MdDeleteOutline } from 'react-icons/md';
 
 type PostFormProps = {
   post?: IPostData;
@@ -25,7 +24,6 @@ export const PostDialog = ({ post, label }: PostFormProps) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
   const { user } = useAuthStore();
   const { toast } = useToast();
-  const navigate = useNavigate();
   const { mutateAsync: uploadImage } = useUploadImage();
   const [imagePreview, setImagePreview] = useState<File | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
