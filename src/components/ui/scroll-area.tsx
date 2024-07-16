@@ -2,19 +2,39 @@
 
 import * as React from 'react';
 import * as ScrollAreaPrimitive from '@radix-ui/react-scroll-area';
-
 import { cn } from '@/lib/utils';
+import { useAppStore } from '@/app/store/appStore';
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof ScrollAreaPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
-    <ScrollAreaPrimitive.Viewport className='h-full w-full rounded-[inherit]'>{children}</ScrollAreaPrimitive.Viewport>
-    <ScrollBar />
-    <ScrollAreaPrimitive.Corner />
-  </ScrollAreaPrimitive.Root>
-));
+>(({ className, children, ...props }, ref) => {
+  const { setScrolling } = useAppStore();
+
+  const scrollTimeoutRef = React.useRef<NodeJS.Timeout | null>(null);
+
+  const handleScroll = () => {
+    setScrolling(true);
+
+    if (scrollTimeoutRef.current) {
+      clearTimeout(scrollTimeoutRef.current);
+    }
+
+    scrollTimeoutRef.current = setTimeout(() => {
+      setScrolling(false);
+    }, 1500);
+  };
+
+  return (
+    <ScrollAreaPrimitive.Root ref={ref} className={cn('relative overflow-hidden', className)} {...props}>
+      <ScrollAreaPrimitive.Viewport onScroll={handleScroll} className='h-full w-full rounded-[inherit]'>
+        {children}
+      </ScrollAreaPrimitive.Viewport>
+      <ScrollBar />
+      <ScrollAreaPrimitive.Corner />
+    </ScrollAreaPrimitive.Root>
+  );
+});
 ScrollArea.displayName = ScrollAreaPrimitive.Root.displayName;
 
 const ScrollBar = React.forwardRef<

@@ -1,26 +1,20 @@
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuthStore } from '../app/store';
 import { SideBar } from '@/components/shared';
+import { useAppStore } from '@/app/store/appStore';
 
 const RootLayout = () => {
   const { isAuthenticated } = useAuthStore();
+  const { isScrolling } = useAppStore();
 
   return (
-    <div className='w-screen h-dvh relative'>
-      <div className='h-full w-full flex flex-col lg:flex-row-reverse justify-between p-2 pt-0 lg:pt-2 lg:pr-0'>
-        <section className='flex-1'>
-          {isAuthenticated ? (
-            <div className='h-full w-full flex px-1 py-2 border-2 border-t-0 lg:border-t-2 lg:border-r-0 rounded-md'>
-              <Outlet />
-            </div>
-          ) : (
-            <Navigate to={'/sign-in'} />
-          )}
-        </section>
-        <div className='sticky bottom-0 lg:left-0 lg:h-full lg:w-16 lg:max-h-dvh lg:overflow-hidden'>
-          <SideBar />
-        </div>
+    <div className='h-dvh w-screen flex flex-col relative overflow-hidden'>
+      <div className=' min-h-full h-1 flex flex-col overflow-y-scroll gap-5 py-2 pb-0'>
+        {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </div>
+      <SideBar
+        classNames={`absolute bottom-0 h-16 ${isScrolling ? 'translate-y-16' : 'translate-y-0'} transition-all duration-300`}
+      />
     </div>
   );
 };

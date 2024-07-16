@@ -1,4 +1,5 @@
 import type { IPostData } from '@/app/type';
+import { PostDialog } from '@/components/forms/PostDialog';
 import { PostForm } from '@/components/forms/PostForm';
 import { PostCard, SearchComponent } from '@/components/shared';
 import { ScrollArea } from '@/components/ui/scroll-area';
@@ -25,15 +26,18 @@ export const HomePage = () => {
   return (
     <div className='w-full h-full overflow-hidden'>
       <div className='w-full h-full flex flex-col lg:flex-row'>
-        <div className='max-h-full w-full lg:w-2/3 lg:flex flex-col'>
+        <div className='max-h-full w-full lg:w-2/3 lg:flex flex-col '>
           <div className='hidden lg:flex'>
             <PostForm />
+          </div>
+          <div className='flex lg:hidden bg-red-900 mb-2 '>
+            <PostDialog />
           </div>
           <div className='h-full'>
             <ScrollArea className='h-full overflow-hidden'>
               <div className='grid grid-cols-1 gap-2 lg:pb-32'>
                 {array?.map((post: IPostData, index: number) => (
-                  <PostCard key={`${post.id}-${index}`} post={post} />
+                  <PostCard key={`${post.id}-${index}`} post={post} className='last:mb-16' />
                 ))}
               </div>
               {hasNextPage && <div ref={ref} className='w-full h-10' />}

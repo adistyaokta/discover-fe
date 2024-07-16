@@ -8,7 +8,11 @@ import { ThemeSwitcher } from './ThemeSwitcher';
 import { useAuthStore } from '@/app/store';
 import { useTheme } from '.';
 
-export const SideBar = () => {
+type SideBarProps = {
+  classNames?: string;
+};
+
+export const SideBar = ({ classNames }: SideBarProps) => {
   const { logout, user } = useAuthStore();
   const { theme } = useTheme();
   const { pathname } = useLocation();
@@ -18,7 +22,9 @@ export const SideBar = () => {
   }
 
   return (
-    <div className='h-full lg:h-full w-full lg:w-16 py-3 px-3 flex flex-row lg:flex-col justify-between items-end'>
+    <div
+      className={`lg:h-full w-full lg:w-16 py-3 px-3 flex flex-row lg:flex-col justify-between items-end ${classNames}`}
+    >
       <ThemeSwitcher />
       <div className='bg-background w-1/2 lg:w-10 h-10 lg:h-1/4 border border-input hover:bg-accent hover:text-accent-foreground rounded-md'>
         <ul className='w-full h-full flex flex-row lg:flex-col justify-between gap-1 items-center '>
