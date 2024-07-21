@@ -42,6 +42,7 @@ export const HomePage = () => {
                 ))}
               </div>
               {hasNextPage && <div ref={ref} className='w-full h-10' />}
+              {!hasNextPage && <div className='w-full h-48' />}
             </ScrollArea>
           </div>
         </div>

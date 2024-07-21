@@ -51,11 +51,11 @@ export const ProfilePage = () => {
         />
       </div>
       <div className='w-full overflow-hidden h-full flex justify-center items-center'>
-        <ScrollArea scrollHideDelay={300} className='flex flex-col min-h-full h-full lg:pb-96'>
+        <ScrollArea scrollHideDelay={300} className='flex flex-col w-full lg:w-1/2 min-h-full h-full lg:pb-96'>
           {posts?.map((post: IPostData) => (
             <PostCard post={post} key={post.id} className='my-2 last:mb-96' />
           ))}
-          <div className='my-52 bg-green-600' />
+          <div className='my-40' />
         </ScrollArea>
       </div>
     </div>

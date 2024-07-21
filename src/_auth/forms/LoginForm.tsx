@@ -6,8 +6,8 @@ import { useLoginAccount } from '@/lib/react-query/queriesAndMutation';
 import { LoginValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { Loader } from 'lucide-react';
 import { useForm } from 'react-hook-form';
+import { RiLoader5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 
@@ -80,7 +80,7 @@ export const LoginForm = () => {
                 )}
               />
               <Button type='submit' className='w-1/2 h-10 mx-auto'>
-                {loading ? <Loader /> : 'Login'}
+                {loading ? <RiLoader5Fill className='animate-spin' /> : 'Login'}
               </Button>
             </motion.div>
           </form>

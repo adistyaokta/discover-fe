@@ -60,11 +60,13 @@ export const PostMedia = ({ post }: PostMediaProps) => {
             <AvatarFallback>{getInitials(post.author?.name || '')}</AvatarFallback>
           </Avatar>
           <div className='flex flex-col'>
-            <p className='font-bold text-sm group-hover:underline'>{post.author?.name}</p>
-            <p className='text-secondary-foreground text-xs'>@{post.author?.username}</p>
+            <p className='font-bold text-sm group-hover:underline text-secondary dark:text-foreground'>
+              {post.author?.name}
+            </p>
+            <p className=' text-xs text-secondary dark:text-foreground'>@{post.author?.username}</p>
           </div>
         </Link>
-        <p className='opacity-100 lg:opacity-0 lg:group-hover/card:opacity-100 group-hover/card:opacity-0 h-full transition-all duration-75 '>
+        <p className='opacity-100 lg:opacity-0 lg:group-hover/card:opacity-100 group-hover/card:opacity-0 h-full transition-all duration-75 text-secondary dark:text-foreground'>
           {post.caption}
         </p>
       </div>

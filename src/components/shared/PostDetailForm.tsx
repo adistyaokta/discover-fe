@@ -107,7 +107,9 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
                 <LuMenuSquare size={25} />
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => handleDeletePost(id!)}>Delete Post</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => handleDeletePost(id!)} className='cursor-pointer'>
+                  Delete Post
+                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

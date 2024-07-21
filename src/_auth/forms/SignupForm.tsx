@@ -7,6 +7,7 @@ import { SignupValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
+import { RiLoader5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
 import type { z } from 'zod';
 
@@ -109,7 +110,7 @@ export const SignupForm = () => {
                 )}
               />
               <Button type='submit' className='w-1/2 mx-auto'>
-                {loading ? 'Loading' : 'Sign Up'}
+                {loading ? <RiLoader5Fill className='animate-spin' /> : 'Sign Up'}
               </Button>
             </motion.div>
           </form>

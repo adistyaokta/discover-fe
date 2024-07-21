@@ -6,10 +6,9 @@ import { useGetPostWithMedia } from '@/lib/react-query/queriesAndMutation';
 
 export const ExplorePage = () => {
   const { data: posts } = useGetPostWithMedia();
-
   return (
     <div className='w-full h-full overflow-hidden relative'>
-      <div className='w-full absolute top-0 z-10 opacity-25 lg:hidden'>
+      <div className='w-full fixed top-0 left-0 z-10 mx-auto lg:hidden'>
         <SearchComponent showTrending={false} modal={true} />
       </div>
       <div className='w-full h-full flex flex-col lg:flex-row'>

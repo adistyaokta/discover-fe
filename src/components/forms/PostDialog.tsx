@@ -14,6 +14,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { useToast } from '../ui/use-toast';
+import { IoAdd } from 'react-icons/io5';
 
 type PostFormProps = {
   post?: IPostData;
@@ -71,7 +72,9 @@ export const PostDialog = ({ post, label }: PostFormProps) => {
 
   return (
     <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-      <DialogTrigger className='w-full h-10 font-outfit bg-accent'>What Are You Discovering Today?</DialogTrigger>
+      <DialogTrigger className='w-full h-10 flex items-center rounded-md font-outfit bg-accent'>
+        <IoAdd size={25} /> What Are You Discovering Today?
+      </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Share your discovery!</DialogTitle>

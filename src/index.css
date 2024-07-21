@@ -6,9 +6,6 @@
 @tailwind components;
 @tailwind utilities;
 
-::selection {
-  background: #520000;
-}
   
 @layer base {
   

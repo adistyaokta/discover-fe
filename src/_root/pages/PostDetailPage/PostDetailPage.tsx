@@ -1,4 +1,5 @@
 import { CommentCard, PostDetailForm } from '@/components/shared';
+import { Loader } from '@/components/shared/Loader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useGetPostDetail } from '@/lib/react-query/queriesAndMutation';
 import { useParams } from 'react-router-dom';
@@ -12,7 +13,7 @@ export const PostDetailPage = () => {
   const comments = post?.comments || [];
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   if (isError || !post) {

@@ -55,18 +55,17 @@ export const PostCard = ({ post, className }: PostCardProps) => {
           <p className='font-bold group-hover:underline'>{author?.name}</p>
           <p className='text-secondary-foreground'>@{author?.username}</p>
         </Link>
-        {/* <p>• {multiFormatDateString(post.createdAt.toString())}</p> */}
       </CardContent>
 
       <Link to={`/post/${post.id}`} className='h-full min-h-24 w-full flex flex-col'>
         <CardContent className='flex-1 w-full h-full text-pretty items-start overflow-hidden'>
-          <div className='h-full min-h-20 overflow-hidden'>
+          <div className='h-full min-h-10 lg:min-h-16 overflow-hidden'>
             <ScrollArea className='h-full overflow-y-auto'>{post.caption}</ScrollArea>
           </div>
         </CardContent>
         {post.media && (
-          <div className='w-1/2 mx-auto h-auto flex justify-center items-center bg-transparent'>
-            <img alt='image-prev' className='w-full h-auto rounded-3xl' src={post.media} />
+          <div className='w-full lg:w-10/12 px-1 mx-auto h-auto flex justify-center items-center bg-transparent'>
+            <img alt='image-prev' className='w-full h-auto rounded-md' src={post.media} />
           </div>
         )}
       </Link>
@@ -75,9 +74,6 @@ export const PostCard = ({ post, className }: PostCardProps) => {
           {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
           {post?.likedBy.length}
         </Button>
-        {/* <Button className='px-2' variant={'ghost'}>
-          <FaRetweet size={23} />
-        </Button> */}
         <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleAddComment(post.id)}>
           {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
           {post?.comments.length}
