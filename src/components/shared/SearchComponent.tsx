@@ -59,16 +59,21 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
                   </div>
                 </label>
               </div>
-              <div className={'h-full w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute top-16 z-50 '}>
+              <div
+                className={
+                  'min-h-full h-1 overflow-y-scroll bg-teal-700 w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute top-16 z-50 '
+                }
+              >
                 {searchedPosts?.length === 0 && (
                   <div className='text-muted-foreground italic text-center'>No result found</div>
                 )}
                 {searchValue &&
                   searchedPosts?.map((post) => (
-                    <div key={post.id} className='w-full'>
+                    <div key={post.id} className='w-full h-full text-left bg-red-800'>
                       <PostCard post={post} />
                     </div>
                   ))}
+                <div className='mb-20' />
                 {!searchValue && !searchedPosts && (
                   <>
                     {showTrending && (
@@ -95,7 +100,7 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
     );
 
   return (
-    <div className='h-full relative py-2'>
+    <div className='h-full overflow-hidden relative py-2'>
       <div className='w-full h-12 px-2'>
         <label htmlFor='search-box' className='flex flex-row h-full w-full'>
           <input
@@ -127,7 +132,7 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
           </div>
         </label>
       </div>
-      <div className={'h-full w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
+      <div className={'w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
         {searchedPosts?.length === 0 && <div className='text-muted-foreground italic text-center'>No result found</div>}
         {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
         {!searchValue && !searchedPosts && (
