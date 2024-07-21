@@ -44,7 +44,7 @@ export const PostMedia = ({ post }: PostMediaProps) => {
 
   return (
     <div
-      className='w-full h-full bg-red-900 rounded-lg border border-input bg-cover bg-center flex flex-col flex-grow justify-end cursor-pointer relative group/card overflow-hidden'
+      className='w-full h-full rounded-lg border border-input bg-cover bg-center flex flex-col flex-grow justify-end cursor-pointer relative group/card overflow-hidden'
       style={{ backgroundImage: `url(${post.media})` }}
       onClick={(e) => {
         const target = e.target as HTMLElement;

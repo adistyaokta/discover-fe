@@ -9,7 +9,7 @@ const RootLayout = () => {
 
   return (
     <div className='h-dvh w-screen flex flex-col relative overflow-hidden'>
-      <div className=' min-h-full h-1 flex flex-col lg:flex-row overflow-y-scroll lg:overflow-hidden gap-5 py-2 pb-0 lg:pl-20'>
+      <div className=' min-h-full h-1 flex flex-col lg:flex-row overflow-y-scroll lg:overflow-hidden gap-5 py-2 pb-0 lg:pb-2 lg:pl-20 '>
         {isAuthenticated ? <Outlet /> : <Navigate to={'/sign-in'} />}
       </div>
       <SideBar
