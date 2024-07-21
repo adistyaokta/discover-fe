@@ -28,7 +28,7 @@ const FollowerModal = ({ follow, label }: FollowerModalProps) => {
             >
               <Avatar>
                 <AvatarImage src={foll?.avaUrl} className='aspect-square' />
-                <AvatarFallback>{getInitials(foll?.name!)}</AvatarFallback>
+                <AvatarFallback>{getInitials(foll?.name ?? '')}</AvatarFallback>
               </Avatar>
               <div className='flex flex-col justify-center items-center w-full'>
                 <p className='text-lg font-bold font-outfit w-full'>@{foll?.username!}</p>

@@ -2,6 +2,7 @@ import type { IPostData } from '@/app/type';
 import { PostDialog } from '@/components/forms/PostDialog';
 import { PostForm } from '@/components/forms/PostForm';
 import { PostCard, SearchComponent } from '@/components/shared';
+import { Loader } from '@/components/shared/Loader';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useInfinitePosts } from '@/lib/react-query/queriesAndMutation';
 import { useEffect } from 'react';
@@ -20,7 +21,7 @@ export const HomePage = () => {
   const array = pages?.pages.flatMap((page) => page.data);
 
   if (isPending) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   return (

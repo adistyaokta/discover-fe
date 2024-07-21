@@ -6,6 +6,7 @@ import { useGetPostByAuthor, useGetUserDetail } from '@/lib/react-query/queriesA
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
+import { Loader } from '@/components/shared/Loader';
 
 export const ProfilePage = () => {
   const { userId } = useParams();
@@ -28,7 +29,7 @@ export const ProfilePage = () => {
   }, [userId, refetchUser, refetchPosts]);
 
   if (userLoading || postsLoading) {
-    return <p>Loading...</p>;
+    return <Loader />;
   }
 
   if (userError || postsError) {
