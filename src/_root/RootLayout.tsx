@@ -11,7 +11,7 @@ const RootLayout = () => {
     <div className='h-dvh w-screen flex flex-col relative overflow-hidden'>
       <div className=' min-h-full h-1 flex flex-col lg:flex-row overflow-y-scroll lg:overflow-hidden gap-5 py-2 pb-0 lg:pb-2 lg:pl-20 px-2 md:px-0'>
         {isAuthenticated ? (
-          <div className='w-full lg:border lg:border-r-0 lg:border-primary rounded-lg rounded-r-none px-1'>
+          <div className='w-full lg:border lg:border-r-0 lg:border-input rounded-lg rounded-r-none px-1'>
             <Outlet />
           </div>
         ) : (
