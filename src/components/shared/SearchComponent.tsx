@@ -61,7 +61,7 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
               </div>
               <div
                 className={
-                  'min-h-full h-1 overflow-y-scroll bg-teal-700 w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute top-16 z-50 '
+                  'min-h-full h-1 overflow-y-scroll w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute top-16 z-50 '
                 }
               >
                 {searchedPosts?.length === 0 && (
@@ -69,7 +69,7 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
                 )}
                 {searchValue &&
                   searchedPosts?.map((post) => (
-                    <div key={post.id} className='w-full h-full text-left bg-red-800'>
+                    <div key={post.id} className='w-full h-full text-left'>
                       <PostCard post={post} />
                     </div>
                   ))}
