@@ -1,6 +1,6 @@
 import useDebounce from '@/app/utils/utils';
 import { useGetMostLikedPost, useSearchPosts } from '@/lib/react-query/queriesAndMutation';
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FaSearch } from 'react-icons/fa';
 import { IoMdCloseCircleOutline } from 'react-icons/io';
 import { ScrollArea } from '../ui/scroll-area';
