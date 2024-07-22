@@ -14,11 +14,13 @@ import { Input } from '../ui/input';
 import { Textarea } from '../ui/textarea';
 import { useToast } from '../ui/use-toast';
 import { MdDeleteOutline } from 'react-icons/md';
+import { LuImagePlus } from 'react-icons/lu';
 
 type PostFormProps = {
   post?: IPostData;
   label?: string;
 };
+
 export const PostForm = ({ post, label }: PostFormProps) => {
   const { mutateAsync: createPost, isPending: isLoadingCreate } = useCreatePost();
   const { user } = useAuthStore();
@@ -107,25 +109,33 @@ export const PostForm = ({ post, label }: PostFormProps) => {
           )}
         />
 
-        <div className='h-full flex flex-col gap-2 items-center justify-between py-1'>
+        <div className='h-full flex flex-col gap-2 items-center justify-between py-1 cursor-pointer'>
           <FormField
             control={form.control}
             name='media'
             render={() => (
-              <FormItem className='h-1/2'>
+              <FormItem className='h-1/2 border border-input rounded-md  cursor-pointer'>
                 <FormControl>
-                  <Input
-                    ref={inputRef}
-                    className='h-full'
-                    type='file'
-                    accept='images/*'
-                    onChange={(event) => {
-                      const file = event.target.files?.[0];
-                      if (file) {
-                        setImagePreview(file);
-                      }
-                    }}
-                  />
+                  <div className='flex w-full h-full justify-center items-center relative'>
+                    {/* Visible container */}
+                    <div className='min-w-40 w-full h-full flex items-center justify-center gap-4'>
+                      <LuImagePlus size={25} className='cursor-pointer ' />
+                    </div>
+
+                    {/* Hidden input */}
+                    <Input
+                      ref={inputRef}
+                      className='absolute inset-0 opacity-0 w-full h-full cursor-pointer'
+                      type='file'
+                      accept='images/*'
+                      onChange={(event) => {
+                        const file = event.target.files?.[0];
+                        if (file) {
+                          setImagePreview(file);
+                        }
+                      }}
+                    />
+                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>

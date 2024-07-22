@@ -34,7 +34,7 @@ const AuthLayout = () => {
               </motion.div>
             </div>
 
-            <div className='h-1/2 w-full'>
+            <div className='h-full m-2 lg:h-1/2 w-full'>
               <Outlet key={pathname} />
             </div>
 
@@ -48,6 +48,10 @@ const AuthLayout = () => {
                 </Link>
               </p>
             </div>
+            <p className='text-muted-foreground mt-auto text-xs w-full text-center italic'>
+              This project is intended solely for recreational purposes; please refrain from disclosing any confidential
+              or significant information here.
+            </p>
           </section>
         </>
       )}

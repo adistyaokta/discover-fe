@@ -12,13 +12,13 @@ export const ProfilePage = () => {
   const { userId } = useParams();
   const {
     data: user,
-    isLoading: userLoading,
+    isPending: userLoading,
     isError: userError,
     refetch: refetchUser
   } = useGetUserDetail(parseInt(userId!));
   const {
     data: posts,
-    isLoading: postsLoading,
+    isPending: postsLoading,
     isError: postsError,
     refetch: refetchPosts
   } = useGetPostByAuthor(parseInt(userId!));
@@ -33,7 +33,7 @@ export const ProfilePage = () => {
   }
 
   if (userError || postsError) {
-    return <p>Error fetching data</p>;
+    return <p>Error fetching data, please log out</p>;
   }
 
   return (

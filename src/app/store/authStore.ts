@@ -6,6 +6,7 @@ type AuthStore = {
   user: IUser | null;
   token: string | null;
   isAuthenticated: boolean;
+  isDemo?: boolean;
   login: (user: IUser, token: string) => Promise<void>;
   logout: () => Promise<void>;
   signup: (user: IUser, token: string) => Promise<void>;

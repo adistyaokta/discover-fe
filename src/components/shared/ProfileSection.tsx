@@ -14,23 +14,30 @@ type FollowerModalProps = {
 const FollowerModal = ({ follow, label }: FollowerModalProps) => {
   return (
     <Dialog aria-describedby={`${label}-modal`}>
-      <DialogTrigger className='capitalize'>
-        {follow.length} {label}
+      <DialogTrigger>
+        <Button className='w-24 lg:w-32 capitalize font-outfit text-base' variant={'ghost'}>
+          {follow.length} {follow.length === 1 ? label : `${label}s`}
+        </Button>
       </DialogTrigger>
-      <DialogContent>
+
+      <DialogContent id='follower-modal'>
         <DialogHeader>
           <DialogTitle className='capitalize flex flex-col gap-3 py-2 text-center'>{label}</DialogTitle>
           {follow?.map((foll) => (
             <Link
               key={foll?.id}
               to={`/profile/${foll?.id}`}
-              className='flex items-center justify-start gap-4 px-1 rounded-md hover:bg-secondary'
+              onClick={() => {
+                const dial = document.getElementById('follower-modal') as HTMLDialogElement;
+                dial.close();
+              }}
+              className='flex items-center justify-start gap-2 lg:gap-4 p-1 rounded-md hover:bg-secondary'
             >
               <Avatar>
                 <AvatarImage src={foll?.avaUrl} className='aspect-square' />
                 <AvatarFallback>{getInitials(foll?.name ?? '')}</AvatarFallback>
               </Avatar>
-              <div className='flex flex-col justify-center items-center w-full'>
+              <div className=' h-full flex flex-col text-left items-center'>
                 <p className='text-lg font-bold font-outfit w-full'>@{foll?.username!}</p>
                 <p className='text-lg font-outfit w-full'>{foll?.name!}</p>
               </div>
@@ -59,15 +66,11 @@ export const ProfileSection = ({ bio, stat, followers, following }: ProfileSecti
         <p className='text-pretty'>{bio}</p>
       </div>
       <div className='w-full max-h-20 lg:w-1/2 px-2 py-1 items-center flex flex-row justify-center lg:justify-end text-left gap-2'>
-        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
-          {stat} Moments
-        </Button>
-        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
-          <FollowerModal follow={followers!} label='follower' />
-        </Button>
-        <Button variant={'ghost'} className='w-24 lg:w-32 text-center'>
-          <FollowerModal follow={following!} label='following' />
-        </Button>
+        <p className='w-24 lg:w-32 text-center font-outfit text-base'>
+          {stat} {stat === 1 ? 'Post' : 'Posts'}
+        </p>
+        <FollowerModal follow={followers!} label='follower' />
+        <FollowerModal follow={following!} label='following' />
       </div>
     </div>
   );

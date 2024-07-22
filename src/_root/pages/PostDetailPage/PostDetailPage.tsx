@@ -25,7 +25,7 @@ export const PostDetailPage = () => {
       <div className='w-full lg:w-2/3 border border-input rounded-md'>
         <PostDetailForm post={post} />
       </div>
-      <ScrollArea className='w-full lg:w-1/3 lg:border lg:border-input lg:border-y-0 lg:border-r-0 px-2 lg:px-4'>
+      <ScrollArea className='min-h-full h-1  w-full lg:w-1/3 lg:border lg:border-input lg:border-y-0 lg:border-r-0 lg:px-4'>
         <div className='w-full max-w-full flex flex-col gap-1'>
           {comments.map((comment) => (
             <div key={comment.id}>

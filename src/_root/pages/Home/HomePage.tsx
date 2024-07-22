@@ -47,7 +47,7 @@ export const HomePage = () => {
           </div>
         </div>
         <div className='hidden w-1/3 lg:flex px-3'>
-          <div className='w-full border-secondary border-l-2'>
+          <div className='w-full'>
             <SearchComponent showTrending />
           </div>
         </div>

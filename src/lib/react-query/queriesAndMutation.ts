@@ -7,7 +7,6 @@ import {
   createPost,
   deleteComment,
   deletePost,
-  // editPost,
   editUser,
   followUser,
   getComment,
@@ -16,7 +15,6 @@ import {
   getPostByAuthor,
   getPostDetail,
   getPostWithMedia,
-  // getRandomPosts,
   getRecentPosts,
   getUserDetail,
   likePost,
@@ -170,20 +168,6 @@ export const useSearchPosts = (searchTerm: string) => {
     enabled: !!searchTerm
   });
 };
-
-// export const useEditPost = () => {
-//   const queryClient = useQueryClient();
-
-//   return useMutation({
-//     mutationFn: (param: IUpdatePostParam) => editPost(param),
-//     onSuccess: (data) => {
-//       return data;
-//     },
-//     onError: (data) => {
-//       return data;
-//     }
-//   });
-// };
 
 export const useDeletePost = () => {
   const queryClient = useQueryClient();

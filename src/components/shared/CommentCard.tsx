@@ -40,7 +40,7 @@ export const CommentCard = ({ comment, postId }: CommentCardProps) => {
             <AvatarImage src={comment?.author?.avaUrl} />
             <AvatarFallback>{getInitials(comment?.author?.name || '')}</AvatarFallback>
           </Avatar>
-          <div className='px-2 py-1 flex flex-col justify-between text-xs lg:text-base'>
+          <div className='px-2 py-1 flex flex-col justify-between text-sm lg:text-base'>
             <p className='font-bold group-hover:underline'>{comment?.author?.name}</p>
             <p className='text-secondary-foreground'>@{comment?.author?.username}</p>
           </div>

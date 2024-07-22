@@ -114,10 +114,6 @@ export const SignupForm = () => {
               </Button>
             </motion.div>
           </form>
-          <p className='text-muted-foreground text-xs w-1/2 text-center italic'>
-            This project is intended solely for recreational purposes; please refrain from disclosing any confidential
-            or significant information here.
-          </p>
         </div>
       </Form>
     </div>
