@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/components/ui/use-toast';
@@ -6,6 +7,7 @@ import { useLoginAccount } from '@/lib/react-query/queriesAndMutation';
 import { LoginValidation } from '@/lib/validation';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RiLoader5Fill } from 'react-icons/ri';
 import { useNavigate } from 'react-router-dom';
@@ -15,6 +17,7 @@ export const LoginForm = () => {
   const { toast } = useToast();
   const { mutateAsync: loginAccount, isPending: loading } = useLoginAccount();
   const navigate = useNavigate();
+  const [useDemo, setUseDemo] = useState(false);
 
   const form = useForm<z.infer<typeof LoginValidation>>({
     resolver: zodResolver(LoginValidation),
@@ -84,6 +87,23 @@ export const LoginForm = () => {
               </Button>
             </motion.div>
           </form>
+          <div className='flex justify-center items-center gap-2'>
+            <Checkbox id='demo-checkbox' onClick={() => setUseDemo(!useDemo)} />
+            <div className='grid gap-1.5 leading-none'>
+              <label
+                htmlFor='demo-checkbox'
+                className='text-sm font-medium font-outfit leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70'
+              >
+                Use demo account?
+              </label>
+            </div>
+          </div>
+          <div
+            className={`flex flex-col text-muted-foreground my-5 text-center font-outfit italic ${!useDemo && 'opacity-0'} transition-all duration-300`}
+          >
+            <p>username: discover-demo</p>
+            <p>password: demo12345</p>
+          </div>
         </div>
       </Form>
     </div>
