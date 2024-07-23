@@ -209,6 +209,9 @@ export const useLikePost = () => {
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
       });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
+      });
     },
     onError: (data) => {
       return data;
@@ -239,6 +242,9 @@ export const useUnlikePost = () => {
       });
       queryClient.invalidateQueries({
         queryKey: [QUERY_KEYS.GET_MOST_LIKED_POSTS]
+      });
+      queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
       });
     },
     onError: (data) => {

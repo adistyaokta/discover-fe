@@ -13,6 +13,7 @@ export async function getRecentPosts() {
 export async function getInfinitePosts({ pageParam = 1 }) {
   try {
     const response = await useHttpGet<any>(`/posts/infinite?cursor=${pageParam}`);
+    console.log(response.data);
     return { data: response.data.data, nextCursor: response.data.nextCursor };
   } catch (error: any) {
     return Promise.reject(error.response?.data?.message || error.message || 'Unable to get data');
