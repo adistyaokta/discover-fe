@@ -12,6 +12,7 @@ import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Textarea } from '../ui/textarea';
 import { useToast } from '../ui/use-toast';
+import { ScrollArea } from '../ui/scroll-area';
 
 type PostDetailProps = {
   post: IPostData;
@@ -88,80 +89,82 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
         </Link>
         <div>Post Detail</div>
       </div>
-      <div className='w-full bg-secondary flex justify-between items-center gap-2'>
-        <Link to={`/profile/${post?.author?.id}`} className='w-5/6 py-2 px-1 flex items-center gap-2 group'>
-          <Avatar>
-            <AvatarImage src={post?.author.avaUrl} />
-            <AvatarFallback>{getInitials(post?.author?.name || '')}</AvatarFallback>
-          </Avatar>
-          <div className='w-fit px-2 flex flex-col justify-center'>
-            <p className='font-bold group-hover:underline'>{post?.author?.name}</p>
-            <p className='text-secondary-foreground'>@{post?.author?.username}</p>
-          </div>
-        </Link>
+      <ScrollArea>
+        <div className='w-full bg-secondary flex justify-between items-center gap-2'>
+          <Link to={`/profile/${post?.author?.id}`} className='w-5/6 py-2 px-1 flex items-center gap-2 group'>
+            <Avatar>
+              <AvatarImage src={post?.author.avaUrl} />
+              <AvatarFallback>{getInitials(post?.author?.name || '')}</AvatarFallback>
+            </Avatar>
+            <div className='w-fit px-2 flex flex-col justify-center'>
+              <p className='font-bold group-hover:underline'>{post?.author?.name}</p>
+              <p className='text-secondary-foreground'>@{post?.author?.username}</p>
+            </div>
+          </Link>
 
-        {validUser && (
-          <div className='pr-3'>
-            <DropdownMenu>
-              <DropdownMenuTrigger>
-                <LuMenuSquare size={25} />
-              </DropdownMenuTrigger>
-              <DropdownMenuContent>
-                <DropdownMenuItem onClick={() => handleDeletePost(id!)} className='cursor-pointer'>
-                  Delete Post
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
+          {validUser && (
+            <div className='pr-3'>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <LuMenuSquare size={25} />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem onClick={() => handleDeletePost(id!)} className='cursor-pointer'>
+                    Delete Post
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          )}
+        </div>
+        <div className='px-2 py-3 min-h-20 w-full flex flex-col justify-between'>
+          <p>{post?.caption}</p>
+        </div>
+        {post?.media && (
+          <div className='w-full h-1/2 flex justify-center p-2'>
+            <img alt='image-prev' className='w-full lg:w-1/2 object-cover rounded-md' src={post.media} />
           </div>
         )}
-      </div>
-      <div className='px-2 py-3 min-h-40 w-full flex flex-col justify-between'>
-        <p>{post?.caption}</p>
-      </div>
-      {post?.media && (
-        <div className='w-full h-1/2 flex justify-center py-2'>
-          <img alt='image-prev' className='w-1/2 object-cover rounded-3xl' src={post.media} />
+        <div className='px-2 py-1 flex justify-between text-xs lg:text-base'>
+          <p className=''>{multiFormatDateString(post?.createdAt.toString() || '')}</p>
+          <p className=''>{formatDateString(post?.createdAt.toString()!)}</p>
         </div>
-      )}
-      <div className='px-2 py-1 flex justify-between text-xs lg:text-base'>
-        <p className=''>{multiFormatDateString(post?.createdAt.toString() || '')}</p>
-        <p className=''>{formatDateString(post?.createdAt.toString()!)}</p>
-      </div>
 
-      <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
-        <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id!)}>
-          {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
-          {post?.likedBy.length}
-        </Button>
-        <Button className='px-2 flex gap-2' variant={'ghost'}>
-          {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
-          {post?.comments.length}
-        </Button>
-      </div>
-
-      <div className='w-full min-h-52 h-32 flex flex-col items-center justify-center px-2 py-1 gap-2'>
-        <div className='self-start w-full'>
-          <Link to={`/profile/${user?.id}`} className='w-5/6 py-2 px-1  flex items-center gap-2 group'>
-            <Avatar>
-              <AvatarImage src={user?.avaUrl} />
-              <AvatarFallback>{getInitials(user?.name || '')}</AvatarFallback>
-            </Avatar>
-            <p className='font-bold group-hover:underline'>{user?.name}</p>
-            <p className='text-secondary-foreground'>@{user?.username}</p>
-          </Link>
+        <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
+          <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id!)}>
+            {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+            {post?.likedBy.length}
+          </Button>
+          <Button className='px-2 flex gap-2' variant={'ghost'}>
+            {post?.comments.length && userHasCommented ? <FaComment size={20} /> : <FaRegComment size={20} />}
+            {post?.comments.length}
+          </Button>
         </div>
-        <Textarea
-          className='h-full'
-          onBlur={(e) => {
-            const { value } = e.target;
-            setComment(value);
-          }}
-          ref={inputRef}
-        />
-        <Button className='w-full' onClick={() => handleAddComment(post?.id!)}>
-          COMMENT
-        </Button>
-      </div>
+
+        <div className='w-full min-h-52 h-32 flex flex-col items-center justify-center px-2 py-1 gap-2'>
+          <div className='self-start w-full'>
+            <Link to={`/profile/${user?.id}`} className='w-5/6 py-2 px-1  flex items-center gap-2 group'>
+              <Avatar>
+                <AvatarImage src={user?.avaUrl} />
+                <AvatarFallback>{getInitials(user?.name || '')}</AvatarFallback>
+              </Avatar>
+              <p className='font-bold group-hover:underline'>{user?.name}</p>
+              <p className='text-secondary-foreground'>@{user?.username}</p>
+            </Link>
+          </div>
+          <Textarea
+            className='h-full'
+            onBlur={(e) => {
+              const { value } = e.target;
+              setComment(value);
+            }}
+            ref={inputRef}
+          />
+          <Button className='w-full' onClick={() => handleAddComment(post?.id!)}>
+            COMMENT
+          </Button>
+        </div>
+      </ScrollArea>
     </div>
   );
 };

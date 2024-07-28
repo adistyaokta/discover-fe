@@ -27,7 +27,7 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
   if (modal)
     return (
       <Dialog aria-describedby={'search-modal'}>
-        <DialogTrigger className='absolute top-2 left-2 rounded-md w-[95%] group bg-primary h-10 flex items-center justify-center'>
+        <DialogTrigger className='w-full h-10 p-1 bg-black rounded-2xl rounded-t-none bg-opacity-10 flex justify-center items-center group-hover/card:bg-opacity-50 group-hover/card:h-1 lg:group-hover/card:h-1/4 transition-all duration-300 backdrop-blur-md'>
           <FaSearch size={20} className='cursor-pointer group-hover:opacity-100 transition-all duration-300' />
         </DialogTrigger>
         <DialogContent>
@@ -137,25 +137,19 @@ export const SearchComponent = ({ showTrending = false, modal = false }: SearchC
           </div>
         </label>
       </div>
-      <div className={'w-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
+      <div className={'w-full h-full px-1 py-3 flex flex-col gap-4 rounded-lg absolute z-50 '}>
         {searchValue && searchLoading && <Loader />}
         {searchedPosts?.length === 0 && <div className='text-muted-foreground italic text-center'>No result found</div>}
-        {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} />)}
-        {!searchValue && !searchedPosts && (
-          <>
-            {showTrending && (
-              <>
-                <p className='w-full font-outfit font-bold text-center'>Trending Moment</p>
-                <ScrollArea className='w-full px-1 h-full scroll-smooth'>
-                  <div className='grid grid-cols-1 gap-2 px-2'>
-                    {mostLikedPosts?.map((post) => (
-                      <PostCard key={post.id} post={post} className='last:mb-20' />
-                    ))}
-                  </div>
-                </ScrollArea>
-              </>
-            )}
-          </>
+        {searchValue && searchedPosts?.map((post) => <PostCard key={post.id} post={post} className='max-h-80' />)}
+        {!searchValue && !searchedPosts && showTrending && (
+          <ScrollArea className='h-1 min-h-full w-full'>
+            <p className='w-full font-outfit font-bold text-center mb-2'>Trending Moment</p>
+            <div className='grid grid-cols-1 gap-2 px-2 mb-20'>
+              {mostLikedPosts?.map((post) => (
+                <PostCard key={post.id} post={post} />
+              ))}
+            </div>
+          </ScrollArea>
         )}
       </div>
     </div>
