@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/app/store';
 import type { IPostData } from '@/app/type';
-import { formatDateString, getInitials, multiFormatDateString } from '@/app/utils/utils';
+import {  getInitials, multiFormatDateString } from '@/app/utils/utils';
 import { useAddComment, useDeletePost, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
 import { useRef, useState } from 'react';
 import { FaComment, FaRegHeart } from 'react-icons/fa';
