@@ -127,7 +127,6 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
         )}
         <div className='px-2 py-1 flex justify-between text-xs lg:text-base'>
           <p className=''>{multiFormatDateString(post?.createdAt.toString() || '')}</p>
-          <p className=''>{formatDateString(post?.createdAt.toString()!)}</p>
         </div>
 
         <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
