@@ -15,11 +15,10 @@ type CommentCardProps = {
 };
 
 export const CommentCard = ({ comment, postId }: CommentCardProps) => {
-  if (!comment) return null;
   const { user: isUser } = useAuthStore();
   const { mutateAsync: deleteComment } = useDeleteComment();
   const { toast } = useToast();
-
+  
   const validUser = isUser?.id === comment.author.id;
 
   async function hadleDeleteComment(commentId: number) {
@@ -27,10 +26,17 @@ export const CommentCard = ({ comment, postId }: CommentCardProps) => {
       const deletedComment = await deleteComment({ postId, commentId });
 
       return deletedComment;
-    } catch (error: any) {
-      toast({ title: error });
+    }catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({ title: error.message });
+      } else {
+        toast({ title: 'An unknown error occurred.' });
+      }
     }
   }
+
+  if (!comment) return null;
+
 
   return (
     <Card className='w-full overflow-hidden flex flex-col gap-1'>
