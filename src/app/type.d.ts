@@ -1,4 +1,3 @@
-import type { ReactElement } from 'react';
 import type { User } from './store';
 
 export type GetParam = {
@@ -86,7 +85,7 @@ export type IPostData = {
   createdAt: Date;
   updatedAt: Date;
   authorId: number;
-  likedBy: number[];
+  likedBy: IUser[];
   comments: IComment[];
 };
 

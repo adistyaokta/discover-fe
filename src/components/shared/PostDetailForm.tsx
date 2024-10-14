@@ -1,8 +1,8 @@
 import { useAuthStore } from '@/app/store';
-import type { IPostData } from '@/app/type';
+import type { IComment, IPostData, IUser } from '@/app/type';
 import {  getInitials, multiFormatDateString } from '@/app/utils/utils';
 import { useAddComment, useDeletePost, useLikePost, useUnlikePost } from '@/lib/react-query/queriesAndMutation';
-import { useRef, useState } from 'react';
+import {  useRef, useState } from 'react';
 import { FaComment, FaRegHeart } from 'react-icons/fa';
 import { FaArrowLeft, FaHeart, FaRegComment } from 'react-icons/fa6';
 import { LuMenuSquare } from 'react-icons/lu';
@@ -24,8 +24,7 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
   const { mutateAsync: deletePost } = useDeletePost();
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { user: isUser } = useAuthStore();
-  const validUser = isUser?.id === user?.id;
+  const validUser = post.authorId === user?.id;
   const { mutateAsync: updateLike } = useLikePost();
   const { mutateAsync: deleteLike } = useUnlikePost();
   const { mutateAsync: addComment } = useAddComment();
@@ -33,23 +32,26 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
 
   const [comment, setComment] = useState<string>('');
 
-  const userHasLiked = post?.likedBy?.some((likedUser: any) => likedUser.id === user?.id);
-  const userHasCommented = post?.comments?.some((comment: any) => comment.author.id === user?.id);
+  const userHasLiked = post?.likedBy?.some((likedUser: IUser) => likedUser.id === user?.id);
+  const userHasCommented = post?.comments?.some((comment: IComment) => comment.author.id === user?.id);
 
   const handleDeletePost = async (id: string) => {
     try {
       const response = await deletePost(id);
-
+  
       if (!response) return;
-
-      if (response) {
-        navigate(-1 as unknown as string);
-        toast({ title: 'Post deleted successfully.' });
+  
+      navigate(-1 as unknown as string);
+      toast({ title: 'Post deleted successfully.' });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({ title: error.message });
+      } else {
+        toast({ title: 'An unknown error occurred.' });
       }
-    } catch (error: any) {
-      toast({ title: error });
     }
   };
+  
 
   async function handleLikePost(postId: number) {
     try {
@@ -60,8 +62,12 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
       const likeResponse = await updateLike(postId);
 
       return likeResponse;
-    } catch (error: any) {
-      toast({ title: error });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({ title: error.message });
+      } else {
+        toast({ title: 'An unknown error occurred.' });
+      }
     }
   }
 
@@ -73,8 +79,12 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
         inputRef.current.value = '';
       }
       return sendComment;
-    } catch (error: any) {
-      toast({ title: error });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast({ title: error.message });
+      } else {
+        toast({ title: 'An unknown error occurred.' });
+      }
     }
   }
 
@@ -130,7 +140,7 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
         </div>
 
         <div className='w-full flex flex-row justify-center items-center min-h-16 border border-input px-3 border-x-0'>
-          <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id!)}>
+          <Button className='px-2 flex gap-2' variant={'ghost'} onClick={() => handleLikePost(post?.id)}>
             {post?.likedBy.length && userHasLiked ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
             {post?.likedBy.length}
           </Button>
@@ -159,7 +169,7 @@ export const PostDetailForm = ({ post }: PostDetailProps) => {
             }}
             ref={inputRef}
           />
-          <Button className='w-full' onClick={() => handleAddComment(post?.id!)}>
+          <Button className='w-full' onClick={() => handleAddComment(post?.id)}>
             COMMENT
           </Button>
         </div>
